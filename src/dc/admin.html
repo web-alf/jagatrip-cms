@@ -49,7 +49,6 @@
       </div>
       <p style="font-size:13px;color:#DC2626;display:{{ loginErrDisplay }}">{{ loginError }}</p>
       <button type="submit" style="background:#F97316;color:#FFFFFF;border:none;font-weight:700;font-size:15px;padding:16px;cursor:pointer;min-height:50px" style-hover="background:#EA580C">Masuk</button>
-      <p style="font-size:12px;line-height:1.6;color:#64748B">Prototipe front-end: kredensial demo <strong>admin@jagatrip.com</strong> / <strong>jagatrip</strong>. TODO: sambungkan ke autentikasi backend (session/JWT) sebelum produksi.</p>
       <a href="/" style="font-size:13px;font-weight:700">← Kembali ke situs</a>
     </form>
   </div>
@@ -163,7 +162,7 @@
                     <span style="font-size:11px;font-weight:700;color:{{ f.counterColor }};display:{{ f.counterDisplay }}">{{ f.counter }}</span>
                   </div>
                   <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
-                    <input id="{{ f.id }}" type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                    <input id="{{ f.id }}" type="text" value="{{ f.value }}" onInput="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
                   </sc-if>
                   <sc-if value="{{ f.isImage }}">
                     <div style="display:grid;gap:10px">
@@ -182,11 +181,11 @@
                         </sc-if>
                         <span style="font-size:12px;color:#64748B">{{ f.imgInfo }}</span>
                       </div>
-                      <input type="text" value="{{ f.urlValue }}" onChange="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                      <input type="text" value="{{ f.urlValue }}" onInput="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
                     </div>
                   </sc-if>
                   <sc-if value="{{ f.isArea }}">
-                    <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
+                    <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onInput="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
                   </sc-if>
                   <sc-if value="{{ f.isSelect }}">
                     <select id="{{ f.id }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px">
@@ -258,7 +257,7 @@
                         <span style="font-size:11px;font-weight:700;color:{{ f.counterColor }};display:{{ f.counterDisplay }}">{{ f.counter }}</span>
                       </div>
                       <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
-                        <input id="{{ f.id }}" type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                        <input id="{{ f.id }}" type="text" value="{{ f.value }}" onInput="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
                       </sc-if>
                       <sc-if value="{{ f.isImage }}">
                     <div style="display:grid;gap:10px">
@@ -277,11 +276,11 @@
                         </sc-if>
                         <span style="font-size:12px;color:#64748B">{{ f.imgInfo }}</span>
                       </div>
-                      <input type="text" value="{{ f.urlValue }}" onChange="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                      <input type="text" value="{{ f.urlValue }}" onInput="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
                     </div>
                   </sc-if>
                   <sc-if value="{{ f.isArea }}">
-                        <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
+                        <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onInput="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
                       </sc-if>
                       <sc-if value="{{ f.isSelect }}">
                         <select id="{{ f.id }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px">
@@ -347,7 +346,7 @@
                       <span style="font-size:11px;font-weight:700;color:{{ f.counterColor }};display:{{ f.counterDisplay }}">{{ f.counter }}</span>
                     </div>
                     <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
-                      <input id="{{ f.id }}" type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                      <input id="{{ f.id }}" type="text" value="{{ f.value }}" onInput="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
                     </sc-if>
                     <sc-if value="{{ f.isImage }}">
                     <div style="display:grid;gap:10px">
@@ -366,11 +365,11 @@
                         </sc-if>
                         <span style="font-size:12px;color:#64748B">{{ f.imgInfo }}</span>
                       </div>
-                      <input type="text" value="{{ f.urlValue }}" onChange="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                      <input type="text" value="{{ f.urlValue }}" onInput="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
                     </div>
                   </sc-if>
                   <sc-if value="{{ f.isArea }}">
-                      <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.7;resize:vertical"></textarea>
+                      <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onInput="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.7;resize:vertical"></textarea>
                     </sc-if>
                     <sc-if value="{{ f.isSelect }}">
                       <select id="{{ f.id }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px">
@@ -397,7 +396,11 @@
                 </div>
                 <div style="padding:0 22px 22px;display:flex;align-items:center;gap:12px">
                   <span aria-hidden="true" style="width:46px;height:46px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#FFFFFF;background:{{ curScoreColor }}">{{ curScore }}</span>
-                  <p style="font-size:12px;line-height:1.5;color:#64748B">{{ curScoreNote }}</p>
+                  <div>
+                    <p style="font-size:12px;font-weight:700;color:#0B2341">Kelengkapan SEO: {{ curScore }}/100</p>
+                    <p style="font-size:12px;line-height:1.5;color:#64748B">{{ curScoreNote }}</p>
+                    <p style="margin-top:4px;font-size:11px;line-height:1.5;color:#94A3B8">Hanya cek isian form, bukan peringkat Google. Data asli: Google Search Console.</p>
+                  </div>
                 </div>
               </section>
 
@@ -413,7 +416,7 @@
                         <span style="font-size:11px;font-weight:700;color:{{ f.counterColor }};display:{{ f.counterDisplay }}">{{ f.counter }}</span>
                       </div>
                       <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
-                        <input id="{{ f.id }}" type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                        <input id="{{ f.id }}" type="text" value="{{ f.value }}" onInput="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
                       </sc-if>
                       <sc-if value="{{ f.isImage }}">
                     <div style="display:grid;gap:10px">
@@ -432,11 +435,11 @@
                         </sc-if>
                         <span style="font-size:12px;color:#64748B">{{ f.imgInfo }}</span>
                       </div>
-                      <input type="text" value="{{ f.urlValue }}" onChange="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                      <input type="text" value="{{ f.urlValue }}" onInput="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
                     </div>
                   </sc-if>
                   <sc-if value="{{ f.isArea }}">
-                        <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
+                        <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onInput="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
                       </sc-if>
                       <sc-if value="{{ f.isSelect }}">
                         <select id="{{ f.id }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px">
@@ -503,6 +506,29 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
 const STORE = "jagatrip-cms-v1";
 const AUTH = "jagatrip-cms-auth";
+const SB = __SUPABASE__; // diisi src/pages/admin/index.astro dari PUBLIC_SUPABASE_*
+
+// Supabase Auth via REST (tanpa SDK). Sesi = {access_token, refresh_token} di localStorage.
+const sbAuth = {
+  headers: (tok) => ({ apikey: SB.key, Authorization: "Bearer " + (tok || SB.key), "Content-Type": "application/json" }),
+  async signIn(email, password) {
+    const r = await fetch(SB.url + "/auth/v1/token?grant_type=password", { method: "POST", headers: this.headers(), body: JSON.stringify({ email, password }) });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error_description || j.msg || "Login gagal");
+    return j;
+  },
+  async refresh(refresh_token) {
+    const r = await fetch(SB.url + "/auth/v1/token?grant_type=refresh_token", { method: "POST", headers: this.headers(), body: JSON.stringify({ refresh_token }) });
+    return r.ok ? r.json() : null;
+  },
+  async user(access_token) {
+    const r = await fetch(SB.url + "/auth/v1/user", { headers: this.headers(access_token) });
+    return r.ok ? r.json() : null;
+  },
+  signOut(access_token) {
+    return fetch(SB.url + "/auth/v1/logout", { method: "POST", headers: this.headers(access_token) }).catch(() => {});
+  }
+};
 
 const DEFAULTS = {
   site: {
@@ -816,28 +842,35 @@ const ARTICLE_SEO_FIELDS = [
   { key: "follow", label: "Follow", type: "bool", onLabel: "follow", offLabel: "nofollow" }
 ];
 
+// Sinkron dengan Supabase Auth → user_metadata.role. Tambah user baru via Dashboard → Authentication → Users.
 const USERS = [
   { name: "Admin JAGATRIP", email: "admin@jagatrip.com", role: "SUPER ADMIN", scope: "Seluruh konten, pengaturan SEO, dan manajemen pengguna." },
-  { name: "Tim Konten", email: "content@jagatrip.com", role: "EDITOR", scope: "Artikel, program, event, galeri, testimoni." },
-  { name: "Tim Partnership", email: "partnership@jagatrip.com", role: "VIEWER", scope: "Melihat konten dan mengunduh data permintaan partnership." }
+  { name: "Tim Konten", email: "content@jagatrip.com", role: "ADMIN", scope: "Artikel, program, event, galeri, testimoni." }
 ];
 
 function clone(o) { return JSON.parse(JSON.stringify(o)); }
 
 class Component extends DCLogic {
   state = {
-    authed: false, loginEmail: "", loginPass: "", loginError: "",
+    authed: false, session: null, user: null, loginEmail: "", loginPass: "", loginError: "", loginBusy: false,
     data: clone(DEFAULTS), section: "overview", itemIndex: null, articleIndex: null,
     dirty: false, toast: ""
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     try {
       const saved = localStorage.getItem(STORE);
-      const authed = localStorage.getItem(AUTH) === "1";
-      const next = { authed };
-      if (saved) next.data = Object.assign(clone(DEFAULTS), JSON.parse(saved));
-      this.setState(next);
+      if (saved) this.setState({ data: Object.assign(clone(DEFAULTS), JSON.parse(saved)) });
+      const raw = localStorage.getItem(AUTH);
+      if (!raw) return;
+      let session = JSON.parse(raw);
+      let user = await sbAuth.user(session.access_token);
+      if (!user && session.refresh_token) {
+        session = await sbAuth.refresh(session.refresh_token);
+        user = session ? await sbAuth.user(session.access_token) : null;
+      }
+      if (user) { localStorage.setItem(AUTH, JSON.stringify(session)); this.setState({ authed: true, session, user }); }
+      else localStorage.removeItem(AUTH);
     } catch (e) { /* storage tidak tersedia */ }
   }
 
@@ -1086,21 +1119,29 @@ class Component extends DCLogic {
       loginEmail: st.loginEmail, loginPass: st.loginPass,
       loginError: st.loginError, loginErrDisplay: st.loginError ? "block" : "none",
       onLoginField: (ev) => this.setState({ [ev.target.name === "email" ? "loginEmail" : "loginPass"]: ev.target.value, loginError: "" }),
-      onLogin: (ev) => {
+      onLogin: async (ev) => {
         ev.preventDefault();
-        if (st.loginEmail.trim().toLowerCase() === "admin@jagatrip.com" && st.loginPass === "jagatrip") {
-          try { localStorage.setItem(AUTH, "1"); } catch (e) {}
-          this.setState({ authed: true, loginPass: "", loginError: "" });
-        } else {
-          this.setState({ loginError: "Email atau password belum sesuai. Gunakan kredensial demo di bawah." });
+        if (st.loginBusy) return;
+        this.setState({ loginBusy: true, loginError: "" });
+        try {
+          const session = await sbAuth.signIn(st.loginEmail.trim().toLowerCase(), st.loginPass);
+          try { localStorage.setItem(AUTH, JSON.stringify(session)); } catch (e) {}
+          this.setState({ authed: true, session, user: session.user, loginPass: "", loginBusy: false });
+        } catch (e) {
+          this.setState({ loginError: "Email atau password salah.", loginBusy: false });
         }
       },
-      onLogout: () => { try { localStorage.removeItem(AUTH); } catch (e) {} this.setState({ authed: false, section: "overview", articleIndex: null, itemIndex: null }); },
+      onLogout: () => {
+        if (st.session) sbAuth.signOut(st.session.access_token);
+        try { localStorage.removeItem(AUTH); } catch (e) {}
+        this.setState({ authed: false, session: null, user: null, section: "overview", articleIndex: null, itemIndex: null });
+      },
 
       navItems, stats, recentArticles, seoChecks, users: USERS,
       crumb: sec.crumb, pageTitle: editingArticle ? "Edit Artikel" : sec.title,
       sectionHint: sec.hint || "",
-      userName: "Admin JAGATRIP", userRole: "Super Admin",
+      userName: (st.user && st.user.user_metadata && st.user.user_metadata.name) || (st.user && st.user.email) || "Admin",
+      userRole: st.user && st.user.user_metadata && st.user.user_metadata.role === "super_admin" ? "Super Admin" : "Admin",
       dirtyLabel: st.dirty ? "Ada perubahan belum tersimpan" : "Semua perubahan tersimpan",
       dirtyColor: st.dirty ? "#B45309" : "#64748B",
 

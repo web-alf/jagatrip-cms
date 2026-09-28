@@ -1,6 +1,7 @@
 ---
 // ponytail: admin masih halaman dc lama (localStorage). Ganti dengan admin native + Supabase Auth.
 import html from "../../dc/admin.html?raw";
-const body = html.replace(/<!doctype[^>]*>/i, "");
+const env = { url: import.meta.env.PUBLIC_SUPABASE_URL, key: import.meta.env.PUBLIC_SUPABASE_ANON_KEY };
+const body = html.replace(/<!doctype[^>]*>/i, "").replace("__SUPABASE__", JSON.stringify(env));
 ---
 <Fragment set:html={body} />
