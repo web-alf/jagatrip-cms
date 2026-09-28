@@ -2,6 +2,7 @@
   "name": "jagatrip-cms",
   "type": "module",
   "private": true,
+  "packageManager": "bun@1.4.2",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
