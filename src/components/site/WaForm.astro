@@ -1,0 +1,59 @@
+---
+// Form lead → buka WhatsApp dengan pesan terisi.
+// ponytail: tanpa backend. Upgrade: insert ke tabel `leads` Supabase lalu redirect WA.
+import { getSite } from "../../lib/repo";
+
+interface Props { kind: "partnership" | "contact" }
+const { kind } = Astro.props;
+const wa = (await getSite()).footer.waPartnership;
+const BASE = ["Educational Benchmarking Program", "International Field Trip", "Immersion Program", "Student Exchange Program", "Institution Partnership", "International Internship", "International Community Service", "JAGATALK Webinar"];
+const c = kind === "contact"
+  ? { p: "ct", intro: "Halo JAGATRIP, saya ingin bertanya.", topic: "Topik", label: "Topik / Pilihan Program", pick: "Pilih topik…", err: "Mohon pilih salah satu topik.", msg: "Pesan", submit: "Kirim Pesan", email: true, opts: [...BASE, "Pendaftaran Rombongan", "Lainnya"], note: "Data diteruskan ke WhatsApp tim JAGATRIP." }
+  : { p: "jt", intro: "Halo JAGATRIP, saya ingin membahas partnership.", topic: "Program", label: "Pilihan Program", pick: "Pilih program…", err: "Mohon pilih salah satu program.", msg: "Message", submit: "Kirim Permintaan Partnership", email: false, opts: [...BASE, "Other Partnership"], note: "Data dikirim ke WhatsApp partnership desk JAGATRIP." };
+---
+<form class="form wa-form" novalidate data-wa={wa} data-intro={c.intro} data-topic={c.topic}>
+  <label>Nama Lengkap<input name="nama" autocomplete="name" required /><span class="err" hidden>Mohon lengkapi nama.</span></label>
+  <label>Asal Institusi<input name="institusi" required /><span class="err" hidden>Mohon lengkapi nama institusi.</span></label>
+  <div class="grid" style="--min:170px;gap:18px">
+    <label>Jabatan / Posisi<input name="jabatan" /></label>
+    <label>No. WhatsApp<input name="wa" type="tel" inputmode="tel" placeholder="08xx / 628xx" required /><span class="err" hidden>Mohon isi nomor yang benar (diawali 08 / 628).</span></label>
+  </div>
+  {c.email && <label>Email <span style="font-weight:500;color:var(--muted2)">(opsional)</span><input name="email" type="email" /></label>}
+  <label>{c.label}
+    <select name="program" required><option value="">{c.pick}</option>{c.opts.map((o) => <option>{o}</option>)}</select>
+    <span class="err" hidden>{c.err}</span>
+  </label>
+  <label>{c.msg}<textarea name="pesan" rows="4"></textarea></label>
+  <button type="submit" class="btn btn-primary" style="min-height:52px">{c.submit}</button>
+  <p role="status" class="muted" style="font-size:13px" hidden></p>
+  <p class="note">{c.note}</p>
+</form>
+
+<script>
+  import { isWaNumber, waLink } from "../../lib/format";
+
+  document.querySelectorAll<HTMLFormElement>(".wa-form").forEach((form) => {
+    const status = form.querySelector<HTMLElement>("[role=status]")!;
+    const field = (n: string) => form.elements.namedItem(n) as HTMLInputElement | null;
+    const setErr = (el: HTMLInputElement, bad: boolean) => {
+      el.setAttribute("aria-invalid", String(bad));
+      const e = el.parentElement!.querySelector<HTMLElement>(".err");
+      if (e) e.hidden = !bad;
+    };
+    form.addEventListener("input", (e) => setErr(e.target as HTMLInputElement, false));
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const v = (n: string) => field(n)?.value.trim() ?? "";
+      const bad = { nama: !v("nama"), institusi: !v("institusi"), wa: !isWaNumber(v("wa")), program: !v("program") };
+      Object.entries(bad).forEach(([n, b]) => setErr(field(n)!, b));
+      const first = Object.keys(bad).find((n) => bad[n as keyof typeof bad]);
+      status.hidden = false;
+      if (first) { status.textContent = "Mohon periksa kembali kolom yang ditandai."; field(first)!.focus(); return; }
+      const d = form.dataset;
+      const lines = [d.intro, "", `Nama: ${v("nama")}`, `Institusi: ${v("institusi")}`, `Jabatan: ${v("jabatan") || "-"}`, `WhatsApp: ${v("wa")}`,
+        ...(field("email") ? [`Email: ${v("email") || "-"}`] : []), `${d.topic}: ${v("program")}`, `Pesan: ${v("pesan") || "-"}`];
+      window.open(waLink(d.wa!, lines.join("\n")), "_blank", "noopener");
+      status.textContent = `Membuka WhatsApp tim JAGATRIP. Jika tidak terbuka otomatis, hubungi ${d.wa}.`;
+    });
+  });
+</script>

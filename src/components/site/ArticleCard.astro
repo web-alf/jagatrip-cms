@@ -1,0 +1,28 @@
+---
+import type { Article } from "../../lib/types";
+import { fmtDate } from "../../lib/format";
+interface Props { a: Article }
+const { a } = Astro.props;
+const href = `/news/${a.slug}`;
+---
+<article class="card" data-category={a.category} style="padding:0;overflow:hidden;display:flex;flex-direction:column">
+  <a href={href} aria-label={`Baca: ${a.title}`} class="cover">
+    {a.cover
+      ? <img src={a.cover} alt={a.imageAlt} loading="lazy" />
+      : <svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2" /><circle cx="9" cy="10" r="1.8" /><path d="M21 16l-5-5-9 9" /></svg>}
+    <span class="badge" style="position:absolute;left:14px;top:14px;background:var(--navy);color:#fff">{a.category.toUpperCase()}</span>
+  </a>
+  <div style="padding:24px;display:flex;flex-direction:column;gap:12px;flex:1">
+    <p style="font-size:12px;font-weight:600;color:var(--faint)">{fmtDate(a.date)} · {a.author}</p>
+    <h3 style="font-size:19px;line-height:1.35;font-weight:700"><a href={href} class="t">{a.title}</a></h3>
+    <p class="muted" style="font-size:15px">{a.excerpt}</p>
+    <a href={href} style="margin-top:auto;padding-top:8px;font-size:14px;font-weight:700">Baca artikel →</a>
+  </div>
+</article>
+
+<style>
+  .cover { display: grid; place-items: center; position: relative; aspect-ratio: 16/10; background: var(--peach); overflow: hidden; }
+  .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .t { color: var(--navy); }
+  .t:hover { color: var(--orange); }
+</style>

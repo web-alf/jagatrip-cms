@@ -1,0 +1,235 @@
+---
+import Base from "../layouts/Base.astro";
+import Founder from "../components/site/Founder.astro";
+import WaForm from "../components/site/WaForm.astro";
+import { getEvents, getHome, getPrograms, getSite } from "../lib/repo";
+import { waLink, ytId } from "../lib/format";
+
+const [site, programs, events, home] = await Promise.all([getSite(), getPrograms(), getEvents(), getHome()]);
+const { hero, about, footer: ft } = site;
+const at = hero.highlight ? hero.heading.indexOf(hero.highlight) : -1;
+const [pre, hl, post] = at < 0 ? [hero.heading, "", ""] : [hero.heading.slice(0, at), hero.highlight, hero.heading.slice(at + hero.highlight.length)];
+const testi = home.testimonials.map((t) => ({ ...t, id: ytId(t.video) })).filter((t) => t.id);
+const perks = [
+  ["International Learning", '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>'],
+  ["Institution Partnership", '<path d="M3 20h18M5 20V9l7-4 7 4v11M9 20v-6h6v6"/>'],
+  ["Global Networking", '<circle cx="8" cy="9" r="3.2"/><circle cx="16" cy="15" r="3.2"/><path d="M10.4 11.2l3.2 2.4"/>'],
+  ["Edu-Tourism", '<path d="M3 13l18-7-7 18-2.6-7.4L3 13z"/>'],
+];
+const pad = (i: number) => String(i + 1).padStart(2, "0");
+---
+<Base title="JAGATRIP — International Education & Edu-Tourism Programs">
+  <section style="position:relative;overflow:hidden">
+    <svg aria-hidden="true" class="deco" viewBox="0 0 1440 620" preserveAspectRatio="none">
+      <path d="M-40 520 C 320 470 520 180 940 120 C 1160 88 1330 60 1500 40" fill="none" stroke="#F97316" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round" opacity=".5" style="animation:jt-dash 9s linear infinite" />
+      <circle cx="1140" cy="470" r="150" fill="none" stroke="#EEF2F6" stroke-width="1.5" />
+    </svg>
+    <div class="wrap row" style="align-items:center">
+      <div style="flex-basis:440px">
+        <div data-reveal style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+          <span style="width:34px;height:2px;background:var(--orange)"></span>
+          <p class="eyebrow" style="margin:0">{hero.eyebrow}</p>
+        </div>
+        <h1 data-reveal class="h1" style="font-size:clamp(40px,5.4vw,70px);line-height:1.04">{pre}<span style="color:var(--orange)">{hl}</span>{post}</h1>
+        <p data-reveal class="lead" style="max-width:560px">{hero.body}</p>
+        <div data-reveal class="btns"><a href={hero.cta1Href} class="btn btn-primary">{hero.cta1}</a><a href={hero.cta2Href} class="btn">{hero.cta2}</a></div>
+        <ul class="grid" style="--min:148px;margin-top:44px;padding-top:28px;border-top:1px solid var(--border)">
+          {perks.map(([l, ic]) => (
+            <li style="display:flex;align-items:center;gap:10px">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.4" set:html={ic} />
+              <span style="font-size:14px;font-weight:600;color:var(--navy)">{l}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div data-reveal>
+        <div style="position:relative;border:1px solid var(--border);background:var(--bg);padding:12px">
+          <img src={hero.visual} alt={hero.visualAlt} style="width:100%;aspect-ratio:4/3;object-fit:cover" />
+          <div class="badge" style="position:absolute;left:24px;bottom:24px;background:var(--navy);color:#fff;padding:12px 16px">TRAVEL TO LEARN · LEARN TO LEAD</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="programs" class="bg-soft">
+    <div class="wrap">
+      <div class="row" style="align-items:flex-end;margin-bottom:48px;gap:28px">
+        <div style="flex-basis:520px"><p class="eyebrow">OUR PROGRAMS</p><h2 class="h2">International Programs Designed to Expand Your World</h2></div>
+        <p class="muted" style="flex-basis:340px;max-width:440px">Program kami dirancang untuk membuka akses pembelajaran global, kolaborasi institusi, dan pengalaman internasional yang relevan untuk dunia pendidikan.</p>
+      </div>
+      <div class="grid" style="--min:258px">
+        {programs.map((p, i) => (
+          <article class="card" style="display:flex;flex-direction:column;gap:14px;min-height:246px">
+            <div style="display:flex;justify-content:space-between;gap:12px">
+              <span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" set:html={p.icon} /></span>
+              <span style="font-weight:700;white-space:nowrap"><span style="font-size:13px;color:var(--orange)">{pad(i)}</span> <span style="font-size:11px;letter-spacing:.1em;color:var(--faint)">{p.active ? "ACTIVE" : "SOON"}</span></span>
+            </div>
+            <h3 style="font-size:20px;line-height:1.28;font-weight:700;color:var(--navy)">{p.title}</h3>
+            <p class="muted" style="font-size:14px;flex:1">{p.desc}</p>
+            {p.active
+              ? <a href={p.href} target="_blank" rel="noopener" style="font-size:13px;font-weight:700">Explore →</a>
+              : <span style="font-size:13px;font-weight:700;color:var(--faint)">Coming Soon</span>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap row">
+      <div style="flex-basis:460px">
+        <p class="eyebrow">{about.eyebrow}</p>
+        <h2 class="h2">{about.heading}</h2>
+        <p style="margin-top:24px;font-size:17px;line-height:1.7">{about.lead}</p>
+        <p class="muted" style="margin-top:18px">{about.body}</p>
+        <div class="btns"><a href={about.readMoreHref} class="btn">Read More</a></div>
+      </div>
+      <div class="tiles" style="flex-basis:360px;align-content:start">
+        <div data-carousel role="group" aria-roledescription="carousel" aria-label="Dokumentasi JAGATRIP">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-bottom:14px">
+            <h3 style="font-size:19px;font-weight:800;color:var(--navy)">Learning Beyond Borders</h3>
+            <p style="font-size:13px;color:var(--muted2)">Dokumentasi Batch #1</p>
+          </div>
+          <div class="carousel"><div class="slides">
+            {home.gallery.map((g, i) => (
+              <figure style="position:relative">
+                <img src={g.image} alt={g.alt} loading="lazy" style="width:100%;aspect-ratio:3/2;object-fit:cover" />
+                <figcaption class="badge" style={`position:absolute;left:14px;top:14px;color:#fff;background:${i % 3 === 1 ? "var(--orange)" : "var(--navy)"}`}>{g.label}</figcaption>
+              </figure>
+            ))}
+          </div></div>
+          <div style="margin-top:14px;display:flex;justify-content:space-between;gap:16px">
+            <div style="display:flex;gap:8px">{home.gallery.map((_, i) => <button type="button" class="dot" data-go={i} aria-label={`Foto ${i + 1}`}></button>)}</div>
+            <div style="display:flex;gap:8px"><button type="button" class="arrow" data-prev aria-label="Foto sebelumnya">←</button><button type="button" class="arrow" data-next aria-label="Foto berikutnya">→</button></div>
+          </div>
+        </div>
+        <div style="background:var(--navy);display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:28px">
+          {[["30+", "Negara dijelajahi"], ["04", "Institusi per batch"], ["06", "Dimensi observasi"]].map(([n, l]) => (
+            <div><p style="font-size:26px;font-weight:800;color:#fff">{n}</p><p style="font-size:12px;color:var(--line);line-height:1.4">{l}</p></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-navy">
+    <div class="wrap">
+      <p class="eyebrow">TESTIMONIAL</p>
+      <h2 class="h2" style="max-width:900px">Apa Kata Mereka yang Sudah Menjadi Bagian dari Perjalanan Bersama JAGATRIP?</h2>
+      <div data-carousel class="row" style="margin-top:48px;gap:24px" role="group" aria-roledescription="carousel" aria-label="Testimoni video peserta">
+        <div style="flex-basis:520px">
+          <div class="carousel" style="border:1px solid var(--dborder)"><div class="slides">
+            {testi.map((t) => (
+              <a href={`https://youtu.be/${t.id}`} target="_blank" rel="noopener" class="play" style="position:relative;display:block;background:var(--dcard)">
+                <img src={`https://img.youtube.com/vi/${t.id}/hqdefault.jpg`} alt={`Video testimoni ${t.name}`} loading="lazy" style="width:100%;aspect-ratio:16/9;object-fit:cover" />
+                <span aria-hidden="true">▶</span>
+              </a>
+            ))}
+          </div></div>
+          <div style="margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px">
+            <div>{testi.map((t, i) => <div data-i={i} hidden={i > 0}><p style="font-size:20px;font-weight:700">{t.name}</p><p style="margin-top:6px;font-size:14px;color:var(--line)">{t.org}</p></div>)}</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span data-count style="font-size:13px;font-weight:700;color:var(--faint)"></span>
+              <button type="button" class="arrow dark" data-prev aria-label="Testimoni sebelumnya">←</button>
+              <button type="button" class="arrow dark" data-next aria-label="Testimoni berikutnya">→</button>
+            </div>
+          </div>
+        </div>
+        <ul style="flex-basis:320px;display:grid;gap:12px;align-content:start">
+          {testi.map((t, i) => (
+            <li><button type="button" data-go={i} class="pick">
+              <span class="play" style="position:relative;flex:none"><img src={`https://img.youtube.com/vi/${t.id}/hqdefault.jpg`} alt="" loading="lazy" width="112" height="63" style="object-fit:cover" /><span aria-hidden="true" style="width:30px;height:30px;font-size:11px">▶</span></span>
+              <span><span style="display:block;font-size:15px;font-weight:700">{t.name}</span><span style="display:block;margin-top:4px;font-size:13px;color:var(--faint)">{t.org}</span></span>
+            </button></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream">
+    <div class="wrap">
+      <p class="eyebrow">WHO IS IT FOR?</p>
+      <h2 class="h2">Program Ini Dirancang untuk Kalian Para:</h2>
+      <p class="muted" style="margin-top:20px;max-width:560px">Dari pengambil keputusan di yayasan sampai pelajar yang menyiapkan studi di luar negeri.</p>
+      <ul class="grid" style="--min:270px;margin-top:clamp(36px,4vw,56px)">
+        {home.audience.map((a) => (
+          <li class="card aud" style="border:0">
+            <span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d={a.icon} /></svg></span>
+            <p style="margin-top:20px;font-size:19px;font-weight:700;color:var(--orange);line-height:1.3">{a.title}</p>
+            <p class="muted" style="margin-top:10px;font-size:15px">{a.desc}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="events" style="border-top:1px solid var(--border)">
+    <div class="wrap">
+      <p class="eyebrow">COMING UP</p>
+      <h2 class="h2">Upcoming International Programs</h2>
+      <div class="grid" style="--min:340px;gap:28px;margin-top:48px">
+        {events.map((e) => (
+          <article style="border:1px solid var(--border);display:flex;flex-direction:column">
+            <div style="background:var(--bg);padding:20px;border-bottom:1px solid var(--border)"><img src={e.flyer} alt={e.flyerAlt} loading="lazy" style="max-width:320px;max-height:340px;object-fit:contain;margin:0 auto" /></div>
+            <div style="padding:28px;display:flex;flex-direction:column;gap:16px;flex:1">
+              <div style="display:flex;flex-wrap:wrap;gap:10px">
+                <span class="badge" style="background:var(--navy);color:#fff">{e.date}</span>
+                <span class="badge" style="border:1px solid var(--border);color:var(--muted)">{e.meta}</span>
+              </div>
+              <h3 style="font-size:clamp(21px,2vw,28px);line-height:1.2;font-weight:800;color:var(--navy)">{e.title}</h3>
+              <p class="muted" style="font-size:15px;flex:1">{e.desc}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+                <a href={e.href} target="_blank" rel="noopener" class="btn btn-primary">Daftar Sekarang</a>
+                <span style="font-size:13px;color:var(--muted2)">{e.price}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Founder founder={site.founder} />
+
+  <section id="partnership" class="bg-navy" style={`position:relative;overflow:hidden;background-image:linear-gradient(rgba(11,35,65,.93),rgba(11,35,65,.93)),url('${site.partnership.bgImage}');background-size:cover;background-position:center`}>
+    <div class="wrap row">
+      <div style="flex-basis:420px">
+        <p class="eyebrow">PARTNERSHIP</p>
+        <h2 class="h2" style="font-size:clamp(32px,3.6vw,52px)">Let's Partner Up!</h2>
+        <p class="lead" style="max-width:480px">Bangun program internasional, institutional visit, benchmarking, atau kolaborasi pendidikan bersama JAGATRIP.</p>
+        <ul class="dash" style="margin-top:32px;display:grid;gap:14px;max-width:480px;font-size:15px;color:#E2E8F0">
+          <li>Perizinan dan koordinasi resmi dengan institusi tujuan.</li>
+          <li>Instrumen observasi, laporan studi lapangan, dan sertifikat resmi.</li>
+          <li>Fasilitasi jalur kerja sama lanjutan dengan sekolah dan kampus mitra.</li>
+        </ul>
+        <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--dborder);display:grid;gap:8px">
+          <p style="font-size:13px;letter-spacing:.08em;color:var(--faint);font-weight:700">PARTNERSHIP DESK</p>
+          <p>WhatsApp <a href={waLink(ft.waPartnership)} target="_blank" rel="noopener" style="color:var(--orange-l)">{ft.waPartnership}</a></p>
+          <p>Email <a href={`mailto:${ft.email}`} style="color:var(--orange-l)">{ft.email}</a></p>
+        </div>
+      </div>
+      <div style="flex-basis:420px;color:var(--text)"><WaForm kind="partnership" /></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap" style="max-width:1000px">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="h2">Ada Pertanyaan? Kami Jawab Semuanya di Sini.</h2>
+      <div class="faq" style="margin-top:40px;border-top:1px solid var(--border)">
+        {home.faqs.map((q, i) => <details name="faq" open={i === 0}><summary>{q.q}</summary><p>{q.a}</p></details>)}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .play > span { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 74px; height: 74px; background: var(--orange); color: #fff; display: grid; place-items: center; font-size: 22px; }
+  .arrow.dark { background: transparent; border-color: var(--dborder); color: #fff; }
+  .arrow.dark:hover { border-color: var(--orange); color: var(--orange-l); }
+  .pick { width: 100%; text-align: left; display: flex; gap: 16px; align-items: center; background: var(--dcard); border: 1px solid var(--dborder); padding: 12px; color: #fff; cursor: pointer; }
+  .pick:hover, .pick[aria-current="true"] { border-color: var(--orange); }
+  .pick[aria-current="true"] { background: #16324F; }
+  .aud:hover { box-shadow: 0 14px 30px rgba(249,115,22,.22); transform: translateY(-3px); }
+</style>

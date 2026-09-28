@@ -1,0 +1,127 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/site/PageHero.astro";
+import { getEvents, getPrograms, getSite } from "../lib/repo";
+import { waLink } from "../lib/format";
+
+const [site, programs, events] = await Promise.all([getSite(), getPrograms(), getEvents()]);
+const facilities = [
+  ["Tiket & Akomodasi", "Tiket pesawat PP untuk trip internasional serta penginapan selama program.", "M2 16l20-7-4-2-6 2-5-3-2 1 3 4-4 1-2-1-1 1 3 3zM3 21h18"],
+  ["Konsumsi Program", "Makan sesuai jadwal program dan welcome drink.", "M5 3v8a2 2 0 002 2v8M9 3v8a2 2 0 01-2 2M7 3v6M17 21V3c-2 1-3 4-3 8h3"],
+  ["Transportasi Lokal", "Transportasi penuh selama rangkaian kegiatan berlangsung.", "M5 17V7a2 2 0 012-2h10a2 2 0 012 2v10zM5 12h14M8 20v-3M16 20v-3M8 15h.01M16 15h.01"],
+  ["Workshop & Seminar Kit", "Perlengkapan sesi, merchandise, dan door prize.", "M4 7h16v13H4zM9 7V4h6v3M4 12h16M12 11v3"],
+  ["Sertifikat Resmi", "Diterbitkan PT JAGATRIP MITRA EDUKASI sebagai bukti partisipasi.", "M6 3h12v11H6zM9 7h6M9 10h4M9 14l-2 7 5-3 5 3-2-7"],
+  ["Dokumentasi Profesional", "Dokumentasi kegiatan yang dapat dipakai laporan institusi.", "M3 8h4l2-3h6l2 3h4v12H3zM12 17a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"],
+  ["City Tour & Tour Leader", "Agenda city tour dengan pendampingan tour leader berpengalaman.", "M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11zM12 12.6a2.6 2.6 0 100-5.2 2.6 2.6 0 000 5.2z"],
+  ["Asuransi Perjalanan", "Perlindungan perjalanan selama program berlangsung.", "M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6zM9 12l2 2 4-4"],
+];
+---
+<Base title="Program — JAGATRIP" description="Rincian program internasional JAGATRIP: benchmarking, field trip, immersion, partnership, dan JAGATALK.">
+  <PageHero crumbs={[["Home", "/"], ["Program"]]} eyebrow="OUR PROGRAMS" title="International Programs Designed to Expand Your World"
+    lead="Program kami dirancang untuk membuka akses pembelajaran global, kolaborasi institusi, dan pengalaman internasional yang relevan untuk dunia pendidikan. Halaman ini memuat rincian setiap program: untuk siapa, apa yang dikerjakan di lapangan, dan apa yang dibawa pulang peserta.">
+    <ul style="margin-top:34px;display:flex;flex-wrap:wrap;gap:10px">
+      {programs.map((p) => <li><a href={`#${p.id}`} class="pill">{p.title.split(" — ")[0]}</a></li>)}
+    </ul>
+  </PageHero>
+
+  {events.length > 0 && (
+    <section class="bg-soft" style="border-bottom:1px solid var(--border)">
+      <div class="wrap">
+        <p class="eyebrow">PROGRAM BERJALAN</p>
+        <h2 class="h2">Program yang pendaftarannya sedang dibuka</h2>
+        <div class="grid" style="--min:320px;gap:24px;margin-top:36px">
+          {events.map((e) => (
+            <article style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--orange);display:flex;flex-direction:column">
+              <div style="background:var(--bg);border-bottom:1px solid var(--border);padding:20px"><img src={e.flyer} alt={e.flyerAlt} loading="lazy" style="max-width:320px;max-height:360px;object-fit:contain;margin:0 auto" /></div>
+              <div style="padding:clamp(24px,3vw,34px);display:flex;flex-direction:column;gap:14px;flex:1">
+                <span class="badge open">PENDAFTARAN DIBUKA</span>
+                <h3 style="font-size:clamp(21px,2.2vw,28px);line-height:1.2;font-weight:800;color:var(--navy)">{e.title}</h3>
+                <p class="muted" style="font-size:15px;flex:1">{e.desc}</p>
+                <dl class="meta">
+                  <div><dt>Jadwal</dt><dd>{e.date}</dd></div>
+                  <div><dt>Format</dt><dd>{e.meta}</dd></div>
+                  <div><dt>Biaya</dt><dd>{e.price}</dd></div>
+                </dl>
+                <div><a href={e.href} target="_blank" rel="noopener" class="btn btn-primary">Daftar Sekarang</a></div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">RINCIAN PROGRAM</p>
+      <h2 class="h2">Delapan Jalur Program JAGATRIP</h2>
+      <div class="tiles" style="margin-top:44px">
+        {programs.map((p) => (
+          <article id={p.id} class="row" style="padding:clamp(26px,3.4vw,44px);scroll-margin-top:110px">
+            <div style="flex-basis:320px">
+              <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
+                <span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" set:html={p.icon} /></span>
+                <span class="badge" style={`border:1px solid;color:${p.active ? "#166534" : "#B45309"}`}>{p.active ? "PENDAFTARAN DIBUKA" : "COMING SOON"}</span>
+              </div>
+              <h3 style="font-size:clamp(21px,2.2vw,30px);line-height:1.18;font-weight:800;color:var(--navy)">{p.title}</h3>
+              <p class="muted" style="margin-top:16px">{p.long}</p>
+              <p style="margin-top:16px;font-size:14px;color:var(--muted2)"><strong style="color:var(--navy)">Untuk siapa:</strong> {p.who}</p>
+              <div style="margin-top:24px">
+                {p.active
+                  ? <a href={p.href} target="_blank" rel="noopener" class="btn btn-primary">{p.cta}</a>
+                  : <a href="/#partnership" class="btn">Tanya Ketersediaan →</a>}
+              </div>
+            </div>
+            <div style="flex-basis:300px">
+              <p style="font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--faint);margin-bottom:16px">{p.listLabel}</p>
+              <ul class="sq">{p.points.map((t) => <li>{t}</li>)}</ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream" style="border-top:1px solid #EEE3D8">
+    <div class="wrap">
+      <p class="eyebrow">YANG PESERTA DAPATKAN</p>
+      <h2 class="h2">Fasilitas Standar di Setiap Program Internasional</h2>
+      <ul class="grid" style="--min:230px;gap:20px;margin-top:36px">
+        {facilities.map(([t, d, ic]) => (
+          <li class="card" style="border-color:#EEE3D8;border-radius:12px">
+            <span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d={ic} /></svg></span>
+            <p style="margin-top:18px;font-size:16px;font-weight:700;color:var(--navy)">{t}</p>
+            <p class="muted" style="margin-top:8px;font-size:14px">{d}</p>
+          </li>
+        ))}
+      </ul>
+      <p style="margin-top:24px;font-size:14px;color:var(--muted2);max-width:720px">Tidak termasuk: pengeluaran pribadi, visa (jika diperlukan), biaya bagasi tambahan, dan tips untuk pemandu lokal.</p>
+    </div>
+  </section>
+
+  <section class="bg-navy">
+    <div class="wrap row" style="align-items:center">
+      <div style="flex-basis:440px">
+        <h2 class="h2">Butuh program yang disusun khusus untuk institusi Anda?</h2>
+        <p class="lead" style="max-width:560px">Sampaikan tujuan, jumlah delegasi, dan negara yang diminati. Tim kami menyusun agenda kunjungan beserta perizinan institusinya.</p>
+      </div>
+      <div class="btns" style="flex:none;margin:0">
+        <a href="/#partnership" class="btn btn-primary">Let's Partner Up</a>
+        <a href={waLink(site.footer.waPartnership)} target="_blank" rel="noopener" class="btn btn-light">WhatsApp Partnership</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pill { display: block; border: 1px solid var(--border); background: var(--bg); color: var(--navy); font-size: 13px; font-weight: 600; padding: 11px 16px; }
+  .pill:hover { border-color: var(--orange); color: var(--orange); }
+  .open { align-self: flex-start; background: var(--cream); border: 1px solid #FDBA74; color: #C2410C; }
+  .meta { display: grid; gap: 10px; }
+  .meta div { display: flex; gap: 12px; }
+  .meta dt { flex: none; width: 92px; font-size: 13px; font-weight: 700; color: var(--faint); }
+  .meta dd { font-size: 14px; color: var(--text); }
+  .sq { display: grid; gap: 12px; }
+  .sq li { display: flex; gap: 12px; font-size: 15px; line-height: 1.7; }
+  .sq li::before { content: ""; flex: none; margin-top: 9px; width: 6px; height: 6px; background: var(--orange); }
+</style>

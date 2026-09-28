@@ -1,0 +1,80 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/site/PageHero.astro";
+import WaForm from "../components/site/WaForm.astro";
+import { getSite } from "../lib/repo";
+import { handleOf, waLink } from "../lib/format";
+
+const ft = (await getSite()).footer;
+const WA = '<path d="M20.5 12a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.1-4.4A8.5 8.5 0 1 1 20.5 12z"/>';
+const cards = [
+  ["ADMIN PROGRAM", ft.waAdmin, waLink(ft.waAdmin), "Pendaftaran peserta, pembayaran DP, dan pertanyaan teknis keberangkatan.", WA],
+  ["PARTNERSHIP DESK", ft.waPartnership, waLink(ft.waPartnership), "Kerja sama institusi, program custom, dan permintaan rombongan.", '<path d="M3 12l3-3 4 3 2-2 2 2 4-3 3 3"/><path d="M6 12v5h12v-5"/>'],
+  ["EMAIL RESMI", ft.email, `mailto:${ft.email}`, "Surat resmi, proposal, dan dokumen kerja sama institusi.", '<rect x="3" y="5" width="18" height="14"/><path d="M3 6.5l9 6 9-6"/>'],
+  ["KANTOR", "PT JAGATRIP MITRA EDUKASI", "", `${ft.address}. Alamat lengkap menyusul dari tim.`, '<path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/>'],
+];
+const socials = [
+  ["Instagram", handleOf(ft.instagram), ft.instagram, '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/>'],
+  ["TikTok", "@" + handleOf(ft.tiktok), ft.tiktok, '<path d="M14 3v11.2a3.6 3.6 0 1 1-3.6-3.6"/><path d="M14 3c.6 2.6 2.3 4.1 5 4.3"/>'],
+  ["YouTube", "@jagatrip", "https://www.youtube.com/@jagatrip", '<rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10.5 9.5l5 2.5-5 2.5z"/>'],
+];
+---
+<Base title="Contact Us — JAGATRIP" description="Hubungi tim JAGATRIP untuk pendaftaran program, penawaran rombongan, atau kerja sama institusi.">
+  <PageHero crumbs={[["Home", "/"], ["Contact Us"]]} eyebrow="CONTACT US" title="Hubungi Tim JAGATRIP"
+    lead="Untuk pendaftaran program, permintaan penawaran rombongan, atau penjajakan kerja sama institusi — sampaikan lewat form di bawah atau hubungi kanal resmi kami langsung.">
+    <ul class="tiles grid" style="--min:240px;gap:1px;margin-top:40px">
+      {cards.map(([k, v, href, d, ic]) => (
+        <li>
+          <span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24" set:html={ic} /></span>
+          <p style="margin-top:16px;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--faint)">{k}</p>
+          {href ? <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener" style="display:block;margin-top:6px;font-size:17px;font-weight:700;color:var(--navy)">{v}</a>
+                : <p style="margin-top:6px;font-size:17px;font-weight:700;color:var(--navy)">{v}</p>}
+          <p class="muted" style="margin-top:8px;font-size:14px">{d}</p>
+        </li>
+      ))}
+    </ul>
+  </PageHero>
+
+  <section id="form">
+    <div class="wrap row">
+      <div style="flex-basis:400px">
+        <p class="eyebrow">KIRIM PERMINTAAN</p>
+        <h2 class="h2">Ceritakan Kebutuhan Institusi Anda</h2>
+        <p class="muted" style="margin-top:20px;max-width:480px">Isi form ini dan tim kami akan menghubungi lewat WhatsApp untuk membahas tujuan program, jumlah delegasi, dan negara yang diminati.</p>
+        <ul class="dash" style="margin-top:28px;display:grid;gap:12px;font-size:15px">
+          <li>Respons pada jam kerja, Senin–Jumat 09.00–17.00 WIB.</li>
+          <li>Permintaan rombongan mendapat skema harga khusus.</li>
+          <li>Perizinan dan koordinasi institusi tujuan ditangani tim kami.</li>
+        </ul>
+        <p style="margin:36px 0 14px;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--faint)">IKUTI KANAL RESMI</p>
+        <ul style="display:grid;gap:10px;max-width:380px">
+          {socials.map(([n, h, href, ic]) => (
+            <li><a href={href} target="_blank" rel="noopener" class="soc">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={ic} />
+              <span>{n} · {h}</span>
+            </a></li>
+          ))}
+        </ul>
+      </div>
+      <div style="flex-basis:440px;background:var(--bg);border:1px solid var(--border);padding:clamp(22px,3vw,36px)"><WaForm kind="contact" /></div>
+    </div>
+  </section>
+
+  <section class="bg-navy">
+    <div class="wrap row" style="align-items:center;--pad:clamp(40px,5vw,64px)">
+      <div style="flex-basis:440px">
+        <h2 class="h2" style="font-size:clamp(24px,2.6vw,34px)">Ingin jawaban cepat? Chat langsung admin kami.</h2>
+        <p class="lead" style="margin-top:12px;font-size:16px">Respons pada jam kerja, Senin–Jumat 09.00–17.00 WIB.</p>
+      </div>
+      <div class="btns" style="flex:none;margin:0">
+        <a href={waLink(ft.waAdmin)} target="_blank" rel="noopener" class="btn btn-primary">WhatsApp Admin</a>
+        <a href={waLink(ft.waPartnership)} target="_blank" rel="noopener" class="btn btn-light">WhatsApp Partnership</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .soc { display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--navy); }
+  .soc:hover { border-color: var(--orange); color: var(--orange); }
+</style>

@@ -1,0 +1,48 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/site/PageHero.astro";
+import ArticleCard from "../../components/site/ArticleCard.astro";
+import { getArticles } from "../../lib/repo";
+
+const articles = await getArticles();
+const cats = [...new Set(articles.map((a) => a.category))];
+const tabs: [string, string, number][] = [["all", "Semua", articles.length], ...cats.map((c): [string, string, number] => [c, c, articles.filter((a) => a.category === c).length])];
+---
+<Base title="News — JAGATRIP" description="Catatan benchmarking, insight pendidikan internasional, dan pengumuman terbaru dari JAGATRIP.">
+  <PageHero crumbs={[["Home", "/"], ["News"]]} eyebrow="NEWS & ARTIKEL" title="Kabar dan Catatan dari Perjalanan JAGATRIP"
+    lead="Catatan benchmarking, insight pendidikan internasional, dokumentasi program, dan pengumuman terbaru dari tim JAGATRIP." />
+
+  <section class="bg-soft">
+    <div class="wrap" id="news">
+      <div role="group" aria-label="Filter kategori" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px">
+        {tabs.map(([v, l, n], i) => <button type="button" class="tab" data-cat={v} aria-pressed={i === 0 ? "true" : "false"}>{l} ({n})</button>)}
+      </div>
+      <div class="grid" style="--min:min(100%,340px);gap:24px">
+        {articles.map((a) => <ArticleCard a={a} />)}
+      </div>
+      <div data-empty hidden={articles.length > 0} style="border:1px dashed var(--line);background:#fff;padding:48px 24px;text-align:center">
+        <p style="font-weight:700;color:var(--navy)">Belum ada artikel di kategori ini.</p>
+        <p class="muted" style="margin-top:8px;font-size:14px">Artikel yang dipublikasikan dari dashboard admin akan tampil di sini.</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tab { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: var(--navy); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .tab:hover { border-color: var(--orange); }
+  .tab[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+</style>
+
+<script>
+  const root = document.getElementById("news")!;
+  const cards = root.querySelectorAll<HTMLElement>("[data-category]");
+  root.querySelectorAll<HTMLButtonElement>(".tab").forEach((b, _, all) =>
+    b.addEventListener("click", () => {
+      all.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      let shown = 0;
+      cards.forEach((c) => { c.hidden = b.dataset.cat !== "all" && c.dataset.category !== b.dataset.cat; if (!c.hidden) shown++; });
+      root.querySelector<HTMLElement>("[data-empty]")!.hidden = shown > 0;
+    }),
+  );
+</script>

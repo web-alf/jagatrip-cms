@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>JAGATRIP CMS — Admin Dashboard</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: #102A43; background: #F1F5F9; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4, p, ul, ol, pre { margin: 0; }
+  ul { padding: 0; list-style: none; }
+  a { color: #F97316; text-decoration: none; }
+  a:hover { color: #C2410C; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  input, select, textarea { width: 100%; }
+  :focus-visible { outline: 3px solid #F97316; outline-offset: 2px; }
+</style>
+</helmet>
+
+<div style="min-height:100vh">
+
+<sc-if value="{{ vLogin }}" hint-placeholder-val="{{ true }}">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0B2341;padding:24px">
+    <form onSubmit="{{ onLogin }}" style="width:100%;max-width:420px;background:#FFFFFF;padding:40px;display:grid;gap:20px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="https://jagatrip.com/images/batch2/logo-logogram.png" alt="" style="height:32px;width:auto" />
+        <img src="https://jagatrip.com/images/batch2/logo-logotype.png" alt="JAGATRIP" style="height:18px;width:auto" />
+      </div>
+      <div>
+        <h1 style="font-size:26px;font-weight:800;color:#0B2341;letter-spacing:-0.02em">Masuk ke CMS</h1>
+        <p style="margin-top:8px;font-size:14px;line-height:1.6;color:#64748B">Kelola seluruh konten halaman publik, program, event, dan artikel JAGATRIP.</p>
+      </div>
+      <div style="display:grid;gap:8px">
+        <label for="adm-email" style="font-size:13px;font-weight:700;color:#0B2341">Email</label>
+        <input id="adm-email" name="email" type="email" value="{{ loginEmail }}" onChange="{{ onLoginField }}" autoComplete="username" style="padding:13px;border:1px solid #CBD5E1;font-size:15px;min-height:46px" />
+      </div>
+      <div style="display:grid;gap:8px">
+        <label for="adm-pass" style="font-size:13px;font-weight:700;color:#0B2341">Password</label>
+        <input id="adm-pass" name="password" type="password" value="{{ loginPass }}" onChange="{{ onLoginField }}" autoComplete="current-password" style="padding:13px;border:1px solid #CBD5E1;font-size:15px;min-height:46px" />
+      </div>
+      <p style="font-size:13px;color:#DC2626;display:{{ loginErrDisplay }}">{{ loginError }}</p>
+      <button type="submit" style="background:#F97316;color:#FFFFFF;border:none;font-weight:700;font-size:15px;padding:16px;cursor:pointer;min-height:50px" style-hover="background:#EA580C">Masuk</button>
+      <p style="font-size:12px;line-height:1.6;color:#64748B">Prototipe front-end: kredensial demo <strong>admin@jagatrip.com</strong> / <strong>jagatrip</strong>. TODO: sambungkan ke autentikasi backend (session/JWT) sebelum produksi.</p>
+      <a href="/" style="font-size:13px;font-weight:700">← Kembali ke situs</a>
+    </form>
+  </div>
+</sc-if>
+
+<sc-if value="{{ vApp }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;align-items:stretch;min-height:100vh">
+
+    <aside style="flex:none;width:250px;background:#0B2341;color:#FFFFFF;padding:22px 0;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh;overflow:auto">
+      <div style="padding:0 20px;display:flex;align-items:center;gap:10px">
+        <img src="https://jagatrip.com/images/batch2/logo-logogram.png" alt="" style="height:26px;width:auto" />
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.14em;color:#FB923C">CMS</span>
+      </div>
+      <nav aria-label="Navigasi admin" style="display:grid;gap:2px">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="12">
+          <div>
+            <p style="display:{{ n.groupDisplay }};padding:18px 20px 8px;font-size:11px;font-weight:700;letter-spacing:0.14em;color:#64748B">{{ n.group }}</p>
+            <button type="button" onClick="{{ n.go }}" aria-current="{{ n.current }}" style="width:100%;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 20px;background:{{ n.bg }};border:none;border-left:3px solid {{ n.bar }};color:{{ n.color }};font-size:14px;font-weight:600;cursor:pointer;min-height:44px" style-hover="background:#102A43;color:#FFFFFF">
+              <span>{{ n.label }}</span>
+              <span style="font-size:11px;font-weight:700;color:#64748B;display:{{ n.countDisplay }}">{{ n.count }}</span>
+            </button>
+          </div>
+        </sc-for>
+      </nav>
+      <div style="margin-top:auto;padding:18px 20px 0;border-top:1px solid #1E3A5F;display:grid;gap:10px">
+        <p style="font-size:13px;font-weight:700;color:#FFFFFF">{{ userName }}</p>
+        <p style="font-size:12px;color:#94A3B8">{{ userRole }}</p>
+        <button type="button" onClick="{{ onLogout }}" style="text-align:left;background:none;border:none;color:#FB923C;font-size:13px;font-weight:700;cursor:pointer;padding:6px 0;min-height:36px">Keluar</button>
+      </div>
+    </aside>
+
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+      <header style="position:sticky;top:0;z-index:20;background:#FFFFFF;border-bottom:1px solid #E2E8F0;padding:16px 28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+        <div style="min-width:0">
+          <p style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:#94A3B8">{{ crumb }}</p>
+          <h1 style="margin-top:4px;font-size:22px;font-weight:800;color:#0B2341;letter-spacing:-0.015em">{{ pageTitle }}</h1>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px">
+          <span style="font-size:12px;font-weight:700;color:{{ dirtyColor }}">{{ dirtyLabel }}</span>
+          <a href="/" target="_blank" rel="noopener" style="border:1px solid #CBD5E1;color:#0B2341;font-size:13px;font-weight:700;padding:11px 16px" style-hover="border-color:#0B2341;color:#0B2341">Lihat situs ↗</a>
+          <button type="button" onClick="{{ onExport }}" style="border:1px solid #CBD5E1;background:#FFFFFF;color:#0B2341;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px" style-hover="border-color:#0B2341">Export JSON</button>
+          <button type="button" onClick="{{ onSave }}" style="background:#F97316;border:none;color:#FFFFFF;font-size:13px;font-weight:700;padding:12px 20px;cursor:pointer;min-height:42px" style-hover="background:#EA580C">Simpan Perubahan</button>
+        </div>
+      </header>
+
+      <main style="flex:1;padding:28px;display:grid;gap:22px;align-content:start">
+
+        <sc-if value="{{ vOverview }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;gap:22px">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:#E2E8F0;border:1px solid #E2E8F0">
+              <sc-for list="{{ stats }}" as="s" hint-placeholder-count="5">
+                <div style="background:#FFFFFF;padding:22px">
+                  <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#94A3B8">{{ s.label }}</p>
+                  <p style="margin-top:12px;font-size:32px;font-weight:800;color:#0B2341;letter-spacing:-0.02em">{{ s.value }}</p>
+                  <p style="margin-top:4px;font-size:12px;color:#64748B">{{ s.note }}</p>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;gap:22px">
+              <section style="flex:1 1 420px;min-width:300px;background:#FFFFFF;border:1px solid #E2E8F0">
+                <div style="padding:20px 22px;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between;gap:12px">
+                  <h2 style="font-size:16px;font-weight:700;color:#0B2341">Artikel terbaru</h2>
+                  <button type="button" onClick="{{ goArticles }}" style="background:none;border:none;color:#F97316;font-size:13px;font-weight:700;cursor:pointer;min-height:36px">Kelola →</button>
+                </div>
+                <ul>
+                  <sc-for list="{{ recentArticles }}" as="a" hint-placeholder-count="3">
+                    <li style="padding:16px 22px;border-bottom:1px solid #F1F5F9;display:flex;align-items:center;justify-content:space-between;gap:14px">
+                      <span style="min-width:0">
+                        <span style="display:block;font-size:15px;font-weight:600;color:#0B2341">{{ a.title }}</span>
+                        <span style="display:block;margin-top:4px;font-size:12px;color:#64748B">/news/{{ a.slug }} · {{ a.date }}</span>
+                      </span>
+                      <span style="flex:none;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:6px 10px;color:{{ a.statusColor }};border:1px solid {{ a.statusColor }}">{{ a.statusLabel }}</span>
+                    </li>
+                  </sc-for>
+                </ul>
+              </section>
+
+              <section style="flex:1 1 340px;min-width:280px;background:#FFFFFF;border:1px solid #E2E8F0">
+                <div style="padding:20px 22px;border-bottom:1px solid #E2E8F0">
+                  <h2 style="font-size:16px;font-weight:700;color:#0B2341">Checklist SEO teknikal</h2>
+                  <p style="margin-top:6px;font-size:13px;color:#64748B">Status konfigurasi global situs.</p>
+                </div>
+                <ul>
+                  <sc-for list="{{ seoChecks }}" as="c" hint-placeholder-count="6">
+                    <li style="padding:14px 22px;border-bottom:1px solid #F1F5F9;display:flex;align-items:flex-start;gap:12px">
+                      <span aria-hidden="true" style="flex:none;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#FFFFFF;background:{{ c.color }}">{{ c.mark }}</span>
+                      <span style="min-width:0">
+                        <span style="display:block;font-size:14px;font-weight:600;color:#0B2341">{{ c.label }}</span>
+                        <span style="display:block;margin-top:2px;font-size:12px;color:#64748B">{{ c.detail }}</span>
+                      </span>
+                    </li>
+                  </sc-for>
+                </ul>
+              </section>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ vSingle }}" hint-placeholder-val="{{ true }}">
+          <section style="background:#FFFFFF;border:1px solid #E2E8F0">
+            <div style="padding:20px 24px;border-bottom:1px solid #E2E8F0">
+              <h2 style="font-size:16px;font-weight:700;color:#0B2341">{{ pageTitle }}</h2>
+              <p style="margin-top:6px;font-size:13px;color:#64748B">{{ sectionHint }}</p>
+            </div>
+            <div style="padding:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px">
+              <sc-for list="{{ fields }}" as="f" hint-placeholder-count="8">
+                <div style="display:grid;gap:8px;align-content:start;grid-column:{{ f.span }}">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                    <label for="{{ f.id }}" style="font-size:13px;font-weight:700;color:#0B2341">{{ f.label }}</label>
+                    <span style="font-size:11px;font-weight:700;color:{{ f.counterColor }};display:{{ f.counterDisplay }}">{{ f.counter }}</span>
+                  </div>
+                  <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
+                    <input id="{{ f.id }}" type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                  </sc-if>
+                  <sc-if value="{{ f.isImage }}">
+                    <div style="display:grid;gap:10px">
+                      <sc-if value="{{ f.hasImg }}">
+                        <div style="position:relative;border:1px solid #E2E8F0;background:#F8FAFC;padding:8px;justify-self:start;max-width:100%">
+                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain" />
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ f.noImg }}">
+                        <div style="width:280px;max-width:100%;height:120px;border:1px dashed #CBD5E1;background:#F8FAFC;display:flex;align-items:center;justify-content:center;font-size:12px;color:#64748B">Belum ada gambar</div>
+                      </sc-if>
+                      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                        <label style="background:#0B2341;color:#FFFFFF;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px;display:inline-flex;align-items:center" style-hover="background:#16324F">{{ f.uploadLabel }}<input id="{{ f.id }}" type="file" accept="image/*" onChange="{{ f.onUpload }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none" /></label>
+                        <sc-if value="{{ f.hasImg }}">
+                          <button type="button" onClick="{{ f.onClear }}" style="background:none;border:1px solid #CBD5E1;color:#B91C1C;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px" style-hover="border-color:#B91C1C">Hapus</button>
+                        </sc-if>
+                        <span style="font-size:12px;color:#64748B">{{ f.imgInfo }}</span>
+                      </div>
+                      <input type="text" value="{{ f.urlValue }}" onChange="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ f.isArea }}">
+                    <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
+                  </sc-if>
+                  <sc-if value="{{ f.isSelect }}">
+                    <select id="{{ f.id }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px">
+                      <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3">
+                        <option value="{{ o }}">{{ o }}</option>
+                      </sc-for>
+                    </select>
+                  </sc-if>
+                  <sc-if value="{{ f.isBool }}">
+                    <button type="button" onClick="{{ f.toggle }}" aria-pressed="{{ f.boolOn }}" style="justify-self:start;display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;padding:4px 0;min-height:40px">
+                      <span aria-hidden="true" style="position:relative;width:46px;height:26px;background:{{ f.trackBg }};display:block;transition:background .2s ease">
+                        <span style="position:absolute;top:3px;left:{{ f.knobLeft }};width:20px;height:20px;background:#FFFFFF;transition:left .2s ease"></span>
+                      </span>
+                      <span style="font-size:13px;font-weight:600;color:#0B2341">{{ f.boolLabel }}</span>
+                    </button>
+                  </sc-if>
+                  <sc-if value="{{ f.isCode }}">
+                    <pre style="padding:16px;background:#0B2341;color:#E2E8F0;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;overflow:auto;max-height:280px;white-space:pre-wrap;word-break:break-word;max-width:100%;min-width:0">{{ f.value }}</pre>
+                  </sc-if>
+                  <p style="font-size:12px;line-height:1.5;color:#64748B;display:{{ f.hintDisplay }}">{{ f.hint }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+        </sc-if>
+
+        <sc-if value="{{ vList }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;gap:22px">
+            <section style="background:#FFFFFF;border:1px solid #E2E8F0">
+              <div style="padding:20px 24px;border-bottom:1px solid #E2E8F0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px">
+                <div style="min-width:0">
+                  <h2 style="font-size:16px;font-weight:700;color:#0B2341">{{ pageTitle }}</h2>
+                  <p style="margin-top:6px;font-size:13px;color:#64748B">{{ sectionHint }}</p>
+                </div>
+                <button type="button" onClick="{{ onAddItem }}" style="background:#0B2341;border:none;color:#FFFFFF;font-size:13px;font-weight:700;padding:12px 18px;cursor:pointer;min-height:42px" style-hover="background:#102A43">+ Tambah</button>
+              </div>
+              <ul>
+                <sc-for list="{{ listItems }}" as="it" hint-placeholder-count="6">
+                  <li style="padding:16px 24px;border-bottom:1px solid #F1F5F9;display:flex;flex-wrap:wrap;align-items:center;gap:14px;background:{{ it.bg }}">
+                    <span style="flex:none;font-size:12px;font-weight:700;color:#94A3B8;width:28px">{{ it.n }}</span>
+                    <span style="flex:1 1 240px;min-width:0">
+                      <span style="display:block;font-size:15px;font-weight:600;color:#0B2341">{{ it.title }}</span>
+                      <span style="display:block;margin-top:4px;font-size:12px;color:#64748B">{{ it.sub }}</span>
+                    </span>
+                    <span style="flex:none;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:6px 10px;color:{{ it.statusColor }};border:1px solid {{ it.statusColor }};display:{{ it.statusDisplay }}">{{ it.status }}</span>
+                    <span style="flex:none;display:flex;gap:6px">
+                      <button type="button" onClick="{{ it.edit }}" style="border:1px solid #CBD5E1;background:#FFFFFF;font-size:12px;font-weight:700;color:#0B2341;padding:9px 14px;cursor:pointer;min-height:38px" style-hover="border-color:#0B2341">Edit</button>
+                      <button type="button" onClick="{{ it.up }}" aria-label="Naikkan" style="border:1px solid #CBD5E1;background:#FFFFFF;font-size:12px;color:#475569;padding:9px 12px;cursor:pointer;min-height:38px" style-hover="border-color:#0B2341">↑</button>
+                      <button type="button" onClick="{{ it.down }}" aria-label="Turunkan" style="border:1px solid #CBD5E1;background:#FFFFFF;font-size:12px;color:#475569;padding:9px 12px;cursor:pointer;min-height:38px" style-hover="border-color:#0B2341">↓</button>
+                      <button type="button" onClick="{{ it.del }}" style="border:1px solid #FCA5A5;background:#FFFFFF;font-size:12px;font-weight:700;color:#DC2626;padding:9px 14px;cursor:pointer;min-height:38px" style-hover="background:#FEF2F2">Hapus</button>
+                    </span>
+                  </li>
+                </sc-for>
+              </ul>
+            </section>
+
+            <sc-if value="{{ hasItemEditor }}">
+              <div role="dialog" aria-modal="true" style="position:fixed;inset:0;z-index:100;background:rgba(11,35,65,.55);overflow:auto;padding:40px 16px">
+              <section style="background:#FFFFFF;border:1px solid #E2E8F0;max-width:960px;margin:0 auto">
+                <div style="padding:20px 24px;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between;gap:12px">
+                  <h2 style="font-size:16px;font-weight:700;color:#0B2341">Edit item {{ itemNumber }}</h2>
+                  <button type="button" onClick="{{ onCloseItem }}" style="background:none;border:none;color:#64748B;font-size:13px;font-weight:700;cursor:pointer;min-height:36px">Tutup</button>
+                </div>
+                <div style="padding:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px">
+                  <sc-for list="{{ itemFields }}" as="f" hint-placeholder-count="5">
+                    <div style="display:grid;gap:8px;align-content:start;grid-column:{{ f.span }}">
+                      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                        <label for="{{ f.id }}" style="font-size:13px;font-weight:700;color:#0B2341">{{ f.label }}</label>
+                        <span style="font-size:11px;font-weight:700;color:{{ f.counterColor }};display:{{ f.counterDisplay }}">{{ f.counter }}</span>
+                      </div>
+                      <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
+                        <input id="{{ f.id }}" type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                      </sc-if>
+                      <sc-if value="{{ f.isImage }}">
+                    <div style="display:grid;gap:10px">
+                      <sc-if value="{{ f.hasImg }}">
+                        <div style="position:relative;border:1px solid #E2E8F0;background:#F8FAFC;padding:8px;justify-self:start;max-width:100%">
+                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain" />
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ f.noImg }}">
+                        <div style="width:280px;max-width:100%;height:120px;border:1px dashed #CBD5E1;background:#F8FAFC;display:flex;align-items:center;justify-content:center;font-size:12px;color:#64748B">Belum ada gambar</div>
+                      </sc-if>
+                      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                        <label style="background:#0B2341;color:#FFFFFF;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px;display:inline-flex;align-items:center" style-hover="background:#16324F">{{ f.uploadLabel }}<input id="{{ f.id }}" type="file" accept="image/*" onChange="{{ f.onUpload }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none" /></label>
+                        <sc-if value="{{ f.hasImg }}">
+                          <button type="button" onClick="{{ f.onClear }}" style="background:none;border:1px solid #CBD5E1;color:#B91C1C;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px" style-hover="border-color:#B91C1C">Hapus</button>
+                        </sc-if>
+                        <span style="font-size:12px;color:#64748B">{{ f.imgInfo }}</span>
+                      </div>
+                      <input type="text" value="{{ f.urlValue }}" onChange="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ f.isArea }}">
+                        <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
+                      </sc-if>
+                      <sc-if value="{{ f.isSelect }}">
+                        <select id="{{ f.id }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px">
+                          <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3">
+                            <option value="{{ o }}">{{ o }}</option>
+                          </sc-for>
+                        </select>
+                      </sc-if>
+                      <p style="font-size:12px;line-height:1.5;color:#64748B;display:{{ f.hintDisplay }}">{{ f.hint }}</p>
+                    </div>
+                  </sc-for>
+                </div>
+              </section>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ vArticles }}" hint-placeholder-val="{{ true }}">
+          <section style="background:#FFFFFF;border:1px solid #E2E8F0">
+            <div style="padding:20px 24px;border-bottom:1px solid #E2E8F0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px">
+              <div style="min-width:0">
+                <h2 style="font-size:16px;font-weight:700;color:#0B2341">News / Artikel</h2>
+                <p style="margin-top:6px;font-size:13px;color:#64748B">Setiap artikel punya slug, meta title/description, canonical, OG image, dan JSON-LD schema sendiri.</p>
+              </div>
+              <button type="button" onClick="{{ onNewArticle }}" style="background:#F97316;border:none;color:#FFFFFF;font-size:13px;font-weight:700;padding:12px 18px;cursor:pointer;min-height:42px" style-hover="background:#EA580C">+ Artikel baru</button>
+            </div>
+            <ul>
+              <sc-for list="{{ articleRows }}" as="a" hint-placeholder-count="3">
+                <li style="padding:18px 24px;border-bottom:1px solid #F1F5F9;display:flex;flex-wrap:wrap;align-items:center;gap:16px">
+                  <span style="flex:1 1 260px;min-width:0">
+                    <span style="display:block;font-size:16px;font-weight:700;color:#0B2341">{{ a.title }}</span>
+                    <span style="display:block;margin-top:4px;font-size:12px;color:#64748B">/news/{{ a.slug }} · {{ a.category }} · {{ a.date }}</span>
+                  </span>
+                  <span style="flex:none;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:6px 10px;color:{{ a.statusColor }};border:1px solid {{ a.statusColor }}">{{ a.statusLabel }}</span>
+                  <span style="flex:none;display:flex;align-items:center;gap:8px">
+                    <span aria-hidden="true" style="width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#FFFFFF;background:{{ a.scoreColor }}">{{ a.score }}</span>
+                    <span style="font-size:12px;color:#64748B;max-width:150px;line-height:1.4">{{ a.scoreNote }}</span>
+                  </span>
+                  <span style="flex:none;display:flex;gap:6px">
+                    <button type="button" onClick="{{ a.edit }}" style="border:1px solid #CBD5E1;background:#FFFFFF;font-size:12px;font-weight:700;color:#0B2341;padding:9px 14px;cursor:pointer;min-height:38px" style-hover="border-color:#0B2341">Edit</button>
+                    <button type="button" onClick="{{ a.del }}" style="border:1px solid #FCA5A5;background:#FFFFFF;font-size:12px;font-weight:700;color:#DC2626;padding:9px 14px;cursor:pointer;min-height:38px" style-hover="background:#FEF2F2">Hapus</button>
+                  </span>
+                </li>
+              </sc-for>
+            </ul>
+          </section>
+        </sc-if>
+
+        <sc-if value="{{ vArticleEditor }}" hint-placeholder-val="{{ true }}">
+          <div role="dialog" aria-modal="true" style="position:fixed;inset:0;z-index:100;background:rgba(11,35,65,.55);overflow:auto;padding:40px 16px">
+          <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start;max-width:1280px;margin:0 auto">
+            <section style="flex:1 1 520px;min-width:0;background:#FFFFFF;border:1px solid #E2E8F0">
+              <div style="padding:20px 24px;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <h2 style="font-size:16px;font-weight:700;color:#0B2341">Konten artikel</h2>
+                <button type="button" onClick="{{ onCloseArticle }}" style="background:none;border:none;color:#64748B;font-size:13px;font-weight:700;cursor:pointer;min-height:36px">Tutup ✕</button>
+              </div>
+              <div style="padding:24px;display:grid;gap:22px">
+                <sc-for list="{{ articleFields }}" as="f" hint-placeholder-count="6">
+                  <div style="display:grid;gap:8px">
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                      <label for="{{ f.id }}" style="font-size:13px;font-weight:700;color:#0B2341">{{ f.label }}</label>
+                      <span style="font-size:11px;font-weight:700;color:{{ f.counterColor }};display:{{ f.counterDisplay }}">{{ f.counter }}</span>
+                    </div>
+                    <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
+                      <input id="{{ f.id }}" type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                    </sc-if>
+                    <sc-if value="{{ f.isImage }}">
+                    <div style="display:grid;gap:10px">
+                      <sc-if value="{{ f.hasImg }}">
+                        <div style="position:relative;border:1px solid #E2E8F0;background:#F8FAFC;padding:8px;justify-self:start;max-width:100%">
+                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain" />
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ f.noImg }}">
+                        <div style="width:280px;max-width:100%;height:120px;border:1px dashed #CBD5E1;background:#F8FAFC;display:flex;align-items:center;justify-content:center;font-size:12px;color:#64748B">Belum ada gambar</div>
+                      </sc-if>
+                      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                        <label style="background:#0B2341;color:#FFFFFF;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px;display:inline-flex;align-items:center" style-hover="background:#16324F">{{ f.uploadLabel }}<input id="{{ f.id }}" type="file" accept="image/*" onChange="{{ f.onUpload }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none" /></label>
+                        <sc-if value="{{ f.hasImg }}">
+                          <button type="button" onClick="{{ f.onClear }}" style="background:none;border:1px solid #CBD5E1;color:#B91C1C;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px" style-hover="border-color:#B91C1C">Hapus</button>
+                        </sc-if>
+                        <span style="font-size:12px;color:#64748B">{{ f.imgInfo }}</span>
+                      </div>
+                      <input type="text" value="{{ f.urlValue }}" onChange="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ f.isArea }}">
+                      <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.7;resize:vertical"></textarea>
+                    </sc-if>
+                    <sc-if value="{{ f.isSelect }}">
+                      <select id="{{ f.id }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px">
+                        <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3">
+                          <option value="{{ o }}">{{ o }}</option>
+                        </sc-for>
+                      </select>
+                    </sc-if>
+                    <p style="font-size:12px;line-height:1.5;color:#64748B;display:{{ f.hintDisplay }}">{{ f.hint }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+
+            <aside style="flex:1 1 340px;min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:22px">
+              <section style="background:#FFFFFF;border:1px solid #E2E8F0;min-width:0">
+                <div style="padding:18px 22px;border-bottom:1px solid #E2E8F0">
+                  <h2 style="font-size:15px;font-weight:700;color:#0B2341">Preview hasil pencarian</h2>
+                </div>
+                <div style="padding:22px">
+                  <p style="font-size:13px;color:#166534">{{ serpUrl }}</p>
+                  <p style="margin-top:6px;font-size:19px;line-height:1.3;color:#1A0DAB">{{ serpTitle }}</p>
+                  <p style="margin-top:6px;font-size:13px;line-height:1.6;color:#475569">{{ serpDesc }}</p>
+                </div>
+                <div style="padding:0 22px 22px;display:flex;align-items:center;gap:12px">
+                  <span aria-hidden="true" style="width:46px;height:46px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#FFFFFF;background:{{ curScoreColor }}">{{ curScore }}</span>
+                  <p style="font-size:12px;line-height:1.5;color:#64748B">{{ curScoreNote }}</p>
+                </div>
+              </section>
+
+              <section style="background:#FFFFFF;border:1px solid #E2E8F0;min-width:0">
+                <div style="padding:18px 22px;border-bottom:1px solid #E2E8F0">
+                  <h2 style="font-size:15px;font-weight:700;color:#0B2341">SEO teknikal artikel</h2>
+                </div>
+                <div style="padding:22px;display:grid;gap:20px">
+                  <sc-for list="{{ articleSeoFields }}" as="f" hint-placeholder-count="7">
+                    <div style="display:grid;gap:8px">
+                      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                        <label for="{{ f.id }}" style="font-size:13px;font-weight:700;color:#0B2341">{{ f.label }}</label>
+                        <span style="font-size:11px;font-weight:700;color:{{ f.counterColor }};display:{{ f.counterDisplay }}">{{ f.counter }}</span>
+                      </div>
+                      <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
+                        <input id="{{ f.id }}" type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                      </sc-if>
+                      <sc-if value="{{ f.isImage }}">
+                    <div style="display:grid;gap:10px">
+                      <sc-if value="{{ f.hasImg }}">
+                        <div style="position:relative;border:1px solid #E2E8F0;background:#F8FAFC;padding:8px;justify-self:start;max-width:100%">
+                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain" />
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ f.noImg }}">
+                        <div style="width:280px;max-width:100%;height:120px;border:1px dashed #CBD5E1;background:#F8FAFC;display:flex;align-items:center;justify-content:center;font-size:12px;color:#64748B">Belum ada gambar</div>
+                      </sc-if>
+                      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                        <label style="background:#0B2341;color:#FFFFFF;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px;display:inline-flex;align-items:center" style-hover="background:#16324F">{{ f.uploadLabel }}<input id="{{ f.id }}" type="file" accept="image/*" onChange="{{ f.onUpload }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none" /></label>
+                        <sc-if value="{{ f.hasImg }}">
+                          <button type="button" onClick="{{ f.onClear }}" style="background:none;border:1px solid #CBD5E1;color:#B91C1C;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px" style-hover="border-color:#B91C1C">Hapus</button>
+                        </sc-if>
+                        <span style="font-size:12px;color:#64748B">{{ f.imgInfo }}</span>
+                      </div>
+                      <input type="text" value="{{ f.urlValue }}" onChange="{{ f.onChange }}" placeholder="atau tempel URL gambar (https://…)" aria-label="URL {{ f.label }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px" />
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ f.isArea }}">
+                        <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
+                      </sc-if>
+                      <sc-if value="{{ f.isSelect }}">
+                        <select id="{{ f.id }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px">
+                          <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3">
+                            <option value="{{ o }}">{{ o }}</option>
+                          </sc-for>
+                        </select>
+                      </sc-if>
+                      <sc-if value="{{ f.isBool }}">
+                        <button type="button" onClick="{{ f.toggle }}" aria-pressed="{{ f.boolOn }}" style="justify-self:start;display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;padding:4px 0;min-height:40px">
+                          <span aria-hidden="true" style="position:relative;width:46px;height:26px;background:{{ f.trackBg }};display:block;transition:background .2s ease">
+                            <span style="position:absolute;top:3px;left:{{ f.knobLeft }};width:20px;height:20px;background:#FFFFFF;transition:left .2s ease"></span>
+                          </span>
+                          <span style="font-size:13px;font-weight:600;color:#0B2341">{{ f.boolLabel }}</span>
+                        </button>
+                      </sc-if>
+                      <p style="font-size:12px;line-height:1.5;color:#64748B;display:{{ f.hintDisplay }}">{{ f.hint }}</p>
+                    </div>
+                  </sc-for>
+                </div>
+              </section>
+
+              <section style="background:#FFFFFF;border:1px solid #E2E8F0;min-width:0">
+                <div style="padding:18px 22px;border-bottom:1px solid #E2E8F0">
+                  <h2 style="font-size:15px;font-weight:700;color:#0B2341">JSON-LD ({{ schemaType }})</h2>
+                </div>
+                <pre style="margin:0;padding:20px;background:#0B2341;color:#E2E8F0;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;overflow:auto;max-height:340px;white-space:pre-wrap;word-break:break-word;max-width:100%;min-width:0">{{ articleJsonLd }}</pre>
+              </section>
+            </aside>
+          </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ vUsers }}" hint-placeholder-val="{{ true }}">
+          <section style="background:#FFFFFF;border:1px solid #E2E8F0">
+            <div style="padding:20px 24px;border-bottom:1px solid #E2E8F0">
+              <h2 style="font-size:16px;font-weight:700;color:#0B2341">Pengguna &amp; hak akses</h2>
+              <p style="margin-top:6px;font-size:13px;color:#64748B">Struktur peran yang perlu disiapkan di backend. TODO: hubungkan ke tabel users + kebijakan akses.</p>
+            </div>
+            <ul>
+              <sc-for list="{{ users }}" as="u" hint-placeholder-count="3">
+                <li style="padding:18px 24px;border-bottom:1px solid #F1F5F9;display:flex;flex-wrap:wrap;align-items:center;gap:16px">
+                  <span style="flex:1 1 220px;min-width:0">
+                    <span style="display:block;font-size:15px;font-weight:700;color:#0B2341">{{ u.name }}</span>
+                    <span style="display:block;margin-top:4px;font-size:12px;color:#64748B">{{ u.email }}</span>
+                  </span>
+                  <span style="flex:none;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:6px 10px;color:#0B2341;border:1px solid #CBD5E1">{{ u.role }}</span>
+                  <span style="flex:1 1 260px;font-size:13px;line-height:1.6;color:#475569">{{ u.scope }}</span>
+                </li>
+              </sc-for>
+            </ul>
+          </section>
+        </sc-if>
+
+        <p style="font-size:12px;line-height:1.6;color:#64748B;max-width:760px">Perubahan tersimpan di penyimpanan lokal browser agar dapat diuji tanpa backend. Untuk produksi: ganti lapisan simpan dengan API (REST/GraphQL), tambahkan otentikasi, revisi konten, dan regenerasi sitemap.xml setelah artikel dipublikasikan.</p>
+      </main>
+    </div>
+  </div>
+</sc-if>
+
+<div role="status" aria-live="polite" style="position:fixed;right:24px;bottom:24px;background:#0B2341;color:#FFFFFF;font-size:14px;font-weight:600;padding:16px 20px;display:{{ toastDisplay }};z-index:80">{{ toast }}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const STORE = "jagatrip-cms-v1";
+const AUTH = "jagatrip-cms-auth";
+
+const DEFAULTS = {
+  site: {
+    siteName: "JAGATRIP",
+    baseUrl: "https://jagatrip.com",
+    titleTemplate: "%page% | JAGATRIP",
+    homeTitle: "JAGATRIP — International Education & Edu-Tourism Programs",
+    homeDescription: "JAGATRIP menghubungkan sekolah, praktisi pendidikan, pelajar, dan institusi dengan program Edu-Tourism, international benchmarking, serta institutional partnership.",
+    canonicalHome: "https://jagatrip.com/",
+    ogImage: "https://jagatrip.com/images/og-default.png",
+    locale: "id-ID",
+    robotsTxt: "User-agent: *\nAllow: /\nSitemap: https://jagatrip.com/sitemap.xml",
+    sitemap: true,
+    indexable: true,
+    gscVerification: "",
+    ga4Id: "",
+    breadcrumbs: true
+  },
+  hero: {
+    eyebrow: "EDU-TOURISM · GLOBAL LEARNING · INSTITUTIONAL PARTNERSHIP",
+    heading: "Your International Program Partner",
+    highlight: "International Program",
+    body: "Empowering institutions and communities to go beyond borders. JAGATRIP connects schools, educators, students, and foundations with meaningful international learning experiences and long-term global partnerships.",
+    cta1: "Explore Our Programs",
+    cta1Href: "#programs",
+    cta2: "Let's Partner Up",
+    cta2Href: "#partnership",
+    visual: "",
+    visualAlt: "Hero visual JAGATRIP"
+  },
+  about: {
+    eyebrow: "ABOUT JAGATRIP",
+    heading: "Apa Itu JAGATRIP?",
+    lead: "JAGATRIP adalah program Edu-Tourism dan international institutional partnership yang menghubungkan praktisi pendidikan, sekolah, pelajar, dan komunitas dengan pengalaman belajar global secara langsung.",
+    body: "Setiap program menggabungkan benchmarking ke sekolah dan kampus mancanegara, field learning di ruang kelas tuan rumah, dialog terbuka dengan manajemen institusi, serta networking lintas negara yang membuka jalur kolaborasi jangka panjang.",
+    readMoreHref: "https://jagatrip.com/companyprofile",
+    vision: "Travel to Learn, Learn to Lead.",
+    mission: "Membuka akses benchmarking ke institusi pendidikan mancanegara.\nMemfasilitasi kemitraan resmi antar institusi pendidikan.\nMenyiapkan instrumen observasi dan laporan yang dapat dipertanggungjawabkan."
+  },
+  footer: {
+    description: "JAGATRIP adalah program Edu-Tourism dan institutional partnership bagi pimpinan sekolah, praktisi pendidikan, pelajar, serta orangtua yang ingin meningkatkan kapabilitas dan memperluas akses global.",
+    tagline: "TRAVEL TO LEARN, LEARN TO LEAD.",
+    instagram: "https://instagram.com/jagatrip.id",
+    tiktok: "https://www.tiktok.com/@jagatrip.id",
+    youtube: "https://www.youtube.com/@jagatrip",
+    email: "official@jagatrip.com",
+    waAdmin: "+62 811-2850-6576",
+    waPartnership: "+62 813-9190-363",
+    address: "Semarang, Indonesia"
+  },
+  programs: [
+    { title: "Educational Benchmarking Program", desc: "Kunjungan terstruktur ke sekolah, kampus, dan institusi internasional untuk guru dan praktisi pendidikan.", status: "Aktif", href: "https://jagatrip.com/batch2" },
+    { title: "International Field Trip", desc: "Perjalanan belajar lintas negara untuk pelajar dan komunitas sekolah.", status: "Coming Soon", href: "" },
+    { title: "Immersion Programs", desc: "Pembelajaran budaya dan bahasa langsung di lingkungan institusi mitra.", status: "Coming Soon", href: "" },
+    { title: "Student Exchange Program", desc: "Pertukaran pelajar antar institusi dan komunitas.", status: "Coming Soon", href: "" },
+    { title: "Institution Partnership Facilitator", desc: "Pendampingan pembukaan MoU dan kerja sama resmi dengan institusi luar negeri.", status: "Coming Soon", href: "" },
+    { title: "International Internship Program", desc: "Penempatan magang internasional bagi mahasiswa dan tenaga pendidik.", status: "Coming Soon", href: "" },
+    { title: "International Community Service", desc: "Program pengabdian masyarakat bersama mitra lintas negara.", status: "Coming Soon", href: "" },
+    { title: "Webinar JAGATALK — Level Up Your Institutions!", desc: "Sesi daring bersama praktisi untuk manajemen dan strategi internasionalisasi sekolah.", status: "Aktif", href: "https://jagatrip.com/jagatalk8" }
+  ],
+  audience: [
+    { title: "Kepala Sekolah", desc: "Membangun visi sekolah ke level internasional." },
+    { title: "Guru & Tenaga Pendidik", desc: "Mencari inspirasi dan praktik pembelajaran global." },
+    { title: "Pelajar SD, SMP, SMA & Mahasiswa", desc: "Menyiapkan langkah studi dan wawasan lintas negara." },
+    { title: "Pengelola Yayasan", desc: "Membuka peluang kolaborasi dan jaringan institusi." },
+    { title: "Pengawas Pendidikan", desc: "Referensi kurikulum dan sistem pendidikan mancanegara." },
+    { title: "Praktisi Pendidikan", desc: "Kontribusi nyata pada kemajuan sistem pendidikan." },
+    { title: "Orangtua", desc: "Memetakan jalur pendidikan anak ke luar negeri." }
+  ],
+  events: [
+    { title: "JAGATRIP Batch 2 — Benchmarking & Sinergi dengan Sekolah Malaysia–Thailand", date: "19–23 OKTOBER 2026", meta: "KUALA LUMPUR → HAT YAI", desc: "Lima hari, empat institusi, dua negara. Studi lapangan terstruktur bagi pimpinan satuan pendidikan dengan instrumen observasi baku dan laporan resmi.", price: "Land tour Rp 7.500.000 · kuota terbatas", href: "https://jagatrip.com/batch2", flyer: "https://jagatrip.com/images/batch2/flyer-hero.avif", status: "Tampil" },
+    { title: "JAGATALK #8 — Roadmap Sekolah Naik Kelas ke Program Internasional", date: "23 SEPTEMBER 2026 · 19.30 WIB", meta: "ONLINE · ZOOM MEETING", desc: "Sesi eksklusif untuk kepala sekolah, manajemen, founder, dan yayasan: empat langkah konkret dari assessment diri sampai membuka partnership internasional.", price: "Regular Rp99.000 · Premium Rp129.000", href: "https://jagatrip.com/jagatalk8", flyer: "https://jagatrip.com/images/jagatalk/flyer-jw8-v3.avif", status: "Tampil" }
+  ],
+  testimonials: [
+    { name: "Pak Syafii Efendi", org: "Visigo Academy Tangerang", video: "https://youtu.be/QvjDgA4mRIs", status: "Tampil" },
+    { name: "Pak Ahmad Sugito", org: "Cordova Islamic School", video: "https://youtu.be/ji7D-TDJHQc", status: "Tampil" },
+    { name: "Kak Nabila", org: "Nabila Public School", video: "https://youtu.be/wIzZQq0W1to", status: "Tampil" },
+    { name: "Pak Badru Tamam", org: "Cordova Islamic School", video: "https://youtu.be/LxuSPFp0G3o", status: "Tampil" },
+    { name: "Pak Fajar Ardiansyah", org: "Yayasan Alwasim Muslim Indonesia", video: "https://youtu.be/xPMST7qU-dg", status: "Tampil" }
+  ],
+  founder: {
+    photo: "https://jagatrip.com/dedi-photo.jpg",
+    photoAlt: "Mr. Dedi Gunawan, Founder JAGATRIP",
+    name: "Mr. Dedi Gunawan",
+    role: "CEO & Founder JAGATRIP · Pemandu Perjalanan"
+  },
+  partnership: { bgImage: "/assets/partnership-bg.jpg" },
+  gallery: [
+    { label: "KNOWLEDGE EXCHANGE", alt: "Tukar plakat dengan sekolah mitra", image: "" },
+    { label: "DISCUSSION SESSION", alt: "Sesi diskusi bersama manajemen sekolah", image: "" },
+    { label: "SCHOOL VISIT", alt: "Peserta bertanya saat sesi tanya jawab", image: "" },
+    { label: "GLOBAL NETWORKING", alt: "Foto bersama delegasi dan sekolah tuan rumah", image: "" },
+    { label: "SHARING SESSION", alt: "Sharing session di dalam bus perjalanan", image: "" }
+  ],
+  faqs: [
+    { q: "Siapa yang boleh ikut program JAGATRIP Insider Series 2026?", a: "Program ini terbuka untuk umum, khususnya untuk praktisi pendidikan: kepala sekolah, guru, pengawas pendidikan, tenaga kependidikan, pemilik yayasan, dan siapa saja yang bergerak di bidang pendidikan dan ingin berkembang." },
+    { q: "Apakah perlu paspor aktif?", a: "Ya, peserta wajib memiliki paspor yang masih berlaku minimal 6 bulan setelah tanggal keberangkatan (minimal berlaku sampai Desember 2026). Jika belum punya paspor, segera urus sebelum mendaftar." },
+    { q: "Apa saja yang sudah termasuk dalam paket?", a: "Paket sudah termasuk: tiket pesawat PP (untuk trip internasional), penginapan, makan sesuai program, welcome drink, transportasi selama program, workshop & seminar kit, merchandise, door prize, sertifikat resmi, dokumentasi profesional, city tour, tour leader berpengalaman, dan asuransi perjalanan." },
+    { q: "Apa yang TIDAK termasuk dalam paket?", a: "Tidak termasuk: pengeluaran pribadi (oleh-oleh, belanja pribadi), visa (jika diperlukan), biaya bagasi tambahan, dan tips untuk pemandu lokal." },
+    { q: "Bagaimana cara mendaftar?", a: "Hubungi admin JAGATRIP via WhatsApp di 08139190363. Tim kami akan memandu proses pendaftaran dan pembayaran DP untuk mengamankan kursimu." },
+    { q: "Berapa DP yang harus dibayarkan untuk konfirmasi seat?", a: "DP sebesar 50% dari harga paket. Pelunasan paling lambat H-7 sebelum keberangkatan." },
+    { q: "Apakah harga bisa berubah?", a: "Harga bervariasi sesuai kota keberangkatan dan dapat berubah sewaktu-waktu mengikuti ketersediaan tiket pesawat. Segera daftar untuk mengunci harga terbaik." }
+  ],
+  articles: [
+    {
+      title: "Catatan Benchmarking Batch #1: Enam Dimensi yang Paling Sering Ditanyakan",
+      slug: "catatan-benchmarking-batch-1",
+      category: "Program",
+      author: "Tim JAGATRIP",
+      date: "2026-09-10",
+      status: "Published",
+      excerpt: "Ringkasan temuan lapangan delegasi JAGATRIP Batch #1 pada enam dimensi observasi: tata kelola, kurikulum, guru, kultur, sarana, dan PPDB.",
+      body: "TODO: isi naskah artikel. Gunakan H2/H3 berurutan, paragraf 2–4 baris, dan tautan internal ke halaman program terkait.",
+      cover: "",
+      imageAlt: "Delegasi JAGATRIP saat sesi observasi kelas",
+      metaTitle: "Catatan Benchmarking Batch #1 | JAGATRIP",
+      metaDescription: "Temuan lapangan delegasi JAGATRIP Batch #1 pada enam dimensi observasi sekolah: tata kelola, kurikulum, guru, kultur, sarana, dan PPDB.",
+      focusKeyword: "benchmarking sekolah internasional",
+      canonical: "https://jagatrip.com/news/catatan-benchmarking-batch-1",
+      ogImage: "",
+      schemaType: "Article",
+      index: true,
+      follow: true
+    }
+  ]
+};
+
+const STATUS_COLORS = { "Published": "#166534", "Draft": "#B45309", "Aktif": "#166534", "Coming Soon": "#B45309", "Tampil": "#166534", "Sembunyi": "#64748B" };
+
+const SECTIONS = {
+  overview: { label: "Dashboard", group: "Ringkasan", type: "overview", crumb: "RINGKASAN", title: "Dashboard" },
+  hero: {
+    label: "Hero", group: "Halaman Publik", type: "single", crumb: "HALAMAN PUBLIK", title: "Section Hero",
+    hint: "Teks utama yang pertama dilihat pengunjung, termasuk dua CTA dan visual utama.",
+    fields: [
+      { key: "eyebrow", label: "Eyebrow", type: "text", max: 80 },
+      { key: "heading", label: "Headline (H1)", type: "text", max: 70, hint: "Hanya satu H1 per halaman." },
+      { key: "highlight", label: "Kata yang di-highlight oranye", type: "text" },
+      { key: "body", label: "Paragraf pendukung", type: "area", rows: 4, span: "1 / -1" },
+      { key: "cta1", label: "CTA utama — label", type: "text" },
+      { key: "cta1Href", label: "CTA utama — tautan", type: "text" },
+      { key: "cta2", label: "CTA sekunder — label", type: "text" },
+      { key: "cta2Href", label: "CTA sekunder — tautan", type: "text" },
+      { key: "visual", label: "Visual hero", type: "image", span: "1 / -1", hint: "Rasio 4:3 disarankan. Kosongkan untuk memakai slot unggah di halaman publik." },
+      { key: "visualAlt", label: "Alt text visual", type: "text", hint: "Wajib untuk aksesibilitas dan SEO gambar." }
+    ]
+  },
+  about: {
+    label: "About · Vision · Mission", group: "Halaman Publik", type: "single", crumb: "HALAMAN PUBLIK", title: "Section About",
+    hint: "Deskripsi perusahaan beserta visi dan misi resmi.",
+    fields: [
+      { key: "eyebrow", label: "Eyebrow", type: "text" },
+      { key: "heading", label: "Headline (H2)", type: "text" },
+      { key: "lead", label: "Paragraf pembuka", type: "area", rows: 3, span: "1 / -1" },
+      { key: "body", label: "Paragraf penjelas", type: "area", rows: 4, span: "1 / -1" },
+      { key: "vision", label: "Visi", type: "area", rows: 2, span: "1 / -1" },
+      { key: "mission", label: "Misi (satu poin per baris)", type: "area", rows: 4, span: "1 / -1" },
+      { key: "readMoreHref", label: "Tautan Read More", type: "text" }
+    ]
+  },
+  programs: {
+    label: "Program", group: "Halaman Publik", type: "list", crumb: "HALAMAN PUBLIK", title: "Daftar Program",
+    hint: "Urutan kartu program pada halaman publik mengikuti urutan daftar ini.",
+    titleKey: "title", subKey: "desc", statusKey: "status",
+    blank: { title: "Program Baru", desc: "", status: "Coming Soon", href: "" },
+    fields: [
+      { key: "title", label: "Nama program", type: "text", span: "1 / -1" },
+      { key: "desc", label: "Deskripsi singkat", type: "area", rows: 3, span: "1 / -1", max: 140 },
+      { key: "status", label: "Status", type: "select", options: ["Aktif", "Coming Soon"] },
+      { key: "href", label: "Tautan pendaftaran", type: "text", hint: "Diisi hanya jika status Aktif." }
+    ]
+  },
+  audience: {
+    label: "Target Audience", group: "Halaman Publik", type: "list", crumb: "HALAMAN PUBLIK", title: "Target Audience",
+    hint: "Kelompok sasaran beserta satu baris manfaat.",
+    titleKey: "title", subKey: "desc",
+    blank: { title: "Audience Baru", desc: "" },
+    fields: [
+      { key: "title", label: "Kelompok", type: "text" },
+      { key: "desc", label: "Deskripsi singkat", type: "text", max: 90, span: "1 / -1" }
+    ]
+  },
+  events: {
+    label: "Coming Up Event", group: "Halaman Publik", type: "list", crumb: "HALAMAN PUBLIK", title: "Event Mendatang",
+    hint: "Tanggal, flyer, dan tautan pendaftaran event. Isi sesuai flyer resmi.",
+    titleKey: "title", subKey: "date", statusKey: "status",
+    blank: { title: "Event Baru", date: "", meta: "", desc: "", price: "", href: "", flyer: "", status: "Sembunyi" },
+    fields: [
+      { key: "title", label: "Judul event", type: "text", span: "1 / -1" },
+      { key: "date", label: "Tanggal / waktu", type: "text" },
+      { key: "meta", label: "Rute / format", type: "text" },
+      { key: "desc", label: "Deskripsi", type: "area", rows: 3, span: "1 / -1" },
+      { key: "price", label: "Keterangan harga", type: "text" },
+      { key: "href", label: "Tautan pendaftaran", type: "text" },
+      { key: "flyer", label: "Flyer event", type: "image", span: "1 / -1", hint: "Poster portrait resmi. Kosong = memakai flyer bawaan." },
+      { key: "status", label: "Status", type: "select", options: ["Tampil", "Sembunyi"] }
+    ]
+  },
+  testimonials: {
+    label: "Testimoni", group: "Halaman Publik", type: "list", crumb: "HALAMAN PUBLIK", title: "Testimoni Video",
+    hint: "Hanya identitas dan tautan video — tidak menuliskan kutipan yang tidak ada di sumber.",
+    titleKey: "name", subKey: "org", statusKey: "status",
+    blank: { name: "Nama Peserta", org: "", video: "", status: "Tampil" },
+    fields: [
+      { key: "name", label: "Nama", type: "text" },
+      { key: "org", label: "Institusi", type: "text" },
+      { key: "video", label: "URL video YouTube", type: "text", span: "1 / -1" },
+      { key: "status", label: "Status", type: "select", options: ["Tampil", "Sembunyi"] }
+    ]
+  },
+  gallery: {
+    label: "Galeri Dokumentasi", group: "Halaman Publik", type: "list", crumb: "HALAMAN PUBLIK", title: "Galeri Dokumentasi",
+    hint: "Label, alt text, dan foto dokumentasi asli (unggah atau URL).",
+    titleKey: "label", subKey: "alt",
+    blank: { label: "LABEL", alt: "", image: "" },
+    fields: [
+      { key: "label", label: "Label", type: "text" },
+      { key: "alt", label: "Alt text foto", type: "text", span: "1 / -1" },
+      { key: "image", label: "Foto dokumentasi", type: "image", span: "1 / -1", hint: "Rasio 3:2 disarankan." }
+    ]
+  },
+  founder: {
+    label: "Founder", group: "Halaman Publik", type: "single", crumb: "HALAMAN PUBLIK", title: "Section Founder",
+    hint: "Foto dan identitas founder yang tampil di Homepage dan About Us.",
+    fields: [
+      { key: "photo", label: "Foto founder", type: "image", span: "1 / -1", hint: "Portrait rasio 4:5 disarankan." },
+      { key: "photoAlt", label: "Alt text foto", type: "text", span: "1 / -1" },
+      { key: "name", label: "Nama", type: "text" },
+      { key: "role", label: "Jabatan", type: "text" }
+    ]
+  },
+  partnership: {
+    label: "Partnership Form", group: "Halaman Publik", type: "single", crumb: "HALAMAN PUBLIK", title: "Section Partnership",
+    hint: "Foto latar di belakang formulir partnership (tertutup overlay navy).",
+    fields: [
+      { key: "bgImage", label: "Foto latar", type: "image", span: "1 / -1", hint: "Landscape, minimal 1600 px lebar." }
+    ]
+  },
+  faqs: {
+    label: "FAQ", group: "Halaman Publik", type: "list", crumb: "HALAMAN PUBLIK", title: "FAQ",
+    hint: "Pertanyaan ini juga dipakai untuk FAQPage schema pada halaman publik.",
+    titleKey: "q", subKey: "a",
+    blank: { q: "Pertanyaan baru", a: "" },
+    fields: [
+      { key: "q", label: "Pertanyaan", type: "text", span: "1 / -1" },
+      { key: "a", label: "Jawaban", type: "area", rows: 4, span: "1 / -1" }
+    ]
+  },
+  footer: {
+    label: "Footer & Kontak", group: "Halaman Publik", type: "single", crumb: "HALAMAN PUBLIK", title: "Footer & Kontak",
+    hint: "Deskripsi footer, kanal sosial, dan nomor kontak resmi.",
+    fields: [
+      { key: "description", label: "Deskripsi footer", type: "area", rows: 4, span: "1 / -1" },
+      { key: "tagline", label: "Tagline", type: "text", span: "1 / -1" },
+      { key: "instagram", label: "Instagram", type: "text" },
+      { key: "tiktok", label: "TikTok", type: "text" },
+      { key: "youtube", label: "YouTube", type: "text" },
+      { key: "email", label: "Email", type: "text" },
+      { key: "waAdmin", label: "WhatsApp admin", type: "text" },
+      { key: "waPartnership", label: "WhatsApp partnership", type: "text" },
+      { key: "address", label: "Alamat", type: "text" }
+    ]
+  },
+  articles: { label: "News / Artikel", group: "Konten", type: "articles", crumb: "KONTEN", title: "News / Artikel" },
+  seo: {
+    label: "SEO & Teknikal", group: "Pengaturan", type: "single", crumb: "PENGATURAN", title: "SEO & Teknikal",
+    hint: "Konfigurasi meta global, indexing, sitemap, dan verifikasi alat webmaster.",
+    fields: [
+      { key: "siteName", label: "Nama situs", type: "text" },
+      { key: "baseUrl", label: "Base URL", type: "text" },
+      { key: "titleTemplate", label: "Template title", type: "text", hint: "Gunakan %page% sebagai placeholder judul halaman." },
+      { key: "homeTitle", label: "Title homepage", type: "text", max: 60, span: "1 / -1" },
+      { key: "homeDescription", label: "Meta description homepage", type: "area", rows: 3, max: 160, span: "1 / -1" },
+      { key: "canonicalHome", label: "Canonical homepage", type: "text" },
+      { key: "ogImage", label: "OG image default", type: "image", span: "1 / -1", hint: "1200×630 px untuk pratinjau share di media sosial." },
+      { key: "locale", label: "Locale", type: "select", options: ["id-ID", "en-US"] },
+      { key: "indexable", label: "Izinkan indexing", type: "bool", onLabel: "Situs boleh diindeks", offLabel: "noindex aktif (situs tidak diindeks)" },
+      { key: "sitemap", label: "Sitemap.xml otomatis", type: "bool", onLabel: "Aktif — regenerasi setelah publish", offLabel: "Nonaktif" },
+      { key: "breadcrumbs", label: "BreadcrumbList schema", type: "bool", onLabel: "Aktif", offLabel: "Nonaktif" },
+      { key: "gscVerification", label: "Google Search Console verification", type: "text" },
+      { key: "ga4Id", label: "GA4 Measurement ID", type: "text", hint: "Format G-XXXXXXX." },
+      { key: "robotsTxt", label: "robots.txt", type: "area", rows: 5, span: "1 / -1" }
+    ]
+  },
+  users: { label: "Pengguna", group: "Pengaturan", type: "users", crumb: "PENGATURAN", title: "Pengguna & Hak Akses" }
+};
+
+const NAV_ORDER = ["overview", "hero", "about", "programs", "audience", "events", "testimonials", "gallery", "founder", "partnership", "faqs", "footer", "articles", "seo", "users"];
+
+const ARTICLE_FIELDS = [
+  { key: "title", label: "Judul artikel (H1)", type: "text", max: 70 },
+  { key: "slug", label: "Slug URL", type: "text", hint: "Huruf kecil, pemisah tanda hubung, tanpa tanggal." },
+  { key: "category", label: "Kategori", type: "select", options: ["Program", "Insight", "Dokumentasi", "Pengumuman"] },
+  { key: "author", label: "Penulis", type: "text" },
+  { key: "date", label: "Tanggal publikasi", type: "text", hint: "Format YYYY-MM-DD untuk datePublished." },
+  { key: "status", label: "Status", type: "select", options: ["Draft", "Published"] },
+  { key: "excerpt", label: "Ringkasan", type: "area", rows: 3, max: 200 },
+  { key: "cover", label: "Gambar utama", type: "image" },
+  { key: "body", label: "Isi artikel", type: "area", rows: 14, hint: "Gunakan urutan heading H2 → H3 dan tautan internal ke halaman program." }
+];
+
+const ARTICLE_SEO_FIELDS = [
+  { key: "metaTitle", label: "Meta title", type: "text", max: 60 },
+  { key: "metaDescription", label: "Meta description", type: "area", rows: 3, max: 160 },
+  { key: "focusKeyword", label: "Focus keyword", type: "text" },
+  { key: "canonical", label: "Canonical URL", type: "text" },
+  { key: "imageAlt", label: "Alt text gambar utama", type: "text" },
+  { key: "ogImage", label: "OG image", type: "image", span: "1 / -1", hint: "Kosong = memakai gambar utama." },
+  { key: "schemaType", label: "Schema type", type: "select", options: ["Article", "NewsArticle", "BlogPosting"] },
+  { key: "index", label: "Index", type: "bool", onLabel: "index", offLabel: "noindex" },
+  { key: "follow", label: "Follow", type: "bool", onLabel: "follow", offLabel: "nofollow" }
+];
+
+const USERS = [
+  { name: "Admin JAGATRIP", email: "admin@jagatrip.com", role: "SUPER ADMIN", scope: "Seluruh konten, pengaturan SEO, dan manajemen pengguna." },
+  { name: "Tim Konten", email: "content@jagatrip.com", role: "EDITOR", scope: "Artikel, program, event, galeri, testimoni." },
+  { name: "Tim Partnership", email: "partnership@jagatrip.com", role: "VIEWER", scope: "Melihat konten dan mengunduh data permintaan partnership." }
+];
+
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+class Component extends DCLogic {
+  state = {
+    authed: false, loginEmail: "", loginPass: "", loginError: "",
+    data: clone(DEFAULTS), section: "overview", itemIndex: null, articleIndex: null,
+    dirty: false, toast: ""
+  };
+
+  componentDidMount() {
+    try {
+      const saved = localStorage.getItem(STORE);
+      const authed = localStorage.getItem(AUTH) === "1";
+      const next = { authed };
+      if (saved) next.data = Object.assign(clone(DEFAULTS), JSON.parse(saved));
+      this.setState(next);
+    } catch (e) { /* storage tidak tersedia */ }
+  }
+
+  flash(msg) {
+    this.setState({ toast: msg });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: "" }), 2600);
+  }
+
+  update(mutator) {
+    this.setState((s) => {
+      const data = clone(s.data);
+      mutator(data);
+      return { data, dirty: true };
+    });
+  }
+
+  save = () => {
+    try {
+      localStorage.setItem(STORE, JSON.stringify(this.state.data));
+      this.setState({ dirty: false });
+      this.flash("Perubahan tersimpan.");
+    } catch (e) { this.flash(e && e.name === "QuotaExceededError" ? "Gagal menyimpan: ukuran gambar melebihi kapasitas penyimpanan lokal. Pakai gambar lebih kecil atau URL." : "Gagal menyimpan: penyimpanan lokal tidak tersedia."); }
+  };
+
+  readImage(file, done) {
+    if (!/^image\//.test(file.type)) { this.flash("File harus berupa gambar."); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 1600, k = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement("canvas");
+        c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        const ctx = c.getContext("2d");
+        const png = file.type === "image/png";
+        if (!png) { ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, c.width, c.height); }
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        done(png ? c.toDataURL("image/png") : c.toDataURL("image/jpeg", 0.82));
+        this.flash("Gambar siap. Klik Simpan untuk menerapkan.");
+      };
+      img.onerror = () => this.flash("Gambar tidak dapat dibaca.");
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  buildField(def, value, onSet, idPrefix) {
+    const t = def.type || "text";
+    const len = typeof value === "string" ? value.length : 0;
+    const over = def.max ? len > def.max : false;
+    const short = def.max ? len < def.max * 0.5 : false;
+    return {
+      id: idPrefix + "-" + def.key,
+      label: def.label,
+      value: t === "bool" ? "" : (value === undefined || value === null ? "" : value),
+      rows: def.rows || 3,
+      options: def.options || [],
+      span: def.span || "auto",
+      hint: def.hint || "",
+      hintDisplay: def.hint ? "block" : "none",
+      isText: t === "text",
+      isArea: t === "area",
+      isSelect: t === "select",
+      isBool: t === "bool",
+      isCode: t === "code",
+      isImage: t === "image",
+      hasImg: t === "image" && !!value,
+      noImg: t === "image" && !value,
+      urlValue: typeof value === "string" && value.indexOf("data:") === 0 ? "" : (value || ""),
+      imgInfo: typeof value === "string" && value.indexOf("data:") === 0 ? "File terunggah · " + Math.round(value.length * 0.75 / 1024) + " KB" : (value ? "Dari URL" : "JPG, PNG, WEBP · dikompres otomatis"),
+      uploadLabel: value ? "Ganti gambar" : "Unggah gambar",
+      onUpload: (ev) => { const file = ev.target.files && ev.target.files[0]; ev.target.value = ""; if (file) this.readImage(file, (url) => onSet(def.key, url)); },
+      onClear: () => onSet(def.key, ""),
+      counter: def.max ? len + " / " + def.max + " karakter" : "",
+      counterDisplay: def.max ? "block" : "none",
+      counterColor: over ? "#DC2626" : (short ? "#B45309" : "#166534"),
+      boolOn: !!value,
+      boolLabel: value ? (def.onLabel || "Aktif") : (def.offLabel || "Nonaktif"),
+      trackBg: value ? "#F97316" : "#CBD5E1",
+      knobLeft: value ? "23px" : "3px",
+      toggle: () => onSet(def.key, !value),
+      onChange: (ev) => onSet(def.key, ev.target.value)
+    };
+  }
+
+  articleScore(a) {
+    let pts = 0;
+    if (a.metaTitle && a.metaTitle.length >= 30 && a.metaTitle.length <= 60) pts += 20;
+    else if (a.metaTitle) pts += 10;
+    if (a.metaDescription && a.metaDescription.length >= 90 && a.metaDescription.length <= 160) pts += 20;
+    else if (a.metaDescription) pts += 10;
+    if (a.slug && /^[a-z0-9-]+$/.test(a.slug)) pts += 15;
+    if (a.focusKeyword && (a.title || "").toLowerCase().indexOf(a.focusKeyword.toLowerCase()) >= 0) pts += 15;
+    if (a.imageAlt) pts += 10;
+    if (a.canonical) pts += 10;
+    if ((a.body || "").length > 600) pts += 10;
+    return pts;
+  }
+
+  scoreNote(a, score) {
+    if (!a.metaDescription || a.metaDescription.length < 90) return "Meta description terlalu pendek.";
+    if (!a.focusKeyword) return "Focus keyword belum diisi.";
+    if (!a.imageAlt) return "Alt text gambar utama kosong.";
+    if ((a.body || "").length < 600) return "Isi artikel masih tipis untuk SEO.";
+    if (score >= 90) return "Siap publish.";
+    return "Periksa slug dan canonical.";
+  }
+
+  renderVals() {
+    const st = this.state;
+    const d = st.data;
+    const sec = SECTIONS[st.section] || SECTIONS.overview;
+    const isArticles = sec.type === "articles";
+    const editingArticle = isArticles && st.articleIndex !== null && d.articles[st.articleIndex];
+
+    const navItems = NAV_ORDER.map((key, i) => {
+      const s = SECTIONS[key];
+      const prev = i > 0 ? SECTIONS[NAV_ORDER[i - 1]] : null;
+      const active = st.section === key;
+      const counts = { programs: d.programs.length, audience: d.audience.length, events: d.events.length, testimonials: d.testimonials.length, gallery: d.gallery.length, faqs: d.faqs.length, articles: d.articles.length };
+      const count = counts[key];
+      return {
+        label: s.label,
+        group: s.group,
+        groupDisplay: !prev || prev.group !== s.group ? "block" : "none",
+        current: active ? "page" : "false",
+        bg: active ? "#102A43" : "transparent",
+        bar: active ? "#F97316" : "transparent",
+        color: active ? "#FFFFFF" : "#CBD5E1",
+        count: count === undefined ? "" : count,
+        countDisplay: count === undefined ? "none" : "block",
+        go: () => this.setState({ section: key, itemIndex: null, articleIndex: null })
+      };
+    });
+
+    const published = d.articles.filter((a) => a.status === "Published").length;
+    const stats = [
+      { label: "PROGRAM AKTIF", value: d.programs.filter((p) => p.status === "Aktif").length, note: "dari " + d.programs.length + " program" },
+      { label: "EVENT TAMPIL", value: d.events.filter((e) => e.status === "Tampil").length, note: "event mendatang" },
+      { label: "ARTIKEL PUBLISHED", value: published, note: d.articles.length - published + " draft" },
+      { label: "TESTIMONI", value: d.testimonials.length, note: "video peserta" },
+      { label: "FAQ", value: d.faqs.length, note: "dipakai FAQPage schema" }
+    ];
+
+    const recentArticles = d.articles.slice(0, 4).map((a) => ({
+      title: a.title, slug: a.slug, date: a.date,
+      statusLabel: a.status.toUpperCase(),
+      statusColor: STATUS_COLORS[a.status] || "#64748B"
+    }));
+
+    const s = d.site;
+    const seoChecks = [
+      { ok: !!s.homeTitle && s.homeTitle.length <= 60, label: "Title homepage", detail: s.homeTitle.length + " karakter (ideal ≤ 60)" },
+      { ok: !!s.homeDescription && s.homeDescription.length <= 160, label: "Meta description homepage", detail: s.homeDescription.length + " karakter (ideal 90–160)" },
+      { ok: !!s.canonicalHome, label: "Canonical homepage", detail: s.canonicalHome || "belum diisi" },
+      { ok: !!s.sitemap, label: "Sitemap.xml", detail: s.sitemap ? "aktif" : "nonaktif" },
+      { ok: !!s.indexable, label: "Indexing", detail: s.indexable ? "index, follow" : "noindex aktif" },
+      { ok: !!s.ogImage, label: "OG image default", detail: s.ogImage || "belum diisi" },
+      { ok: !!s.ga4Id, label: "GA4 Measurement ID", detail: s.ga4Id || "belum diisi" },
+      { ok: !!s.gscVerification, label: "Verifikasi Search Console", detail: s.gscVerification || "belum diisi" }
+    ].map((c) => ({ label: c.label, detail: c.detail, mark: c.ok ? "✓" : "!", color: c.ok ? "#166534" : "#B45309" }));
+
+    let fields = [];
+    if (sec.type === "single") {
+      const bucket = st.section === "seo" ? "site" : st.section;
+      fields = sec.fields.map((def) => this.buildField(def, d[bucket][def.key], (k, v) => this.update((dd) => { dd[bucket][k] = v; }), "sec-" + bucket));
+    }
+
+    let listItems = [];
+    let itemFields = [];
+    if (sec.type === "list") {
+      const arr = d[st.section];
+      listItems = arr.map((it, i) => {
+        const status = sec.statusKey ? it[sec.statusKey] : null;
+        return {
+          n: String(i + 1).padStart(2, "0"),
+          title: it[sec.titleKey] || "(tanpa judul)",
+          sub: (it[sec.subKey] || "").slice(0, 96),
+          status: status || "",
+          statusDisplay: status ? "block" : "none",
+          statusColor: STATUS_COLORS[status] || "#64748B",
+          bg: st.itemIndex === i ? "#FFF9F4" : "#FFFFFF",
+          edit: () => this.setState({ itemIndex: st.itemIndex === i ? null : i }),
+          up: () => { if (i > 0) this.update((dd) => { const a = dd[st.section]; const t = a[i - 1]; a[i - 1] = a[i]; a[i] = t; }); },
+          down: () => { if (i < arr.length - 1) this.update((dd) => { const a = dd[st.section]; const t = a[i + 1]; a[i + 1] = a[i]; a[i] = t; }); },
+          del: () => { this.update((dd) => { dd[st.section].splice(i, 1); }); this.setState({ itemIndex: null }); }
+        };
+      });
+      if (st.itemIndex !== null && arr[st.itemIndex]) {
+        itemFields = sec.fields.map((def) => this.buildField(def, arr[st.itemIndex][def.key], (k, v) => this.update((dd) => { dd[st.section][st.itemIndex][k] = v; }), "item"));
+      }
+    }
+
+    const articleRows = d.articles.map((a, i) => {
+      const score = this.articleScore(a);
+      return {
+        title: a.title, slug: a.slug, category: a.category, date: a.date,
+        statusLabel: a.status.toUpperCase(),
+        statusColor: STATUS_COLORS[a.status] || "#64748B",
+        score: score, scoreColor: score >= 85 ? "#166534" : (score >= 60 ? "#B45309" : "#DC2626"),
+        scoreNote: this.scoreNote(a, score),
+        edit: () => this.setState({ articleIndex: i }),
+        del: () => { this.update((dd) => { dd.articles.splice(i, 1); }); this.setState({ articleIndex: null }); }
+      };
+    });
+
+    let articleFields = [], articleSeoFields = [], jsonld = "", serp = { url: "", title: "", desc: "" }, curScore = 0;
+    if (editingArticle) {
+      const a = editingArticle;
+      const setA = (k, v) => this.update((dd) => { dd.articles[st.articleIndex][k] = v; });
+      articleFields = ARTICLE_FIELDS.map((def) => this.buildField(def, a[def.key], setA, "art"));
+      articleSeoFields = ARTICLE_SEO_FIELDS.map((def) => this.buildField(def, a[def.key], setA, "artseo"));
+      serp = {
+        url: d.site.baseUrl + "/news/" + (a.slug || "slug-artikel"),
+        title: a.metaTitle || a.title,
+        desc: a.metaDescription || a.excerpt
+      };
+      curScore = this.articleScore(a);
+      jsonld = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": a.schemaType,
+        headline: a.title,
+        description: a.metaDescription,
+        image: [a.ogImage || a.cover || d.site.ogImage],
+        datePublished: a.date,
+        dateModified: a.date,
+        inLanguage: d.site.locale,
+        author: { "@type": "Organization", name: a.author || d.site.siteName },
+        publisher: { "@type": "Organization", name: "PT JAGATRIP MITRA EDUKASI", logo: { "@type": "ImageObject", url: d.site.baseUrl + "/images/batch2/logo-logotype.png" } },
+        mainEntityOfPage: { "@type": "WebPage", "@id": a.canonical || serp.url },
+        keywords: a.focusKeyword
+      }, null, 2);
+    }
+
+    return {
+      vLogin: !st.authed,
+      vApp: st.authed,
+      vOverview: st.authed && sec.type === "overview",
+      vSingle: st.authed && sec.type === "single",
+      vList: st.authed && sec.type === "list",
+      vArticles: st.authed && isArticles,
+      vArticleEditor: st.authed && !!editingArticle,
+      vUsers: st.authed && sec.type === "users",
+
+      loginEmail: st.loginEmail, loginPass: st.loginPass,
+      loginError: st.loginError, loginErrDisplay: st.loginError ? "block" : "none",
+      onLoginField: (ev) => this.setState({ [ev.target.name === "email" ? "loginEmail" : "loginPass"]: ev.target.value, loginError: "" }),
+      onLogin: (ev) => {
+        ev.preventDefault();
+        if (st.loginEmail.trim().toLowerCase() === "admin@jagatrip.com" && st.loginPass === "jagatrip") {
+          try { localStorage.setItem(AUTH, "1"); } catch (e) {}
+          this.setState({ authed: true, loginPass: "", loginError: "" });
+        } else {
+          this.setState({ loginError: "Email atau password belum sesuai. Gunakan kredensial demo di bawah." });
+        }
+      },
+      onLogout: () => { try { localStorage.removeItem(AUTH); } catch (e) {} this.setState({ authed: false, section: "overview", articleIndex: null, itemIndex: null }); },
+
+      navItems, stats, recentArticles, seoChecks, users: USERS,
+      crumb: sec.crumb, pageTitle: editingArticle ? "Edit Artikel" : sec.title,
+      sectionHint: sec.hint || "",
+      userName: "Admin JAGATRIP", userRole: "Super Admin",
+      dirtyLabel: st.dirty ? "Ada perubahan belum tersimpan" : "Semua perubahan tersimpan",
+      dirtyColor: st.dirty ? "#B45309" : "#64748B",
+
+      fields, listItems, itemFields,
+      hasItemEditor: st.itemIndex !== null && itemFields.length > 0,
+      itemNumber: st.itemIndex === null ? "" : String(st.itemIndex + 1).padStart(2, "0"),
+      onCloseItem: () => this.setState({ itemIndex: null }),
+      // ponytail: popup = overlay fixed, tutup via tombol saja (tanpa Esc/klik backdrop/focus trap)
+      onAddItem: () => {
+        const blank = clone(SECTIONS[st.section].blank);
+        this.update((dd) => { dd[st.section].push(blank); });
+        this.setState({ itemIndex: d[st.section].length });
+      },
+
+      articleRows, articleFields, articleSeoFields,
+      articleJsonLd: jsonld,
+      schemaType: editingArticle ? editingArticle.schemaType : "Article",
+      serpUrl: serp.url, serpTitle: serp.title, serpDesc: serp.desc,
+      curScore: curScore,
+      curScoreColor: curScore >= 85 ? "#166534" : (curScore >= 60 ? "#B45309" : "#DC2626"),
+      curScoreNote: editingArticle ? this.scoreNote(editingArticle, curScore) : "",
+      goArticles: () => this.setState({ section: "articles", articleIndex: null }),
+      onNewArticle: () => {
+        const blank = {
+          title: "Artikel Baru", slug: "artikel-baru", category: "Insight", author: "Tim JAGATRIP",
+          date: new Date().toISOString().slice(0, 10), status: "Draft", excerpt: "", body: "",
+          cover: "", imageAlt: "", metaTitle: "", metaDescription: "", focusKeyword: "",
+          canonical: d.site.baseUrl + "/news/artikel-baru", ogImage: "", schemaType: "Article", index: true, follow: true
+        };
+        this.update((dd) => { dd.articles.unshift(blank); });
+        this.setState({ section: "articles", articleIndex: 0 });
+      },
+      onCloseArticle: () => this.setState({ articleIndex: null }),
+
+      onSave: this.save,
+      onExport: () => {
+        const blob = new Blob([JSON.stringify(this.state.data, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = "jagatrip-content.json";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        this.flash("File JSON konten diunduh.");
+      },
+      toast: st.toast, toastDisplay: st.toast ? "block" : "none"
+    };
+  }
+}
+</script>
+</body>
+</html>

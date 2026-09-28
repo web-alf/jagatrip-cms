@@ -1,0 +1,22 @@
+---
+import type { Site } from "../../lib/types";
+interface Props { founder: Site["founder"]; heading?: string }
+const { founder: f, heading = "Meet the Founder Behind JAGATRIP" } = Astro.props;
+---
+<section class="bg-soft">
+  <div class="wrap row" style="align-items:flex-start">
+    <div style="flex-basis:360px">
+      <img src={f.photo} alt={f.photoAlt} loading="lazy" style="width:100%;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--border);background:#fff" />
+    </div>
+    <div style="flex-basis:460px">
+      <p class="eyebrow">FOUNDER</p>
+      <h2 class="h2">{heading}</h2>
+      {heading !== f.name && <p style="margin-top:20px;font-size:20px;font-weight:700;color:var(--navy)">{f.name}</p>}
+      <p style="margin-top:4px;font-size:15px;color:var(--muted2)">{f.role}</p>
+      <ul class="tiles numbered" style="margin-top:28px">
+        {f.points.map((t, i) => <li><span class="num">{String(i + 1).padStart(2, "0")}</span><span>{t}</span></li>)}
+      </ul>
+      <div style="margin-top:28px"><a href="https://jagatrip.com/batch2" target="_blank" rel="noopener" class="btn">Learn More</a></div>
+    </div>
+  </div>
+</section>

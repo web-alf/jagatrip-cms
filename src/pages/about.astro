@@ -1,0 +1,110 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/site/PageHero.astro";
+import Founder from "../components/site/Founder.astro";
+import { getSite } from "../lib/repo";
+
+const site = await getSite();
+const stats = [["30+", "Negara dijelajahi founder"], ["04", "Institusi per batch"], ["06", "Dimensi observasi"], ["02", "Negara tujuan Batch 2"]];
+const pillars = [
+  ["International Benchmarking", "Perbandingan langsung praktik tata kelola dan pembelajaran dengan institusi tujuan.", '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M4.6 7h14.8M4.6 17h14.8"/>'],
+  ["Field Learning", "Observasi di ruang kelas dan lingkungan sekolah tuan rumah, bukan presentasi ruang rapat saja.", '<path d="M2 9l10-4 10 4-10 4z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v5"/>'],
+  ["Institutional Dialogue", "Sesi tanya jawab dengan manajemen institusi mengenai kebijakan dan penerapannya.", '<path d="M3 5h11v9H7.5L4 17v-3H3z"/><path d="M17 9h4v9h-1v3l-3-3h-5v-4"/>'],
+  ["Networking & Kolaborasi", "Pembukaan jalur komunikasi lanjutan antar institusi setelah program selesai.", '<path d="M3 13l3.4-3.2a2 2 0 0 1 2.6 0l2.2 2 2-1.8a2 2 0 0 1 2.7 0L21 13"/><path d="M11.2 11.8l2.6 2.4M9.4 13.6l2.6 2.4M7.6 15.4l2.4 2.2"/><path d="M3 9.5V17M21 9.5V17"/>'],
+];
+const missions = [
+  "Membuka akses benchmarking ke institusi pendidikan mancanegara bagi sekolah dan yayasan Indonesia.",
+  "Memfasilitasi kemitraan resmi antar institusi pendidikan lintas negara.",
+  "Menyiapkan instrumen observasi dan laporan yang dapat dipertanggungjawabkan ke pemangku kepentingan.",
+  "Memperluas wawasan global pelajar, guru, dan praktisi pendidikan melalui pengalaman lapangan.",
+  "Menjaga kualitas program melalui kuota terbatas dan pendampingan tour leader berpengalaman.",
+];
+const steps = [
+  ["Pemetaan Kebutuhan", "Identifikasi tujuan institusi: kurikulum, tata kelola, kesiswaan, atau rencana kerja sama."],
+  ["Perizinan & Penjadwalan", "Koordinasi resmi dengan institusi tujuan, penyusunan agenda, dan persiapan dokumen perjalanan."],
+  ["Studi Lapangan", "Kunjungan institusi, observasi kelas, dialog manajemen, dan sesi refleksi harian bersama delegasi."],
+  ["Laporan & Tindak Lanjut", "Penyusunan laporan observasi, sertifikat resmi, dan fasilitasi komunikasi lanjutan dengan institusi mitra."],
+];
+const pad = (i: number) => String(i + 1).padStart(2, "0");
+---
+<Base title="About Us — JAGATRIP" description={site.about.lead}>
+  <PageHero crumbs={[["Home", "/"], ["About Us"]]} eyebrow="ABOUT JAGATRIP" title="Program Edu-Tourism dan Institutional Partnership untuk Dunia Pendidikan" lead={site.about.lead}>
+    <div class="tiles grid" style="--min:170px;gap:1px;margin-top:36px;max-width:860px">
+      {stats.map(([n, l]) => <div><p style="font-size:30px;font-weight:800;color:var(--navy)">{n}</p><p style="margin-top:4px;font-size:13px;color:var(--muted2)">{l}</p></div>)}
+    </div>
+  </PageHero>
+
+  <section id="pengertian">
+    <div class="wrap row">
+      <div style="flex-basis:460px">
+        <p class="eyebrow">PENGERTIAN PROGRAM</p>
+        <h2 class="h2">Apa Itu JAGATRIP?</h2>
+        <p style="margin-top:22px;font-size:17px;line-height:1.75">Bukan perjalanan wisata yang diberi label pendidikan. JAGATRIP menyusun setiap keberangkatan sebagai studi lapangan: institusi tujuan dipilih berdasarkan relevansi, agenda kunjungan disepakati sebelumnya, dan peserta membawa instrumen observasi yang sama sehingga temuan antar sekolah dapat dibandingkan.</p>
+        <p class="muted" style="margin-top:18px">Pendekatan ini menggabungkan empat hal: benchmarking ke sekolah dan kampus mancanegara, field learning langsung di ruang kelas tuan rumah, dialog terbuka dengan manajemen institusi, serta networking lintas negara yang membuka jalur kolaborasi jangka panjang.</p>
+        <p class="muted" style="margin-top:18px">Hasil yang dibawa pulang peserta bukan sekadar dokumentasi, melainkan catatan observasi terstruktur, kontak institusi, dan rencana tindak lanjut yang dapat dipresentasikan ke yayasan masing-masing.</p>
+      </div>
+      <ul class="tiles grid" style="--min:220px;gap:1px;flex-basis:340px;align-content:start">
+        {pillars.map(([t, d, ic]) => (
+          <li>
+            <svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={ic} />
+            <p style="margin-top:18px;font-size:17px;font-weight:700;color:var(--navy);line-height:1.3">{t}</p>
+            <p class="muted" style="margin-top:8px;font-size:14px">{d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="vision" class="bg-navy">
+    <div class="wrap row">
+      <div style="flex-basis:380px">
+        <p class="eyebrow">VISION</p>
+        <h2 class="h2">Travel to Learn, Learn to Lead.</h2>
+        <p class="lead" style="max-width:460px">Menjadikan perjalanan internasional sebagai instrumen pengembangan kapasitas institusi pendidikan Indonesia — dari kepala sekolah sampai pelajar — bukan sebagai rekreasi.</p>
+        <p class="note">Catatan redaksi: menunggu naskah visi resmi dari tim JAGATRIP untuk menggantikan rumusan ringkas ini.</p>
+      </div>
+      <div id="mission">
+        <p class="eyebrow">MISSION</p>
+        <ul class="tiles numbered dark">
+          {missions.map((m, i) => <li><span class="num">{pad(i)}</span><span>{m}</span></li>)}
+        </ul>
+        <p class="note">Catatan redaksi: menunggu naskah misi resmi untuk finalisasi.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">CARA KERJA PROGRAM</p>
+      <h2 class="h2">Empat Tahap dari Perencanaan sampai Tindak Lanjut</h2>
+      <ol class="tiles grid" style="--min:240px;gap:1px;margin-top:44px">
+        {steps.map(([t, d], i) => (
+          <li style="border-top:3px solid var(--orange);padding:28px 26px">
+            <p class="eyebrow" style="letter-spacing:.1em;margin:0">TAHAP {pad(i)}</p>
+            <p style="margin-top:12px;font-size:18px;font-weight:700;color:var(--navy)">{t}</p>
+            <p class="muted" style="margin-top:10px;font-size:14px">{d}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <Founder founder={site.founder} heading={site.founder.name} />
+
+  <section class="bg-cream" style="border-top:1px solid #EEE3D8">
+    <div class="wrap">
+      <div class="bg-navy" style="padding:clamp(28px,4vw,44px);max-width:640px">
+        <h2 class="h2" style="font-size:clamp(24px,2.6vw,34px)">Siap membawa institusi Anda ke level internasional?</h2>
+        <p class="lead" style="margin-top:16px;font-size:16px">Diskusikan rencana benchmarking, institutional visit, atau kolaborasi pendidikan bersama tim JAGATRIP.</p>
+        <div class="btns"><a href="/#partnership" class="btn btn-primary">Let's Partner Up</a><a href="/program" class="btn btn-light">Lihat Program</a></div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .note { margin-top: 16px; font-size: 14px; line-height: 1.6; color: var(--faint); max-width: 460px; }
+  .dark { background: var(--dborder); border-color: var(--dborder); }
+  .dark > li { background: var(--dcard); color: #E2E8F0; }
+  .dark .num { color: var(--orange-l); }
+</style>

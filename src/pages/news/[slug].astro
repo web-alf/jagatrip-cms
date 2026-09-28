@@ -1,0 +1,43 @@
+---
+import Base from "../../layouts/Base.astro";
+import ArticleCard from "../../components/site/ArticleCard.astro";
+import { getArticles } from "../../lib/repo";
+import { bodyBlocks, fmtDate } from "../../lib/format";
+import type { Article } from "../../lib/types";
+
+export async function getStaticPaths() {
+  const all = await getArticles();
+  return all.map((a) => ({ params: { slug: a.slug }, props: { a, others: all.filter((x) => x.slug !== a.slug).slice(0, 3) } }));
+}
+const { a, others } = Astro.props as { a: Article; others: Article[] };
+const size = { h2: "26px", h3: "20px", p: "17px" };
+---
+<Base title={`${a.title} — JAGATRIP`} description={a.excerpt}>
+  <article>
+    <header class="wrap" style="max-width:820px;padding-bottom:32px">
+      <nav aria-label="Breadcrumb" class="crumb"><ol><li><a href="/">Home</a></li><li><a href="/news">News</a></li><li aria-current="page">{a.category}</li></ol></nav>
+      <p class="eyebrow">{a.category.toUpperCase()}</p>
+      <h1 class="h1" style="font-size:clamp(30px,4vw,50px)">{a.title}</h1>
+      <p class="muted" style="margin-top:18px;font-size:14px">{fmtDate(a.date)} · {a.author}</p>
+    </header>
+    <div style="max-width:1080px;margin:0 auto;padding:0 24px">
+      {a.cover
+        ? <img src={a.cover} alt={a.imageAlt} style="width:100%;aspect-ratio:16/8;object-fit:cover;border-radius:12px" />
+        : <div aria-hidden="true" style="aspect-ratio:16/8;background:var(--peach);border-radius:12px"></div>}
+    </div>
+    <div class="wrap" style="max-width:720px;display:grid;gap:20px">
+      <p style="font-size:19px;font-weight:500;line-height:1.7;color:var(--navy)">{a.excerpt}</p>
+      {bodyBlocks(a.body).map(({ tag: T, text }) => <T style={`font-size:${size[T]};line-height:1.7;color:${T === "p" ? "#334155" : "var(--navy)"};${T === "p" ? "" : "font-weight:800;margin-top:12px"}`}>{text}</T>)}
+      <a href="/news" style="margin-top:20px;font-weight:700">← Kembali ke semua artikel</a>
+    </div>
+  </article>
+
+  {others.length > 0 && (
+    <section class="bg-soft">
+      <div class="wrap">
+        <h2 class="h2" style="font-size:clamp(24px,2.6vw,34px);margin-bottom:32px">Artikel Lainnya</h2>
+        <div class="grid" style="--min:min(100%,340px);gap:24px">{others.map((o) => <ArticleCard a={o} />)}</div>
+      </div>
+    </section>
+  )}
+</Base>

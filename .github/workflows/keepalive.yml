@@ -1,0 +1,16 @@
+name: supabase-keepalive
+on:
+  schedule:
+    - cron: "0 3 */3 * *" # tiap 3 hari 03:00 UTC (< batas idle 7 hari)
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun run keepalive
+        env:
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+          KEEPALIVE_TABLE: keepalive

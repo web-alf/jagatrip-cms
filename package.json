@@ -1,0 +1,14 @@
+{
+  "name": "jagatrip-cms",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "keepalive": "bun scripts/keepalive.ts"
+  },
+  "dependencies": {
+    "astro": "^7.3.5"
+  }
+}

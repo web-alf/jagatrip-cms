@@ -1,0 +1,61 @@
+---
+import { getSite } from "../../lib/repo";
+import { handleOf, waLink } from "../../lib/format";
+
+const f = (await getSite()).footer;
+const WA = '<path d="M20.5 12a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.1-4.4A8.5 8.5 0 1 1 20.5 12z"/><path d="M8.9 9.1c0 3 2 5 5 5.1.8 0 1.6-.6 1.6-1.3l-1.7-.8-.9.9c-1-.4-1.8-1.2-2.2-2.2l.9-.9-.8-1.7c-.7 0-1.9.4-1.9 1z"/>';
+const cols: [string, [string, string][]][] = [
+  ["PROGRAM", [["Benchmarking", "https://jagatrip.com/batch2"], ["Field Trip", "/program#field-trip"], ["Immersion", "/program#immersion"], ["Partnership", "/#partnership"], ["JAGATALK", "https://jagatrip.com/jagatalk8"]]],
+  ["COMPANY", [["About Us", "/about"], ["News", "/news"], ["Contact", "/contact"], ["Company Profile", "https://jagatrip.com/companyprofile"]]],
+];
+const find = [
+  { href: f.instagram, label: handleOf(f.instagram), aria: "Instagram", icon: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/>' },
+  { href: f.tiktok, label: "@" + handleOf(f.tiktok), aria: "TikTok", icon: '<path d="M14 3v11.2a3.6 3.6 0 1 1-3.6-3.6"/><path d="M14 3c.6 2.6 2.3 4.1 5 4.3"/>' },
+  { href: "mailto:" + f.email, label: f.email, aria: "Email", icon: '<rect x="3" y="5" width="18" height="14"/><path d="M3 6.5l9 6 9-6"/>' },
+  { href: waLink(f.waAdmin), label: f.waAdmin, aria: "WhatsApp admin", icon: WA },
+  { href: waLink(f.waPartnership), label: f.waPartnership, aria: "WhatsApp partnership", icon: WA },
+];
+const ext = (h: string) => /^https?:/.test(h) ? { target: "_blank", rel: "noopener" } : {};
+---
+<footer class="ft">
+  <svg aria-hidden="true" class="deco" viewBox="0 0 1200 300" preserveAspectRatio="none" style="opacity:.1">
+    <path d="M-20 240 C 300 200 560 120 900 70 C 1030 50 1140 40 1240 30" fill="none" stroke="#F97316" stroke-width="2" stroke-dasharray="2 10" />
+  </svg>
+  <div class="ft-in">
+    <div style="flex:1.5 1 300px">
+      <img src="/assets/jagatrip-logo-white.png" alt="JAGATRIP" height="44" style="width:auto" />
+      <p style="margin-top:22px;font-size:15px;line-height:1.75;color:var(--line);max-width:460px">{f.description}</p>
+      <p style="margin-top:20px;font-size:13px;letter-spacing:.1em;color:var(--orange-l);font-weight:700">{f.tagline}</p>
+    </div>
+    {cols.map(([h, links]) => (
+      <div style="flex:1 1 170px">
+        <p class="cap">{h}</p>
+        <ul>{links.map(([l, href]) => <li><a href={href} {...ext(href)}>{l}</a></li>)}</ul>
+      </div>
+    ))}
+    <div style="flex:1.1 1 210px">
+      <p class="cap">FIND US</p>
+      <ul>{find.map((x) => (
+        <li><a href={x.href} aria-label={x.aria} {...ext(x.href)} style="display:flex;align-items:center;gap:10px">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={x.icon} />
+          <span>{x.label}</span>
+        </a></li>
+      ))}</ul>
+    </div>
+  </div>
+  <div class="ft-in bottom">
+    <p>© 2026 PT JAGATRIP MITRA EDUKASI. All rights reserved.</p>
+    <p>{f.address}</p>
+  </div>
+</footer>
+
+<style>
+  .ft { background: var(--navy); color: #fff; position: relative; overflow: hidden; }
+  .ft-in { position: relative; max-width: 1280px; margin: 0 auto; padding: clamp(48px,6vw,80px) 24px 32px; display: flex; flex-wrap: wrap; gap: 40px; }
+  .ft-in > div { min-width: 150px; }
+  .cap { font-size: 12px; font-weight: 700; letter-spacing: .14em; color: var(--faint); margin-bottom: 18px; }
+  ul { display: grid; gap: 12px; }
+  a { font-size: 15px; color: #E2E8F0; }
+  a:hover { color: var(--orange-l); }
+  .bottom { padding: 24px; border-top: 1px solid var(--dborder); gap: 12px; justify-content: space-between; font-size: 13px; color: var(--faint); }
+</style>

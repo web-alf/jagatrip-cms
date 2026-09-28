@@ -1,0 +1,50 @@
+---
+const nav = [["Home", "/"], ["About Us", "/about"], ["Program", "/program"], ["News", "/news"], ["Contact Us", "/contact"]];
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isCur = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+---
+<header class="hd">
+  <div class="hd-in">
+    <a href="/" aria-label="JAGATRIP — beranda" class="logo">
+      <img src="https://jagatrip.com/images/batch2/logo-logogram.png" alt="" height="36" />
+      <img src="https://jagatrip.com/images/batch2/logo-logotype.png" alt="JAGATRIP" height="19" />
+    </a>
+    <button type="button" class="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="nav"><span></span></button>
+    <nav id="nav" aria-label="Navigasi utama">
+      {nav.map(([label, href]) => <a href={href} class="lnk" aria-current={isCur(href) ? "page" : undefined}>{label}</a>)}
+      <a href="/#partnership" class="btn btn-primary sm">Let's Partner Up</a>
+      <a href="/admin" class="btn sm">Masuk</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .hd { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .hd-in { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; transition: height .25s; }
+  :global(.hd.scrolled) .hd-in { height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; flex: none; }
+  .logo img { width: auto; }
+  nav { display: flex; align-items: center; gap: 30px; }
+  .lnk { font-size: 15px; font-weight: 600; color: var(--navy); }
+  .lnk:hover, .lnk[aria-current] { color: var(--orange); }
+  .sm { font-size: 14px; padding: 13px 22px; }
+  .burger { display: none; width: 46px; height: 46px; align-items: center; justify-content: center; background: #fff; border: 1px solid var(--border); cursor: pointer; }
+  .burger span { width: 20px; height: 2px; background: var(--navy); box-shadow: 0 -6px 0 var(--navy), 0 6px 0 var(--navy); }
+  @media (max-width: 940px) {
+    .burger { display: flex; }
+    nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 10px 24px 22px; flex-direction: column; align-items: stretch; gap: 2px; }
+    :global(.hd.open) nav { display: flex; }
+    .lnk { padding: 14px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
+    .sm { margin-top: 10px; text-align: center; padding: 16px 20px; }
+  }
+</style>
+
+<script>
+  const hd = document.querySelector(".hd")!;
+  const burger = hd.querySelector(".burger")!;
+  const onScroll = () => hd.classList.toggle("scrolled", scrollY > 40);
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  burger.addEventListener("click", () => burger.setAttribute("aria-expanded", String(hd.classList.toggle("open"))));
+  hd.querySelectorAll("nav a").forEach((a) => a.addEventListener("click", () => (hd.classList.remove("open"), burger.setAttribute("aria-expanded", "false"))));
+</script>

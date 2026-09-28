@@ -1,0 +1,18 @@
+---
+interface Props { crumbs: [string, string?][]; eyebrow: string; title: string; lead?: string }
+const { crumbs, eyebrow, title, lead } = Astro.props;
+---
+<section style="position:relative;overflow:hidden;border-bottom:1px solid var(--border)">
+  <svg aria-hidden="true" class="deco" viewBox="0 0 1440 400" preserveAspectRatio="none">
+    <path d="M-40 340 C 340 306 620 136 1000 92 C 1170 72 1320 54 1500 36" fill="none" stroke="#F97316" stroke-width="2" stroke-dasharray="2 10" opacity=".45" />
+  </svg>
+  <div class="wrap" style="padding-block:clamp(40px,5vw,72px)">
+    <nav aria-label="Breadcrumb" class="crumb">
+      <ol>{crumbs.map(([l, href]) => <li>{href ? <a href={href}>{l}</a> : <span aria-current="page">{l}</span>}</li>)}</ol>
+    </nav>
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 class="h1">{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</section>
