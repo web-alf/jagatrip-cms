@@ -650,6 +650,7 @@ const DEFAULTS = {
     role: "CEO & Founder JAGATRIP · Pemandu Perjalanan"
   },
   partnership: { bgImage: "/assets/partnership-bg.jpg" },
+  programHero: { image: "", imageAlt: "Peserta program JAGATRIP" },
   gallery: [
     { label: "KNOWLEDGE EXCHANGE", alt: "Tukar plakat dengan sekolah mitra", image: "" },
     { label: "DISCUSSION SESSION", alt: "Sesi diskusi bersama manajemen sekolah", image: "" },
@@ -801,6 +802,14 @@ const SECTIONS = {
       { key: "bgImage", label: "Foto latar", type: "image", span: "1 / -1", hint: "Landscape, minimal 1600 px lebar." }
     ]
   },
+  programHero: {
+    label: "Hero Halaman Program", group: "Halaman Publik", type: "single", crumb: "HALAMAN PUBLIK", title: "Hero Halaman Program",
+    hint: "Gambar pada hero halaman /program. Kosongkan untuk menyembunyikan gambar.",
+    fields: [
+      { key: "image", label: "Gambar hero program", type: "image", span: "1 / -1", hint: "Gambar tidak dipotong — pakai rasio asli." },
+      { key: "imageAlt", label: "Alt text gambar", type: "text", hint: "Wajib untuk aksesibilitas dan SEO gambar." }
+    ]
+  },
   faqs: {
     label: "FAQ", group: "Halaman Publik", type: "list", crumb: "HALAMAN PUBLIK", title: "FAQ",
     hint: "Pertanyaan ini juga dipakai untuk FAQPage schema pada halaman publik.",
@@ -850,7 +859,7 @@ const SECTIONS = {
   users: { label: "Pengguna", group: "Pengaturan", type: "users", crumb: "PENGATURAN", title: "Pengguna & Hak Akses" }
 };
 
-const NAV_ORDER = ["overview", "hero", "about", "programs", "audience", "events", "testimonials", "gallery", "founder", "partnership", "faqs", "footer", "articles", "seo", "users"];
+const NAV_ORDER = ["overview", "hero", "about", "programs", "programHero", "audience", "events", "testimonials", "gallery", "founder", "partnership", "faqs", "footer", "articles", "seo", "users"];
 
 const ARTICLE_FIELDS = [
   { key: "title", label: "Judul artikel (H1)", type: "text", max: 70 },

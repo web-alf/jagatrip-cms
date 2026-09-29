@@ -27,6 +27,7 @@ export const site: Site = {
     ],
   },
   partnership: { bgImage: "/assets/partnership-bg.jpg" },
+  programHero: { image: "", imageAlt: "Peserta program JAGATRIP" },
   footer: {
     description: "JAGATRIP adalah program Edu-Tourism dan institutional partnership bagi pimpinan sekolah, praktisi pendidikan, pelajar, serta orangtua yang ingin meningkatkan kapabilitas dan memperluas akses global.",
     tagline: "TRAVEL TO LEARN, LEARN TO LEAD.",

@@ -3,7 +3,7 @@ import type { Article, Audience, Event, Faq, GalleryItem, Program, Site, Testimo
 // Bentuk baris tabel `content` = state admin (src/dc/admin.html DEFAULTS). Longgar: semua opsional.
 export type Content = Partial<{
   hero: Partial<Site["hero"]>; about: Partial<Site["about"]>; founder: Partial<Site["founder"]>;
-  partnership: Partial<Site["partnership"]>; footer: Partial<Site["footer"]>;
+  partnership: Partial<Site["partnership"]>; footer: Partial<Site["footer"]>; programHero: Partial<Site["programHero"]>;
   programs: { title: string; desc: string; status: string; href?: string }[];
   audience: { title: string; desc: string }[];
   events: { title: string; date: string; meta: string; desc: string; price: string; href: string; flyer: string; status: string }[];
@@ -34,6 +34,7 @@ export function merge(d: Defaults, c: Content): Defaults {
     site: {
       hero: fill(d.site.hero, c.hero), about: fill(d.site.about, c.about), founder: fill(d.site.founder, c.founder),
       partnership: fill(d.site.partnership, c.partnership), footer: fill(d.site.footer, c.footer),
+      programHero: fill(d.site.programHero, c.programHero),
     },
     programs: c.programs?.map((p) => {
       const def = byTitle(d.programs, p.title);

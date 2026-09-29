@@ -49,5 +49,6 @@ export interface Site {
   about: { eyebrow: string; heading: string; lead: string; body: string; readMoreHref: string };
   founder: { photo: string; photoAlt: string; name: string; role: string; points: string[] };
   partnership: { bgImage: string };
+  programHero: { image: string; imageAlt: string };
   footer: { description: string; tagline: string; instagram: string; tiktok: string; email: string; waAdmin: string; waPartnership: string; address: string };
 }
