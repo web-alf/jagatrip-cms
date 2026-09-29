@@ -1,6 +1,6 @@
 ---
-interface Props { crumbs: [string, string?][]; eyebrow: string; title: string; lead?: string; image?: string; imageAlt?: string }
-const { crumbs, eyebrow, title, lead, image, imageAlt } = Astro.props;
+interface Props { crumbs: [string, string?][]; eyebrow: string; title: string; lead?: string; image?: string; imageAlt?: string; imageBadge?: string }
+const { crumbs, eyebrow, title, lead, image, imageAlt, imageBadge } = Astro.props;
 ---
 <section style="position:relative;overflow:hidden;border-bottom:1px solid var(--border)">
   <svg aria-hidden="true" class="deco" viewBox="0 0 1440 400" preserveAspectRatio="none">
@@ -17,7 +17,12 @@ const { crumbs, eyebrow, title, lead, image, imageAlt } = Astro.props;
       {lead && <p class="lead">{lead}</p>}
       <slot />
     </div>
-    {image && <img src={image} alt={imageAlt || ""} loading="eager" decoding="async" style="display:block;width:100%;height:auto;border-radius:12px" />}
+    {image && (
+      <div style="position:relative;border:1px solid var(--border);background:var(--bg);padding:12px">
+        <img src={image} alt={imageAlt || ""} loading="eager" decoding="async" style="display:block;width:100%;height:auto" />
+        {imageBadge && <div class="badge" style="position:absolute;left:24px;bottom:24px;background:var(--navy);color:#fff;padding:12px 16px">{imageBadge}</div>}
+      </div>
+    )}
   </div>
 </section>
 <style>

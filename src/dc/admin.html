@@ -168,7 +168,7 @@
                     <div style="display:grid;gap:10px">
                       <sc-if value="{{ f.hasImg }}">
                         <div style="position:relative;border:1px solid #E2E8F0;background:#F8FAFC;padding:8px;justify-self:start;max-width:100%">
-                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain" />
+                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain;transition:opacity .25s ease" />
                         </div>
                       </sc-if>
                       <sc-if value="{{ f.noImg }}">
@@ -188,6 +188,7 @@
                     <textarea id="{{ f.id }}" rows="{{ f.rows }}" value="{{ f.value }}" onInput="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;line-height:1.6;resize:vertical"></textarea>
                   </sc-if>
                   <sc-if value="{{ f.isSelect }}">
+
                     <select id="{{ f.id }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="padding:12px;border:1px solid #CBD5E1;font-size:14px;min-height:44px">
                       <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3">
                         <option value="{{ o }}">{{ o }}</option>
@@ -263,7 +264,7 @@
                     <div style="display:grid;gap:10px">
                       <sc-if value="{{ f.hasImg }}">
                         <div style="position:relative;border:1px solid #E2E8F0;background:#F8FAFC;padding:8px;justify-self:start;max-width:100%">
-                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain" />
+                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain;transition:opacity .25s ease" />
                         </div>
                       </sc-if>
                       <sc-if value="{{ f.noImg }}">
@@ -352,7 +353,7 @@
                     <div style="display:grid;gap:10px">
                       <sc-if value="{{ f.hasImg }}">
                         <div style="position:relative;border:1px solid #E2E8F0;background:#F8FAFC;padding:8px;justify-self:start;max-width:100%">
-                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain" />
+                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain;transition:opacity .25s ease" />
                         </div>
                       </sc-if>
                       <sc-if value="{{ f.noImg }}">
@@ -422,7 +423,7 @@
                     <div style="display:grid;gap:10px">
                       <sc-if value="{{ f.hasImg }}">
                         <div style="position:relative;border:1px solid #E2E8F0;background:#F8FAFC;padding:8px;justify-self:start;max-width:100%">
-                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain" />
+                          <img src="{{ f.value }}" alt="Pratinjau {{ f.label }}" style="display:block;max-width:100%;width:280px;max-height:200px;object-fit:contain;transition:opacity .25s ease" />
                         </div>
                       </sc-if>
                       <sc-if value="{{ f.noImg }}">
@@ -968,8 +969,11 @@ class Component extends DCLogic {
         c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
         const ctx = c.getContext("2d");
         ctx.drawImage(img, 0, 0, c.width, c.height);
+        // Preview lokal langsung tampil (optimistic) — tidak menunggu upload selesai.
+        const preview = c.toDataURL("image/webp", 0.82);
+        done(preview);
         const s = this.state.session;
-        if (!s) { done(c.toDataURL("image/webp", 0.82)); this.flash("Gambar siap (lokal). Klik Simpan."); return; }
+        if (!s) { this.flash("Gambar siap (lokal). Klik Simpan."); return; }
         this.flash("Mengunggah gambar…");
         c.toBlob((blob) => {
           sbData.upload(blob, s, currentUrl).then((url) => { done(url); this.flash("Gambar terunggah. Klik Simpan."); }).catch((e) => this.flash(e.message));

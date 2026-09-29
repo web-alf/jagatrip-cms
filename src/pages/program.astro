@@ -19,7 +19,7 @@ const facilities = [
 <Base title="Program — JAGATRIP" description="Rincian program internasional JAGATRIP: benchmarking, field trip, immersion, partnership, dan JAGATALK.">
   <PageHero crumbs={[["Home", "/"], ["Program"]]} eyebrow="OUR PROGRAMS" title="International Programs Designed to Expand Your World"
     lead="Program kami dirancang untuk membuka akses pembelajaran global, kolaborasi institusi, dan pengalaman internasional yang relevan untuk dunia pendidikan. Halaman ini memuat rincian setiap program: untuk siapa, apa yang dikerjakan di lapangan, dan apa yang dibawa pulang peserta."
-    image={site.programHero.image} imageAlt={site.programHero.imageAlt}>
+    image={site.programHero.image} imageAlt={site.programHero.imageAlt} imageBadge="INTERNATIONAL PROGRAMS">
     <ul style="margin-top:34px;display:flex;flex-wrap:wrap;gap:10px">
       {programs.map((p) => <li><a href={`#${p.id}`} class="pill">{p.title.split(" — ")[0]}</a></li>)}
     </ul>
