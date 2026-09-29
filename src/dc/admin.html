@@ -91,7 +91,6 @@
           <a href="/" target="_blank" rel="noopener" style="border:1px solid #CBD5E1;color:#0B2341;font-size:13px;font-weight:700;padding:11px 16px" style-hover="border-color:#0B2341;color:#0B2341">Lihat situs ↗</a>
           <button type="button" onClick="{{ onExport }}" style="border:1px solid #CBD5E1;background:#FFFFFF;color:#0B2341;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px" style-hover="border-color:#0B2341">Export JSON</button>
           <button type="button" onClick="{{ onSave }}" style="background:#F97316;border:none;color:#FFFFFF;font-size:13px;font-weight:700;padding:12px 20px;cursor:pointer;min-height:42px" style-hover="background:#EA580C">{{ saveLabel }}</button>
-          <button type="button" onClick="{{ onPublish }}" title="Build ulang situs dengan konten tersimpan" style="background:#0B2341;border:none;color:#FFFFFF;font-size:13px;font-weight:700;padding:12px 20px;cursor:pointer;min-height:42px" style-hover="background:#102A43">Publish ke Situs</button>
         </div>
       </header>
 
@@ -550,24 +549,18 @@ const sbData = {
     });
     if (!r.ok) throw new Error(r.status === 401 ? "Sesi habis. Login ulang." : "Gagal menyimpan ke server (" + r.status + ")");
   },
-  // INSERT ke public.deploys → Database Webhook Supabase → Cloudflare Deploy Hook → build ulang situs.
-  async publish(session, email) {
-    const r = await fetch(SB.url + "/rest/v1/deploys", {
-      method: "POST",
-      headers: Object.assign(sbAuth.headers(session.access_token), { Prefer: "return=minimal" }),
-      body: JSON.stringify({ by_email: email })
-    });
-    if (!r.ok) throw new Error("Gagal memicu publish (" + r.status + ")");
-  },
-  async upload(blob, session) {
-    const name = (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)) + ".webp";
+  // Ganti gambar yang sudah di bucket media → timpa file yang sama (URL tetap, tanpa file yatim). Cache 60 dtk.
+  async upload(blob, session, currentUrl) {
+    const base = SB.url + "/storage/v1/object/public/media/";
+    const replacing = typeof currentUrl === "string" && currentUrl.startsWith(base);
+    const name = replacing ? currentUrl.slice(base.length) : (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)) + ".webp";
     const r = await fetch(SB.url + "/storage/v1/object/media/" + name, {
       method: "POST",
-      headers: { apikey: SB.key, Authorization: "Bearer " + session.access_token, "Content-Type": "image/webp", "Cache-Control": "31536000" },
+      headers: { apikey: SB.key, Authorization: "Bearer " + session.access_token, "Content-Type": "image/webp", "Cache-Control": "60", "x-upsert": "true" },
       body: blob
     });
     if (!r.ok) throw new Error("Upload gambar gagal (" + r.status + "). Bucket 'media' sudah dibuat?");
-    return SB.url + "/storage/v1/object/public/media/" + name;
+    return base + name;
   }
 };
 
@@ -950,24 +943,12 @@ class Component extends DCLogic {
     try {
       await sbData.save(this.state.data, Object.assign({ user_email: this.state.user && this.state.user.email }, s));
       this.setState({ dirty: false });
-      this.flash("Tersimpan ke server. Klik Publish agar tampil di situs.");
+      this.flash("Tersimpan. Tampil di situs ≤ 30 detik.");
     } catch (e) { this.flash(e.message); }
     this.setState({ busy: false });
   };
 
-  publish = async () => {
-    if (this.state.busy) return;
-    if (this.state.dirty) { this.flash("Simpan perubahan dulu sebelum Publish."); return; }
-    if (!this.state.session) { this.flash("Login dulu untuk Publish."); return; }
-    this.setState({ busy: true });
-    try {
-      await sbData.publish(this.state.session, this.state.user && this.state.user.email);
-      this.flash("Publish dipicu. Situs diperbarui ±1–2 menit.");
-    } catch (e) { this.flash(e.message); }
-    this.setState({ busy: false });
-  };
-
-  readImage(file, done) {
+  readImage(file, done, currentUrl) {
     if (!/^image\//.test(file.type)) { this.flash("File harus berupa gambar."); return; }
     const reader = new FileReader();
     reader.onload = () => {
@@ -982,7 +963,7 @@ class Component extends DCLogic {
         if (!s) { done(c.toDataURL("image/webp", 0.82)); this.flash("Gambar siap (lokal). Klik Simpan."); return; }
         this.flash("Mengunggah gambar…");
         c.toBlob((blob) => {
-          sbData.upload(blob, s).then((url) => { done(url); this.flash("Gambar terunggah. Klik Simpan."); }).catch((e) => this.flash(e.message));
+          sbData.upload(blob, s, currentUrl).then((url) => { done(url); this.flash("Gambar terunggah. Klik Simpan."); }).catch((e) => this.flash(e.message));
         }, "image/webp", 0.82);
       };
       img.onerror = () => this.flash("Gambar tidak dapat dibaca.");
@@ -1016,7 +997,7 @@ class Component extends DCLogic {
       urlValue: typeof value === "string" && value.indexOf("data:") === 0 ? "" : (value || ""),
       imgInfo: typeof value === "string" && value.indexOf("data:") === 0 ? "File terunggah · " + Math.round(value.length * 0.75 / 1024) + " KB" : (value ? "Dari URL" : "JPG, PNG, WEBP · dikompres otomatis"),
       uploadLabel: value ? "Ganti gambar" : "Unggah gambar",
-      onUpload: (ev) => { const file = ev.target.files && ev.target.files[0]; ev.target.value = ""; if (file) this.readImage(file, (url) => onSet(def.key, url)); },
+      onUpload: (ev) => { const file = ev.target.files && ev.target.files[0]; ev.target.value = ""; if (file) this.readImage(file, (url) => onSet(def.key, url), value); },
       onClear: () => onSet(def.key, ""),
       counter: def.max ? len + " / " + def.max + " karakter" : "",
       counterDisplay: def.max ? "block" : "none",
@@ -1250,7 +1231,6 @@ class Component extends DCLogic {
       onCloseArticle: () => this.setState({ articleIndex: null }),
 
       onSave: this.save,
-      onPublish: this.publish,
       saveLabel: st.busy ? "Memproses…" : "Simpan Perubahan",
       onExport: () => {
         const blob = new Blob([JSON.stringify(this.state.data, null, 2)], { type: "application/json" });

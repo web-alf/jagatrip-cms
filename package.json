@@ -7,10 +7,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "deploy": "wrangler deploy",
     "keepalive": "bun scripts/keepalive.ts",
     "seed": "bun scripts/seed.ts"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.3.3",
     "astro": "^7.3.5"
   }
 }

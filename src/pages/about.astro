@@ -77,9 +77,9 @@ const pad = (i: number) => String(i + 1).padStart(2, "0");
     <div class="wrap">
       <p class="eyebrow">CARA KERJA PROGRAM</p>
       <h2 class="h2">Empat Tahap dari Perencanaan sampai Tindak Lanjut</h2>
-      <ol class="tiles grid" style="--min:240px;gap:1px;margin-top:44px">
+      <ol class="grid" style="--min:240px;margin-top:44px">
         {steps.map(([t, d], i) => (
-          <li style="border-top:3px solid var(--orange);padding:28px 26px">
+          <li class="step" style="padding:32px 28px">
             <p class="eyebrow" style="letter-spacing:.1em;margin:0">TAHAP {pad(i)}</p>
             <p style="margin-top:12px;font-size:18px;font-weight:700;color:var(--navy)">{t}</p>
             <p class="muted" style="margin-top:10px;font-size:14px">{d}</p>
@@ -104,6 +104,8 @@ const pad = (i: number) => String(i + 1).padStart(2, "0");
 
 <style>
   .note { margin-top: 16px; font-size: 14px; line-height: 1.6; color: var(--faint); max-width: 460px; }
+  .step { background: #fff; border: 2px solid var(--border); border-top: 4px solid var(--orange); border-radius: 10px; transition: box-shadow .18s, transform .18s, border-color .18s; }
+  .step:hover { border-color: var(--orange); box-shadow: 0 10px 24px rgba(11,35,65,.1); transform: translateY(-3px); }
   .dark { background: var(--dborder); border-color: var(--dborder); }
   .dark > li { background: var(--dcard); color: #E2E8F0; }
   .dark .num { color: var(--orange-l); }

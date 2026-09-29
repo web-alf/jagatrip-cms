@@ -1,5 +1,6 @@
 ---
-// ponytail: admin masih halaman dc lama (localStorage). Ganti dengan admin native + Supabase Auth.
+// Prerender: admin = HTML statis, env PUBLIC_* di-inline saat build.
+export const prerender = true;
 import html from "../../dc/admin.html?raw";
 const env = { url: import.meta.env.PUBLIC_SUPABASE_URL, key: import.meta.env.PUBLIC_SUPABASE_ANON_KEY };
 const body = html.replace(/<!doctype[^>]*>/i, "").replace("__SUPABASE__", JSON.stringify(env));

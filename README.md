@@ -1,7 +1,8 @@
 # JAGATRIP CMS
 
 Situs publik JAGATRIP (Edu-Tourism, benchmarking, partnership) + panel admin `/admin`.
-Astro 7 static output, Bun, Supabase Auth. Deploy ke Cloudflare (Workers static assets).
+Astro 7 **SSR** (`output: 'server'`, `@astrojs/cloudflare`), Bun, Supabase Auth. Deploy ke Cloudflare Workers.
+Setiap request baca konten dari Supabase langsung — **tidak ada build/Publish saat konten berubah.**
 
 ---
 
@@ -29,27 +30,30 @@ Astro 7 static output, Bun, Supabase Auth. Deploy ke Cloudflare (Workers static 
 
 ```mermaid
 flowchart LR
-  subgraph build["Build time (bun run build)"]
-    D[src/data/defaults.ts] --> R[src/lib/repo.ts]
-    R --> P[src/pages/*.astro]
-    P --> DIST[dist/ static HTML]
-    A[src/dc/admin.html] -->|?raw + inject env| AD[dist/admin/index.html]
+  subgraph worker["Cloudflare Worker (tiap request)"]
+    P[src/pages/*.astro] --> R[src/lib/repo.ts]
+    R -->|cache 30 dtk per isolate| S[(Supabase public.content)]
+    R --> D[src/data/defaults.ts]
+    P --> HTML[Response HTML]
   end
-  subgraph runtime["Browser"]
-    AD --> LS[(localStorage\njagatrip-cms-v1)]
+  subgraph prerender["Build time (halaman statis)"]
+    A[src/dc/admin.html] -->|?raw + inject env| AD[dist/client/admin/index.html]
+  end
+  subgraph runtime["Browser admin"]
     AD -->|REST /auth/v1| SB[(Supabase Auth)]
+    AD -->|upsert content, upload media| SB
   end
   subgraph ops["GitHub Actions"]
-    KA[keepalive.yml cron] -->|GET /rest/v1/keepalive| SB
+    KA[keepalive.yml cron] -->|GET /rest/v1/keepalive| S
     SEC[security.yml] --> TRIVY[Trivy]
   end
 ```
 
 Prinsip:
 
-- **Static-only.** Tidak ada server runtime. Semua HTML dirender saat build.
-- **Satu pintu data.** Halaman publik hanya baca dari `src/lib/repo.ts`. Ganti isi fungsi di file itu = ganti sumber data (defaults → Supabase) tanpa sentuh pages.
-- **Admin masih terpisah.** `/admin` adalah SPA lama berbasis framework internal "dc" (`public/support.js`) yang menyimpan konten ke `localStorage`. Login-nya sudah Supabase Auth; datanya belum.
+- **SSR, bukan build-per-perubahan.** Halaman publik (`/`, `/about`, `/program`, `/contact`, `/news`, `/news/<slug>`) di-render on-demand tiap request. Admin edit konten → tampil di situs ≤ 30 detik (TTL cache), tanpa deploy.
+- **Satu pintu data.** Halaman publik hanya baca dari `src/lib/repo.ts`. Fetch gagal / Supabase down → fallback `defaults.ts`, situs tetap jalan (stale/default), tidak pernah 500.
+- **Admin tetap prerender.** `/admin` adalah halaman statis (SPA lama "dc", `public/support.js`) — env `PUBLIC_*` di-inline saat build. Datanya baca/tulis langsung ke Supabase dari browser.
 
 ---
 
@@ -57,7 +61,8 @@ Prinsip:
 
 ```
 .
-├── astro.config.mjs          # trailingSlash: 'ignore'; output default static
+├── astro.config.mjs          # output: 'server' + adapter @astrojs/cloudflare
+├── wrangler.jsonc             # config Worker (name, assets dir dist/client)
 ├── package.json              # packageManager: bun@1.4.2
 ├── bun.lock                  # lockfile v2 (butuh Bun ≥1.3)
 ├── tsconfig.json
@@ -87,13 +92,13 @@ Prinsip:
     │   ├── program.astro     # /program
     │   ├── contact.astro     # /contact
     │   ├── news/index.astro  # /news
-    │   ├── news/[slug].astro # /news/<slug>  (getStaticPaths dari repo)
-    │   └── admin/index.astro # /admin  → wrap src/dc/admin.html
+    │   ├── news/[slug].astro # /news/<slug>  (SSR, cari by Astro.params.slug)
+    │   └── admin/index.astro # /admin  (prerender) → wrap src/dc/admin.html
     ├── dc/admin.html         # SPA admin (template + logic dalam satu file)
     └── styles/global.css
 ```
 
-Build menghasilkan 7 route: `/`, `/about`, `/program`, `/contact`, `/news`, `/news/<slug>` (per artikel Published), `/admin`.
+Route: `/`, `/about`, `/program`, `/contact`, `/news`, `/news/<slug>` = SSR (render tiap request). `/admin` = prerender (statis).
 
 ---
 
@@ -132,9 +137,10 @@ Di mana disimpan:
 
 | Perintah | Fungsi |
 |---|---|
-| `bun run dev` | dev server |
-| `bun run build` | build ke `dist/` |
-| `bun run preview` | serve `dist/` |
+| `bun run dev` | dev server (workerd via Vite plugin Cloudflare) |
+| `bun run build` | build ke `dist/` (`dist/client` assets, `dist/server` Worker) |
+| `bun run preview` | jalankan Worker hasil build via Wrangler (`astro preview`) |
+| `bun run deploy` | `wrangler deploy` — deploy Worker ke Cloudflare |
 | `bun test` | jalankan `src/lib/*.test.ts` |
 | `bun run keepalive` | ping Supabase sekali (baca `.env`) |
 | `bun run seed` | isi tabel `content` dari `defaults.ts` untuk key yang belum ada; `--force` timpa semua (butuh `SUPABASE_SERVICE_ROLE_KEY`) |
@@ -147,22 +153,26 @@ Jangan jalankan `bunx astro check` non-interaktif — hang menunggu prompt insta
 
 ```mermaid
 sequenceDiagram
-  participant B as bun run build
+  participant U as Request
   participant P as pages/*.astro
   participant R as lib/repo.ts
   participant D as data/defaults.ts
   participant S as Supabase public.content
-  B->>P: render
+  U->>P: GET /, /news/<slug>, ...
   P->>R: await getSite()/getArticles()/...
-  R->>S: GET /rest/v1/content?select=key,data (anon, sekali per build)
-  S-->>R: rows {key, data jsonb}
-  R->>D: defaults
-  R->>R: merge.ts: defaults + rows (status Aktif/Tampil → boolean, icon/points dari defaults by title)
+  alt cache < 30 dtk (isolate ini)
+    R-->>P: data dari cache
+  else cache basi / kosong
+    R->>S: GET /rest/v1/content?select=key,data (anon)
+    S-->>R: rows {key, data jsonb}
+    R->>D: defaults
+    R->>R: merge.ts: defaults + rows (status Aktif/Tampil → boolean, icon/points dari defaults by title)
+  end
   R-->>P: data (sudah difilter: visible, Published, sort desc by date)
-  P-->>B: HTML statis
+  P-->>U: HTML
 ```
 
-Env kosong atau fetch gagal → pakai `defaults.ts` (build tidak pernah gagal karena Supabase).
+Env kosong atau fetch gagal → pakai `defaults.ts` (situs tidak pernah 500 karena Supabase down). ponytail: cache 30 dtk in-memory per isolate Worker (`src/lib/repo.ts`) — bukan cache global; isolate baru = fetch ulang. Upgrade: Cloudflare Cache API / KV bila traffic tinggi butuh cache lintas-isolate.
 
 `src/lib/repo.ts`:
 
@@ -175,7 +185,7 @@ Env kosong atau fetch gagal → pakai `defaults.ts` (build tidak pernah gagal ka
 | `getArticles()` | artikel `status === "Published"`, urut tanggal desc |
 | `getArticle(slug)` | satu artikel atau `undefined` |
 
-`src/pages/news/[slug].astro` pakai `getStaticPaths()` → satu HTML per artikel Published.
+`src/pages/news/[slug].astro`: SSR, cari artikel dari `getArticles()` by `Astro.params.slug`; tidak ketemu → `404`.
 
 Aturan: **pages tidak boleh import `src/data` langsung.**
 
@@ -209,13 +219,11 @@ stateDiagram-v2
   Login --> Dashboard: signIn OK
   Dashboard --> Dashboard: edit → dirty=true
   Dashboard --> Saved: Simpan → upsert POST /rest/v1/content (Bearer access_token)
-  Saved --> Dashboard
-  Dashboard --> Published: Publish → INSERT public.deploys → webhook → Cloudflare build
-  Published --> Dashboard
+  Saved --> Dashboard: tampil di situs ≤ 30 detik, tanpa build
   Dashboard --> Login: Logout → /auth/v1/logout + hapus sesi
 ```
 
-Upload gambar: canvas resize maks 1600px → WebP 0.82 → `POST /storage/v1/object/media/<uuid>.webp` → field diisi URL publik. Belum login → data URL lokal.
+Upload gambar: canvas resize maks 1600px → WebP 0.82 → `POST /storage/v1/object/media/<nama>.webp` (`x-upsert: true`, `Cache-Control: 60`) → field diisi URL publik. Ganti gambar yang sudah pakai URL bucket `media` → timpa file yang sama (URL tetap, tanpa file yatim); gambar baru → nama file `uuid` baru. Belum login → data URL lokal.
 
 ### Editor artikel
 
@@ -234,18 +242,16 @@ Upload gambar: canvas resize maks 1600px → WebP 0.82 → `POST /storage/v1/obj
   | canonical terisi | 10 |
   | body > 600 karakter | 10 |
 
-### Simpan vs Publish
+### Simpan
 
-- **Simpan Perubahan** → tulis ke Supabase `public.content`. Belum tampil di situs (situs statis).
-- **Publish ke Situs** → INSERT `public.deploys` → Database Webhook → Cloudflare Deploy Hook → build ulang (±1–2 menit). Ditolak jika masih ada perubahan belum disimpan.
+- **Simpan Perubahan** → upsert langsung ke Supabase `public.content`. Tidak ada tombol Publish/build — halaman publik baca Supabase tiap request (cache 30 dtk), jadi perubahan tampil sendiri ≤ 30 detik.
 
 ### Setup sekali (Dashboard)
 
-1. **SQL Editor** → jalankan `supabase/migrations/20260929_content.sql` (tabel `content`, `deploys`, bucket `media`, RLS). Lalu `bun run seed`.
-2. **Cloudflare** → Workers & Pages → worker → Settings → Builds → **Deploy Hooks** → Create → salin URL.
-3. **Supabase** → Integrations → **Database Webhooks** → Create: table `public.deploys`, event `INSERT`, type HTTP Request, method `POST`, URL = Deploy Hook. Simpan.
+1. **SQL Editor** → jalankan `supabase/migrations/20260929_content.sql` (tabel `content`, bucket `media`, RLS). Lalu `bun run seed`.
+2. **Cloudflare** → Workers & Pages → Create → Import repo. Build command `bun run build`, Deploy command `npx wrangler deploy`. Build vars: `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`.
 
-Deploy Hook URL adalah rahasia (siapa pun yang punya bisa memicu build). Hanya ada di webhook Supabase, tidak di repo/browser. Limit Cloudflare 10 trigger/menit.
+Tidak perlu Deploy Hook atau Database Webhook lagi — dihapus bersama migrasi ke SSR.
 
 Field `icon`, `long`, `who`, `points` (program), `flyerAlt` (event), `icon` (audience) tidak ada di form admin — diambil dari `defaults.ts` dicocokkan **by title**. Ganti judul program di admin = detail tersebut hilang (fallback: `long = desc`, `points = []`). Tambah field ke form admin bila perlu.
 
@@ -360,19 +366,21 @@ Secret scanner akan menandai `.env` lokal — itu benar; file tersebut memang ti
 
 ## 13. Deploy (Cloudflare)
 
-Project Cloudflare Workers (static assets) terhubung ke Git.
+Project Cloudflare Workers (SSR, bukan static assets saja) terhubung ke Git. Konfigurasi Worker di `wrangler.jsonc` (name, assets dir `./dist/client`).
 
-- Build command: `bun run build` — Output dir: `dist`.
+- Build command: `bun run build`.
+- Deploy command: `npx wrangler deploy` (Wrangler ikut terpasang lewat `@astrojs/cloudflare`).
 - Bun version: dari `packageManager` di `package.json`. Kalau Cloudflare tetap pakai Bun lama (error `Unknown lockfile version`), set build var `BUN_VERSION=1.4.2`.
-- Build vars (Settings → Build → Variables and secrets): `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`.
-- Runtime vars/bindings **terkunci** untuk static assets — normal, tidak dibutuhkan.
+- Build vars (Settings → Build → Variables and secrets): `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY` — dipakai saat build (inline ke `/admin`) **dan** saat runtime Worker (dibaca `import.meta.env` di `repo.ts`, inline juga karena prefix `PUBLIC_`).
+- **Supabase down = situs tampil defaults/stale**, bukan 500 — tapi tetap jaga Supabase aktif (lihat §11 Keepalive; sekarang lebih penting karena tiap request bisa hit Supabase).
 
 Checklist rilis:
 
 1. `bun test` dan `bun run build` lolos lokal.
-2. Push ke `main` → Cloudflare build otomatis.
+2. Push ke `main` → Cloudflare build + deploy otomatis (Workers Builds).
 3. Cek `/admin` → login berhasil, bukan pesan "Konfigurasi Supabase kosong".
 4. Cek `view-source` artikel → canonical/og:image benar.
+5. Edit satu field di admin → Simpan → refresh halaman publik ≤ 30 detik → berubah tanpa deploy manual.
 
 ---
 
@@ -386,12 +394,12 @@ Checklist rilis:
 | Login lolos tapi nama/role salah | `user_metadata` kosong | isi `name`, `role` di metadata user |
 | `bun run keepalive` → 404 `PGRST205` | tabel tidak ada / tidak ter-expose | jalankan SQL §11 |
 | `bun run keepalive` → env kosong | `.env` belum ada | `cp .env.example .env` lalu isi |
-| Perubahan di `/admin` tidak muncul di situs | belum klik **Publish**, atau webhook belum dibuat | klik Publish; cek Supabase → Database Webhooks → logs; cek Cloudflare → Builds |
+| Perubahan di `/admin` tidak muncul di situs setelah 30+ detik | fetch Supabase gagal (RLS/anon key salah) atau cache Worker isolate belum expired di edge tertentu | cek log Worker (`wrangler tail`); cek `PUBLIC_SUPABASE_ANON_KEY` di Cloudflare Build vars |
 | Admin: "Gagal memuat konten (404)" | tabel `content` belum ada | jalankan migration SQL (§7) |
 | Admin: "Sesi habis. Login ulang." | access_token > 1 jam | logout → login |
 | Admin: "Upload gambar gagal (404)" | bucket `media` belum ada | jalankan migration SQL |
-| Build pakai konten lama | `repo.ts` fallback ke defaults karena fetch gagal | lihat log build: `[repo] Supabase gagal` |
-| Variables "cannot be added to a Worker that only has static assets" | itu section Runtime | pakai section **Build** |
+| Halaman publik pakai konten lama/default terus | `repo.ts` fallback ke defaults karena fetch gagal tiap request | cek runtime log Worker: `[repo] Supabase gagal`; cek Supabase tidak paused |
+| `wrangler deploy` gagal "could not resolve..." | dependency pakai Node API tak didukung `workerd` | lihat §Node.js compatibility di docs `@astrojs/cloudflare` |
 | `bunx astro check` hang | prompt install `@astrojs/check` | jangan jalankan non-interaktif |
 
 ---
@@ -404,10 +412,9 @@ Ditandai `ponytail:` di kode = penyederhanaan sengaja + jalur upgrade.
 |---|---|---|
 | 1 tabel `content` jsonb per section | tidak bisa query per artikel/filter SQL; 1 admin simpan = timpa semua section | normalisasi ke tabel `articles`, `programs`, dll. saat butuh query/relasi atau multi-editor bersamaan |
 | Detail program/audience (`icon`, `points`, …) dari `defaults.ts` by title | ganti judul = detail hilang | tambah field ke form admin, hapus `byTitle` di `merge.ts` |
-| Publish = INSERT `deploys` → Database Webhook | tidak ada status build di admin | poll Cloudflare API dari endpoint server |
-| Static output | tidak ada endpoint server | `output: 'server'` + `@astrojs/cloudflare` bila perlu API rahasia (service role) |
+| Cache repo.ts 30 dtk per isolate Worker | lintas-isolate tidak sinkron, tiap isolate fetch sendiri | Cloudflare Cache API (`caches.default`) atau KV bila traffic tinggi |
+| Bucket `media` tidak pernah dibersihkan (file lama dari ganti gambar model "URL baru") | storage tumbuh pelan | cron hapus objek yang tidak direferensi `content` |
 | Role hanya label | admin & super_admin sama kuat | RLS policy `auth.jwt() -> 'user_metadata' ->> 'role'` |
 | `USERS` array statis | perlu sinkron manual | fetch `/auth/v1/admin/users` lewat endpoint server (butuh service role → butuh server output) |
 | Refresh token hanya saat reload | sesi > 1 jam tanpa reload bisa 401 | timer refresh sebelum `expires_at` |
 | `onNewArticle` set canonical ke `/news/artikel-baru` | canonical tidak ikut slug | kosongkan default; hitung dari slug bila kosong |
-| Upload ke bucket `media`, file tidak pernah dihapus | storage tumbuh | cron hapus objek yang tidak direferensi `content` |

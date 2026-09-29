@@ -173,4 +173,18 @@ export const articles: Article[] = [
     body: "TODO: isi naskah artikel. Gunakan H2/H3 berurutan, paragraf 2–4 baris, dan tautan internal ke halaman program terkait.",
     cover: "", imageAlt: "Delegasi JAGATRIP saat sesi observasi kelas",
   },
+  {
+    title: "Pendaftaran Batch #2 Resmi Dibuka: Kuota Terbatas untuk 4 Institusi",
+    slug: "pendaftaran-batch-2-dibuka", category: "Pengumuman", author: "Tim JAGATRIP", date: "2026-09-18", status: "Published",
+    excerpt: "JAGATRIP membuka pendaftaran Batch #2 dengan kuota terbatas 4 institusi per pemberangkatan. Simak jadwal, negara tujuan, dan cara daftar.",
+    body: "TODO: isi naskah artikel. Gunakan H2/H3 berurutan, paragraf 2–4 baris, dan tautan internal ke halaman program terkait.",
+    cover: "", imageAlt: "Tim JAGATRIP menyiapkan agenda Batch #2",
+  },
+  {
+    title: "Lima Pelajaran dari Kunjungan Institusi Mancanegara",
+    slug: "lima-pelajaran-kunjungan-institusi", category: "Insight", author: "Tim JAGATRIP", date: "2026-09-24", status: "Published",
+    excerpt: "Dari tata kelola kesiswaan sampai kolaborasi lintas negara — berikut lima pelajaran utama yang dibawa pulang delegasi dari kunjungan institusi mancanegara.",
+    body: "TODO: isi naskah artikel. Gunakan H2/H3 berurutan, paragraf 2–4 baris, dan tautan internal ke halaman program terkait.",
+    cover: "", imageAlt: "Sesi dialog delegasi dengan manajemen institusi tujuan",
+  },
 ];

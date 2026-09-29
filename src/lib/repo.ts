@@ -3,25 +3,33 @@ import { merge, type Content, type Defaults } from "./merge";
 import type { Article } from "./types";
 
 // Satu-satunya pintu data untuk pages. Pages tidak boleh import src/data langsung.
-// Saat build: baca tabel `content` Supabase (1 baris per section), gabung ke defaults.
-// Env kosong / fetch gagal → defaults. ponytail: fetch sekali per build, tanpa retry.
+// SSR: tiap request baca tabel `content` Supabase (1 baris per section), gabung ke defaults.
+// Env kosong / fetch gagal → defaults (situs tidak pernah 500 karena Supabase).
+// ponytail: cache in-memory per isolate 30 dtk. Upgrade: Cloudflare Cache API / KV bila traffic tinggi.
 
 const URL = import.meta.env.PUBLIC_SUPABASE_URL;
 const KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+const TTL = 30_000;
 
-let cache: Promise<Defaults> | undefined;
-const load = () => (cache ??= (async () => {
-  if (!URL || !KEY) return d;
-  try {
-    const r = await fetch(`${URL}/rest/v1/content?select=key,data`, { headers: { apikey: KEY } });
-    if (!r.ok) throw new Error(String(r.status));
-    const c: Content = Object.fromEntries((await r.json()).map((row: { key: string; data: unknown }) => [row.key, row.data]));
-    return merge(d, c);
-  } catch (e) {
-    console.warn("[repo] Supabase gagal, pakai defaults:", e);
-    return d;
-  }
-})());
+let cache: { at: number; p: Promise<Defaults> } | undefined;
+const load = () => {
+  if (cache && Date.now() - cache.at < TTL) return cache.p;
+  const p = (async () => {
+    if (!URL || !KEY) return d;
+    try {
+      const r = await fetch(`${URL}/rest/v1/content?select=key,data`, { headers: { apikey: KEY } });
+      if (!r.ok) throw new Error(String(r.status));
+      const c: Content = Object.fromEntries((await r.json()).map((row: { key: string; data: unknown }) => [row.key, row.data]));
+      return merge(d, c);
+    } catch (e) {
+      console.warn("[repo] Supabase gagal, pakai defaults:", e);
+      cache = undefined;
+      return d;
+    }
+  })();
+  cache = { at: Date.now(), p };
+  return p;
+};
 
 export const getSite = async () => (await load()).site;
 export const getPrograms = async () => (await load()).programs;

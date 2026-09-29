@@ -1,16 +1,46 @@
 ---
 import Base from "../../layouts/Base.astro";
-import PageHero from "../../components/site/PageHero.astro";
 import ArticleCard from "../../components/site/ArticleCard.astro";
 import { getArticles } from "../../lib/repo";
+import { fmtDate } from "../../lib/format";
 
 const articles = await getArticles();
+const featured = articles.slice(0, 3);
 const cats = [...new Set(articles.map((a) => a.category))];
 const tabs: [string, string, number][] = [["all", "Semua", articles.length], ...cats.map((c): [string, string, number] => [c, c, articles.filter((a) => a.category === c).length])];
 ---
 <Base title="News — JAGATRIP" description="Catatan benchmarking, insight pendidikan internasional, dan pengumuman terbaru dari JAGATRIP.">
-  <PageHero crumbs={[["Home", "/"], ["News"]]} eyebrow="NEWS & ARTIKEL" title="Kabar dan Catatan dari Perjalanan JAGATRIP"
-    lead="Catatan benchmarking, insight pendidikan internasional, dokumentasi program, dan pengumuman terbaru dari tim JAGATRIP." />
+  {featured.length > 0
+    ? <section data-carousel class="news-hero" role="group" aria-roledescription="carousel" aria-label="Berita pilihan">
+        <div class="carousel"><div class="slides">
+          {featured.map((a) => (
+            <a href={`/news/${a.slug}`} class="hslide">
+              {a.cover
+                ? <img src={a.cover} alt={a.imageAlt} loading="lazy" />
+                : <div class="hslide-ph"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2" /><circle cx="9" cy="10" r="1.8" /><path d="M21 16l-5-5-9 9" /></svg></div>}
+            </a>
+          ))}
+        </div></div>
+        <div class="hfade" aria-hidden="true"></div>
+        <div class="wrap hcap">
+          <nav aria-label="Breadcrumb" class="crumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">News</span></li></ol></nav>
+          <p class="eyebrow">NEWS & ARTIKEL</p>
+          {featured.map((a, i) => (
+            <div data-i={i} hidden={i > 0}>
+              <h1 class="h1" style="color:#fff">{a.title}</h1>
+              <p class="lead" style="color:var(--line)">{fmtDate(a.date)} · {a.author} · {a.category}</p>
+            </div>
+          ))}
+        </div>
+        <div class="wrap hnav">
+          <div style="display:flex;gap:8px">{featured.map((_, i) => <button type="button" class="dot" data-go={i} aria-label={`Berita ${i + 1}`}></button>)}</div>
+          <div style="display:flex;gap:8px"><button type="button" class="arrow" data-prev aria-label="Berita sebelumnya">←</button><button type="button" class="arrow" data-next aria-label="Berita berikutnya">→</button></div>
+        </div>
+      </section>
+    : <section class="wrap" style="padding-block:clamp(40px,5vw,72px)">
+        <p class="eyebrow">NEWS & ARTIKEL</p>
+        <h1 class="h1">Kabar dan Catatan dari Perjalanan JAGATRIP</h1>
+      </section>}
 
   <section class="bg-soft">
     <div class="wrap" id="news">
@@ -32,6 +62,18 @@ const tabs: [string, string, number][] = [["all", "Semua", articles.length], ...
   .tab { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: var(--navy); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
   .tab:hover { border-color: var(--orange); }
   .tab[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .news-hero { position: relative; background: var(--navy); overflow: hidden; }
+  .news-hero .carousel, .news-hero .slides, .hslide { height: clamp(360px, 46vw, 560px); }
+  .hslide { display: block; }
+  .hslide img { width: 100%; height: 100%; object-fit: cover; }
+  .hslide-ph { width: 100%; height: 100%; display: grid; place-items: center; background: var(--dcard); }
+  .hfade { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(11,35,65,.92), rgba(11,35,65,.35) 55%, rgba(11,35,65,.15)); pointer-events: none; }
+  .hcap { position: absolute; left: 0; right: 0; bottom: 64px; padding-top: 0; padding-bottom: 0; }
+  .hcap .h1 { max-width: 780px; }
+  .hcap [data-i] .lead { margin-top: 10px; }
+  .hnav { position: absolute; left: 0; right: 0; bottom: 20px; display: flex; justify-content: space-between; align-items: center; padding-top: 0; padding-bottom: 0; }
+  .hnav .arrow { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.3); color: #fff; }
+  .hnav .arrow:hover { background: #fff; color: var(--navy); }
 </style>
 
 <script>

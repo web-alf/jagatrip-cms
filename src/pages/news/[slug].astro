@@ -5,11 +5,10 @@ import { getArticles } from "../../lib/repo";
 import { bodyBlocks, fmtDate } from "../../lib/format";
 import type { Article } from "../../lib/types";
 
-export async function getStaticPaths() {
-  const all = await getArticles();
-  return all.map((a) => ({ params: { slug: a.slug }, props: { a, others: all.filter((x) => x.slug !== a.slug).slice(0, 3) } }));
-}
-const { a, others } = Astro.props as { a: Article; others: Article[] };
+const all = await getArticles();
+const a = all.find((x) => x.slug === Astro.params.slug) as Article | undefined;
+if (!a) return new Response(null, { status: 404 });
+const others = all.filter((x) => x.slug !== a.slug).slice(0, 3);
 const size = { h2: "26px", h3: "20px", p: "17px" };
 ---
 <Base title={`${a.title} — JAGATRIP`} description={a.excerpt}>

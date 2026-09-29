@@ -1,3 +1,10 @@
 import { defineConfig } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
 
-export default defineConfig({ trailingSlash: 'ignore' });
+// SSR: setiap request baca Supabase (cache 30 dtk di lib/repo.ts). Tidak ada build ulang saat konten berubah.
+export default defineConfig({
+  trailingSlash: 'ignore',
+  output: 'server',
+  adapter: cloudflare({ imageService: 'passthrough' }),
+  session: false,
+});
