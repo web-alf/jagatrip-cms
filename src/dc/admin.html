@@ -32,8 +32,8 @@
   <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0B2341;padding:24px">
     <form onSubmit="{{ onLogin }}" style="width:100%;max-width:420px;background:#FFFFFF;padding:40px;display:grid;gap:20px">
       <div style="display:flex;align-items:center;gap:10px">
-        <img src="https://jagatrip.com/images/batch2/logo-logogram.png" alt="" style="height:32px;width:auto" />
-        <img src="https://jagatrip.com/images/batch2/logo-logotype.png" alt="JAGATRIP" style="height:18px;width:auto" />
+        <img src="/assets/brand/logogram.webp" alt="" style="height:32px;width:auto" />
+        <img src="/assets/brand/logotype.webp" alt="JAGATRIP" style="height:18px;width:auto" />
       </div>
       <div>
         <h1 style="font-size:26px;font-weight:800;color:#0B2341;letter-spacing:-0.02em">Masuk ke CMS</h1>
@@ -59,7 +59,7 @@
 
     <aside style="flex:none;width:250px;background:#0B2341;color:#FFFFFF;padding:22px 0;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh;overflow:auto">
       <div style="padding:0 20px;display:flex;align-items:center;gap:10px">
-        <img src="https://jagatrip.com/images/batch2/logo-logogram.png" alt="" style="height:26px;width:auto" />
+        <img src="/assets/brand/logogram.webp" alt="" style="height:26px;width:auto" />
         <span style="font-size:12px;font-weight:700;letter-spacing:0.14em;color:#FB923C">CMS</span>
       </div>
       <nav aria-label="Navigasi admin" style="display:grid;gap:2px">
@@ -512,9 +512,10 @@ const SB = __SUPABASE__; // diisi src/pages/admin/index.astro dari PUBLIC_SUPABA
 const sbAuth = {
   headers: (tok) => ({ apikey: SB.key, Authorization: "Bearer " + (tok || SB.key), "Content-Type": "application/json" }),
   async signIn(email, password) {
+    if (!SB.url || !SB.key) throw new Error("Konfigurasi Supabase kosong: set PUBLIC_SUPABASE_URL & PUBLIC_SUPABASE_ANON_KEY di env build.");
     const r = await fetch(SB.url + "/auth/v1/token?grant_type=password", { method: "POST", headers: this.headers(), body: JSON.stringify({ email, password }) });
     const j = await r.json();
-    if (!r.ok) throw new Error(j.error_description || j.msg || "Login gagal");
+    if (!r.ok) throw new Error(r.status === 400 ? "Email atau password salah." : (j.error_description || j.msg || j.error || "Login gagal (" + r.status + ")"));
     return j;
   },
   async refresh(refresh_token) {
@@ -1128,7 +1129,7 @@ class Component extends DCLogic {
           try { localStorage.setItem(AUTH, JSON.stringify(session)); } catch (e) {}
           this.setState({ authed: true, session, user: session.user, loginPass: "", loginBusy: false });
         } catch (e) {
-          this.setState({ loginError: "Email atau password salah.", loginBusy: false });
+          this.setState({ loginError: e.message || "Login gagal.", loginBusy: false });
         }
       },
       onLogout: () => {

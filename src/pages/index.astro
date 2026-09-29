@@ -18,7 +18,7 @@ const perks = [
 ];
 const pad = (i: number) => String(i + 1).padStart(2, "0");
 ---
-<Base title="JAGATRIP — International Education & Edu-Tourism Programs">
+<Base title="JAGATRIP — International Education & Edu-Tourism Programs" preload={hero.visual}>
   <section style="position:relative;overflow:hidden">
     <svg aria-hidden="true" class="deco" viewBox="0 0 1440 620" preserveAspectRatio="none">
       <path d="M-40 520 C 320 470 520 180 940 120 C 1160 88 1330 60 1500 40" fill="none" stroke="#F97316" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round" opacity=".5" style="animation:jt-dash 9s linear infinite" />
@@ -30,8 +30,8 @@ const pad = (i: number) => String(i + 1).padStart(2, "0");
           <span style="width:34px;height:2px;background:var(--orange)"></span>
           <p class="eyebrow" style="margin:0">{hero.eyebrow}</p>
         </div>
-        <h1 data-reveal class="h1" style="font-size:clamp(40px,5.4vw,70px);line-height:1.04">{pre}<span style="color:var(--orange)">{hl}</span>{post}</h1>
-        <p data-reveal class="lead" style="max-width:560px">{hero.body}</p>
+        <h1 class="h1" style="font-size:clamp(40px,5.4vw,70px);line-height:1.04">{pre}<span style="color:var(--orange)">{hl}</span>{post}</h1>
+        <p class="lead" style="max-width:560px">{hero.body}</p>
         <div data-reveal class="btns"><a href={hero.cta1Href} class="btn btn-primary">{hero.cta1}</a><a href={hero.cta2Href} class="btn">{hero.cta2}</a></div>
         <ul class="grid" style="--min:148px;margin-top:44px;padding-top:28px;border-top:1px solid var(--border)">
           {perks.map(([l, ic]) => (
@@ -42,9 +42,9 @@ const pad = (i: number) => String(i + 1).padStart(2, "0");
           ))}
         </ul>
       </div>
-      <div data-reveal>
+      <div>
         <div style="position:relative;border:1px solid var(--border);background:var(--bg);padding:12px">
-          <img src={hero.visual} alt={hero.visualAlt} style="width:100%;aspect-ratio:4/3;object-fit:cover" />
+          <img src={hero.visual} alt={hero.visualAlt} width="800" height="600" fetchpriority="high" decoding="async" style="width:100%;height:auto;aspect-ratio:4/3;object-fit:cover" />
           <div class="badge" style="position:absolute;left:24px;bottom:24px;background:var(--navy);color:#fff;padding:12px 16px">TRAVEL TO LEARN · LEARN TO LEAD</div>
         </div>
       </div>

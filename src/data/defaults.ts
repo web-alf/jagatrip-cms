@@ -8,7 +8,7 @@ export const site: Site = {
     heading: "Your International Program Partner", highlight: "International Program",
     body: "Empowering institutions and communities to go beyond borders. JAGATRIP connects schools, educators, students, and foundations with meaningful international learning experiences and long-term global partnerships.",
     cta1: "Explore Our Programs", cta1Href: "#programs", cta2: "Let's Partner Up", cta2Href: "#partnership",
-    visual: "/assets/gallery/jt-doc-4.webp", visualAlt: "Delegasi JAGATRIP bersama sekolah tuan rumah",
+    visual: "/assets/gallery/hero.webp", visualAlt: "Delegasi JAGATRIP bersama sekolah tuan rumah",
   },
   about: {
     eyebrow: "ABOUT JAGATRIP", heading: "Apa Itu JAGATRIP?",

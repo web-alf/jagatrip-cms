@@ -1,0 +1,25 @@
+name: security-scan
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 4 * * 1" # tiap Senin, tangkap CVE baru tanpa perubahan kode
+  workflow_dispatch:
+
+jobs:
+  trivy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,secret,misconfig
+          severity: HIGH,CRITICAL
+          exit-code: "1" # gagalkan job kalau ada temuan
+          ignore-unfixed: true
+          skip-dirs: node_modules,dist,.astro
