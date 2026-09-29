@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "keepalive": "bun scripts/keepalive.ts"
+    "keepalive": "bun scripts/keepalive.ts",
+    "seed": "bun scripts/seed.ts"
   },
   "dependencies": {
     "astro": "^7.3.5"

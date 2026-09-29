@@ -90,7 +90,8 @@
           <span style="font-size:12px;font-weight:700;color:{{ dirtyColor }}">{{ dirtyLabel }}</span>
           <a href="/" target="_blank" rel="noopener" style="border:1px solid #CBD5E1;color:#0B2341;font-size:13px;font-weight:700;padding:11px 16px" style-hover="border-color:#0B2341;color:#0B2341">Lihat situs ↗</a>
           <button type="button" onClick="{{ onExport }}" style="border:1px solid #CBD5E1;background:#FFFFFF;color:#0B2341;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;min-height:42px" style-hover="border-color:#0B2341">Export JSON</button>
-          <button type="button" onClick="{{ onSave }}" style="background:#F97316;border:none;color:#FFFFFF;font-size:13px;font-weight:700;padding:12px 20px;cursor:pointer;min-height:42px" style-hover="background:#EA580C">Simpan Perubahan</button>
+          <button type="button" onClick="{{ onSave }}" style="background:#F97316;border:none;color:#FFFFFF;font-size:13px;font-weight:700;padding:12px 20px;cursor:pointer;min-height:42px" style-hover="background:#EA580C">{{ saveLabel }}</button>
+          <button type="button" onClick="{{ onPublish }}" title="Build ulang situs dengan konten tersimpan" style="background:#0B2341;border:none;color:#FFFFFF;font-size:13px;font-weight:700;padding:12px 20px;cursor:pointer;min-height:42px" style-hover="background:#102A43">Publish ke Situs</button>
         </div>
       </header>
 
@@ -531,6 +532,45 @@ const sbAuth = {
   }
 };
 
+// Data CMS di Supabase: tabel public.content (key, data jsonb) — 1 baris per section. Lihat supabase/migrations.
+const sbData = {
+  async load() {
+    const r = await fetch(SB.url + "/rest/v1/content?select=key,data", { headers: sbAuth.headers() });
+    if (!r.ok) throw new Error("Gagal memuat konten (" + r.status + "). Sudah jalankan migration SQL?");
+    const out = {};
+    for (const row of await r.json()) out[row.key] = row.data;
+    return out;
+  },
+  async save(data, session) {
+    const rows = Object.keys(DEFAULTS).map((key) => ({ key, data: data[key], updated_by: session.user_email || null }));
+    const r = await fetch(SB.url + "/rest/v1/content?on_conflict=key", {
+      method: "POST",
+      headers: Object.assign(sbAuth.headers(session.access_token), { Prefer: "resolution=merge-duplicates,return=minimal" }),
+      body: JSON.stringify(rows)
+    });
+    if (!r.ok) throw new Error(r.status === 401 ? "Sesi habis. Login ulang." : "Gagal menyimpan ke server (" + r.status + ")");
+  },
+  // INSERT ke public.deploys → Database Webhook Supabase → Cloudflare Deploy Hook → build ulang situs.
+  async publish(session, email) {
+    const r = await fetch(SB.url + "/rest/v1/deploys", {
+      method: "POST",
+      headers: Object.assign(sbAuth.headers(session.access_token), { Prefer: "return=minimal" }),
+      body: JSON.stringify({ by_email: email })
+    });
+    if (!r.ok) throw new Error("Gagal memicu publish (" + r.status + ")");
+  },
+  async upload(blob, session) {
+    const name = (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)) + ".webp";
+    const r = await fetch(SB.url + "/storage/v1/object/media/" + name, {
+      method: "POST",
+      headers: { apikey: SB.key, Authorization: "Bearer " + session.access_token, "Content-Type": "image/webp", "Cache-Control": "31536000" },
+      body: blob
+    });
+    if (!r.ok) throw new Error("Upload gambar gagal (" + r.status + "). Bucket 'media' sudah dibuat?");
+    return SB.url + "/storage/v1/object/public/media/" + name;
+  }
+};
+
 const DEFAULTS = {
   site: {
     siteName: "JAGATRIP",
@@ -846,6 +886,7 @@ const ARTICLE_SEO_FIELDS = [
 // Sinkron dengan Supabase Auth → user_metadata.role. Tambah user baru via Dashboard → Authentication → Users.
 const USERS = [
   { name: "Admin JAGATRIP", email: "admin@jagatrip.com", role: "SUPER ADMIN", scope: "Seluruh konten, pengaturan SEO, dan manajemen pengguna." },
+  { name: "Ryan", email: "ryan@mediapro.work", role: "SUPER ADMIN", scope: "Seluruh konten, pengaturan SEO, dan manajemen pengguna." },
   { name: "Tim Konten", email: "content@jagatrip.com", role: "ADMIN", scope: "Artikel, program, event, galeri, testimoni." }
 ];
 
@@ -855,13 +896,16 @@ class Component extends DCLogic {
   state = {
     authed: false, session: null, user: null, loginEmail: "", loginPass: "", loginError: "", loginBusy: false,
     data: clone(DEFAULTS), section: "overview", itemIndex: null, articleIndex: null,
-    dirty: false, toast: ""
+    dirty: false, toast: "", busy: false
   };
 
   async componentDidMount() {
     try {
       const saved = localStorage.getItem(STORE);
       if (saved) this.setState({ data: Object.assign(clone(DEFAULTS), JSON.parse(saved)) });
+    } catch (e) { /* storage tidak tersedia */ }
+    this.loadRemote();
+    try {
       const raw = localStorage.getItem(AUTH);
       if (!raw) return;
       let session = JSON.parse(raw);
@@ -873,6 +917,14 @@ class Component extends DCLogic {
       if (user) { localStorage.setItem(AUTH, JSON.stringify(session)); this.setState({ authed: true, session, user }); }
       else localStorage.removeItem(AUTH);
     } catch (e) { /* storage tidak tersedia */ }
+  }
+
+  async loadRemote() {
+    if (!SB.url || !SB.key) return;
+    try {
+      const remote = await sbData.load();
+      if (Object.keys(remote).length) this.setState({ data: Object.assign(clone(DEFAULTS), remote), dirty: false });
+    } catch (e) { this.flash(e.message); }
   }
 
   flash(msg) {
@@ -889,12 +941,30 @@ class Component extends DCLogic {
     });
   }
 
-  save = () => {
+  save = async () => {
+    if (this.state.busy) return;
+    try { localStorage.setItem(STORE, JSON.stringify(this.state.data)); } catch (e) { /* cache lokal opsional */ }
+    const s = this.state.session;
+    if (!s) { this.setState({ dirty: false }); this.flash("Tersimpan lokal (belum login)."); return; }
+    this.setState({ busy: true });
     try {
-      localStorage.setItem(STORE, JSON.stringify(this.state.data));
+      await sbData.save(this.state.data, Object.assign({ user_email: this.state.user && this.state.user.email }, s));
       this.setState({ dirty: false });
-      this.flash("Perubahan tersimpan.");
-    } catch (e) { this.flash(e && e.name === "QuotaExceededError" ? "Gagal menyimpan: ukuran gambar melebihi kapasitas penyimpanan lokal. Pakai gambar lebih kecil atau URL." : "Gagal menyimpan: penyimpanan lokal tidak tersedia."); }
+      this.flash("Tersimpan ke server. Klik Publish agar tampil di situs.");
+    } catch (e) { this.flash(e.message); }
+    this.setState({ busy: false });
+  };
+
+  publish = async () => {
+    if (this.state.busy) return;
+    if (this.state.dirty) { this.flash("Simpan perubahan dulu sebelum Publish."); return; }
+    if (!this.state.session) { this.flash("Login dulu untuk Publish."); return; }
+    this.setState({ busy: true });
+    try {
+      await sbData.publish(this.state.session, this.state.user && this.state.user.email);
+      this.flash("Publish dipicu. Situs diperbarui ±1–2 menit.");
+    } catch (e) { this.flash(e.message); }
+    this.setState({ busy: false });
   };
 
   readImage(file, done) {
@@ -907,11 +977,13 @@ class Component extends DCLogic {
         const c = document.createElement("canvas");
         c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
         const ctx = c.getContext("2d");
-        const png = file.type === "image/png";
-        if (!png) { ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, c.width, c.height); }
         ctx.drawImage(img, 0, 0, c.width, c.height);
-        done(png ? c.toDataURL("image/png") : c.toDataURL("image/jpeg", 0.82));
-        this.flash("Gambar siap. Klik Simpan untuk menerapkan.");
+        const s = this.state.session;
+        if (!s) { done(c.toDataURL("image/webp", 0.82)); this.flash("Gambar siap (lokal). Klik Simpan."); return; }
+        this.flash("Mengunggah gambar…");
+        c.toBlob((blob) => {
+          sbData.upload(blob, s).then((url) => { done(url); this.flash("Gambar terunggah. Klik Simpan."); }).catch((e) => this.flash(e.message));
+        }, "image/webp", 0.82);
       };
       img.onerror = () => this.flash("Gambar tidak dapat dibaca.");
       img.src = reader.result;
@@ -1178,6 +1250,8 @@ class Component extends DCLogic {
       onCloseArticle: () => this.setState({ articleIndex: null }),
 
       onSave: this.save,
+      onPublish: this.publish,
+      saveLabel: st.busy ? "Memproses…" : "Simpan Perubahan",
       onExport: () => {
         const blob = new Blob([JSON.stringify(this.state.data, null, 2)], { type: "application/json" });
         const url = URL.createObjectURL(blob);

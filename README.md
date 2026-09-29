@@ -135,8 +135,9 @@ Di mana disimpan:
 | `bun run dev` | dev server |
 | `bun run build` | build ke `dist/` |
 | `bun run preview` | serve `dist/` |
-| `bun test` | jalankan `src/lib/format.test.ts` |
+| `bun test` | jalankan `src/lib/*.test.ts` |
 | `bun run keepalive` | ping Supabase sekali (baca `.env`) |
+| `bun run seed` | isi tabel `content` dari `defaults.ts` untuk key yang belum ada; `--force` timpa semua (butuh `SUPABASE_SERVICE_ROLE_KEY`) |
 
 Jangan jalankan `bunx astro check` non-interaktif — hang menunggu prompt install `@astrojs/check`.
 
@@ -150,14 +151,20 @@ sequenceDiagram
   participant P as pages/*.astro
   participant R as lib/repo.ts
   participant D as data/defaults.ts
+  participant S as Supabase public.content
   B->>P: render
   P->>R: await getSite()/getArticles()/...
-  R->>D: baca konstanta
+  R->>S: GET /rest/v1/content?select=key,data (anon, sekali per build)
+  S-->>R: rows {key, data jsonb}
+  R->>D: defaults
+  R->>R: merge.ts: defaults + rows (status Aktif/Tampil → boolean, icon/points dari defaults by title)
   R-->>P: data (sudah difilter: visible, Published, sort desc by date)
   P-->>B: HTML statis
 ```
 
-`src/lib/repo.ts` (semua `async`, siap ditukar ke fetch):
+Env kosong atau fetch gagal → pakai `defaults.ts` (build tidak pernah gagal karena Supabase).
+
+`src/lib/repo.ts`:
 
 | Fungsi | Return |
 |---|---|
@@ -194,16 +201,21 @@ Aturan: **pages tidak boleh import `src/data` langsung.**
 ```mermaid
 stateDiagram-v2
   [*] --> Mount
-  Mount --> LoadStore: localStorage["jagatrip-cms-v1"] ?? DEFAULTS
-  LoadStore --> CheckSession: localStorage["jagatrip-cms-auth"]
+  Mount --> LoadStore: localStorage["jagatrip-cms-v1"] ?? DEFAULTS (cache)
+  LoadStore --> LoadRemote: GET /rest/v1/content (anon) → timpa state
+  LoadRemote --> CheckSession: localStorage["jagatrip-cms-auth"]
   CheckSession --> Login: tidak ada / invalid / refresh gagal
   CheckSession --> Dashboard: /auth/v1/user OK (atau refresh OK)
   Login --> Dashboard: signIn OK
   Dashboard --> Dashboard: edit → dirty=true
-  Dashboard --> Saved: Simpan → localStorage
+  Dashboard --> Saved: Simpan → upsert POST /rest/v1/content (Bearer access_token)
   Saved --> Dashboard
+  Dashboard --> Published: Publish → INSERT public.deploys → webhook → Cloudflare build
+  Published --> Dashboard
   Dashboard --> Login: Logout → /auth/v1/logout + hapus sesi
 ```
+
+Upload gambar: canvas resize maks 1600px → WebP 0.82 → `POST /storage/v1/object/media/<uuid>.webp` → field diisi URL publik. Belum login → data URL lokal.
 
 ### Editor artikel
 
@@ -222,9 +234,20 @@ stateDiagram-v2
   | canonical terisi | 10 |
   | body > 600 karakter | 10 |
 
-### Penting: data admin ≠ data situs
+### Simpan vs Publish
 
-Perubahan di `/admin` **hanya** tersimpan di `localStorage` browser tersebut. Situs publik tetap membaca `src/data/defaults.ts` saat build. Untuk mengubah situs: edit `defaults.ts` → commit → deploy. Lihat §15 untuk rencana migrasi.
+- **Simpan Perubahan** → tulis ke Supabase `public.content`. Belum tampil di situs (situs statis).
+- **Publish ke Situs** → INSERT `public.deploys` → Database Webhook → Cloudflare Deploy Hook → build ulang (±1–2 menit). Ditolak jika masih ada perubahan belum disimpan.
+
+### Setup sekali (Dashboard)
+
+1. **SQL Editor** → jalankan `supabase/migrations/20260929_content.sql` (tabel `content`, `deploys`, bucket `media`, RLS). Lalu `bun run seed`.
+2. **Cloudflare** → Workers & Pages → worker → Settings → Builds → **Deploy Hooks** → Create → salin URL.
+3. **Supabase** → Integrations → **Database Webhooks** → Create: table `public.deploys`, event `INSERT`, type HTTP Request, method `POST`, URL = Deploy Hook. Simpan.
+
+Deploy Hook URL adalah rahasia (siapa pun yang punya bisa memicu build). Hanya ada di webhook Supabase, tidak di repo/browser. Limit Cloudflare 10 trigger/menit.
+
+Field `icon`, `long`, `who`, `points` (program), `flyerAlt` (event), `icon` (audience) tidak ada di form admin — diambil dari `defaults.ts` dicocokkan **by title**. Ganti judul program di admin = detail tersebut hilang (fallback: `long = desc`, `points = []`). Tambah field ke form admin bila perlu.
 
 ---
 
@@ -274,6 +297,7 @@ Akun saat ini:
 |---|---|
 | `admin@jagatrip.com` | `super_admin` |
 | `content@jagatrip.com` | `admin` |
+| `ryan@mediapro.work` | `super_admin` |
 
 Reset password: Dashboard → Authentication → Users → pilih user → Reset password. Password awal yang pernah muncul di terminal dianggap bocor — ganti.
 
@@ -362,7 +386,11 @@ Checklist rilis:
 | Login lolos tapi nama/role salah | `user_metadata` kosong | isi `name`, `role` di metadata user |
 | `bun run keepalive` → 404 `PGRST205` | tabel tidak ada / tidak ter-expose | jalankan SQL §11 |
 | `bun run keepalive` → env kosong | `.env` belum ada | `cp .env.example .env` lalu isi |
-| Perubahan di `/admin` tidak muncul di situs | admin simpan ke localStorage | edit `src/data/defaults.ts` (lihat §7, §15) |
+| Perubahan di `/admin` tidak muncul di situs | belum klik **Publish**, atau webhook belum dibuat | klik Publish; cek Supabase → Database Webhooks → logs; cek Cloudflare → Builds |
+| Admin: "Gagal memuat konten (404)" | tabel `content` belum ada | jalankan migration SQL (§7) |
+| Admin: "Sesi habis. Login ulang." | access_token > 1 jam | logout → login |
+| Admin: "Upload gambar gagal (404)" | bucket `media` belum ada | jalankan migration SQL |
+| Build pakai konten lama | `repo.ts` fallback ke defaults karena fetch gagal | lihat log build: `[repo] Supabase gagal` |
 | Variables "cannot be added to a Worker that only has static assets" | itu section Runtime | pakai section **Build** |
 | `bunx astro check` hang | prompt install `@astrojs/check` | jangan jalankan non-interaktif |
 
@@ -374,10 +402,12 @@ Ditandai `ponytail:` di kode = penyederhanaan sengaja + jalur upgrade.
 
 | Sekarang | Batas | Upgrade |
 |---|---|---|
-| Data situs di `defaults.ts`, admin di localStorage | admin tidak mengubah situs | buat tabel `articles`, `site`, dll. di Supabase + RLS; ganti isi fungsi `repo.ts` ke `fetch(${url}/rest/v1/...)`; admin tulis via REST dengan access token user |
+| 1 tabel `content` jsonb per section | tidak bisa query per artikel/filter SQL; 1 admin simpan = timpa semua section | normalisasi ke tabel `articles`, `programs`, dll. saat butuh query/relasi atau multi-editor bersamaan |
+| Detail program/audience (`icon`, `points`, …) dari `defaults.ts` by title | ganti judul = detail hilang | tambah field ke form admin, hapus `byTitle` di `merge.ts` |
+| Publish = INSERT `deploys` → Database Webhook | tidak ada status build di admin | poll Cloudflare API dari endpoint server |
 | Static output | tidak ada endpoint server | `output: 'server'` + `@astrojs/cloudflare` bila perlu API rahasia (service role) |
 | Role hanya label | admin & super_admin sama kuat | RLS policy `auth.jwt() -> 'user_metadata' ->> 'role'` |
 | `USERS` array statis | perlu sinkron manual | fetch `/auth/v1/admin/users` lewat endpoint server (butuh service role → butuh server output) |
 | Refresh token hanya saat reload | sesi > 1 jam tanpa reload bisa 401 | timer refresh sebelum `expires_at` |
 | `onNewArticle` set canonical ke `/news/artikel-baru` | canonical tidak ikut slug | kosongkan default; hitung dari slug bila kosong |
-| Upload gambar = file manual ke `public/uploads/` | tidak ada storage | Supabase Storage bucket `public` |
+| Upload ke bucket `media`, file tidak pernah dihapus | storage tumbuh | cron hapus objek yang tidak direferensi `content` |
