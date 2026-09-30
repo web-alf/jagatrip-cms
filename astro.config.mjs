@@ -7,4 +7,5 @@ export default defineConfig({
   output: 'server',
   adapter: cloudflare({ imageService: 'passthrough' }),
   session: false,
+  devToolbar: { enabled: false }, // toolbar overlay sendiri yang bikin forced-reflow report palsu saat profiling dev
 });

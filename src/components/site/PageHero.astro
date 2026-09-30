@@ -19,7 +19,7 @@ const { crumbs, eyebrow, title, lead, image, imageAlt, imageBadge } = Astro.prop
     </div>
     {image && (
       <div style="position:relative;border:1px solid var(--border);background:var(--bg);padding:12px">
-        <img src={image} alt={imageAlt || ""} loading="eager" decoding="async" style="display:block;width:100%;height:auto" />
+        <img src={image} alt={imageAlt || ""} width="800" height="600" loading="eager" decoding="async" style="display:block;width:100%;height:auto" />
         {imageBadge && <div class="badge" style="position:absolute;left:24px;bottom:24px;background:var(--navy);color:#fff;padding:12px 16px">{imageBadge}</div>}
       </div>
     )}

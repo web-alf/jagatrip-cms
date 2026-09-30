@@ -21,7 +21,7 @@ const size = { h2: "26px", h3: "20px", p: "17px" };
     </header>
     <div style="max-width:1080px;margin:0 auto;padding:0 24px">
       {a.cover
-        ? <img src={a.cover} alt={a.imageAlt} style="width:100%;aspect-ratio:16/8;object-fit:cover;border-radius:12px" />
+        ? <img src={a.cover} alt={a.imageAlt} width="1080" height="540" fetchpriority="high" decoding="async" style="width:100%;aspect-ratio:16/8;object-fit:cover;border-radius:12px" />
         : <div aria-hidden="true" style="aspect-ratio:16/8;background:var(--peach);border-radius:12px"></div>}
     </div>
     <div class="wrap" style="max-width:720px;display:grid;gap:20px">
