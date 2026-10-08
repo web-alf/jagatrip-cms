@@ -1,0 +1,162 @@
+---
+import { waLink } from '../../data/site';
+const wa = waLink();
+
+const currentPath = Astro.url.pathname;
+
+// Halaman sekunder (gak punya section itinerary/pricing/faq) → link ke root.
+// Landing page utama (punya section tsb) → hash relatif ke section di LP aktual.
+// (Brief poin 4 — sesuaikan link dgn landingpage yang sedang dibuka)
+const lpPaths = ['/', '/china', '/china2', '/companyprofile', '/batch3', '/promo'];
+const isLp = lpPaths.includes(currentPath);
+const sectionHref = (hash: string) => isLp ? `#${hash}` : `/${hash}`;
+
+const links = [
+  { label: 'Beranda', href: '/' },
+  { label: 'Tentang', href: '/tentang' },
+  { label: 'Itinerary', href: sectionHref('#itinerary') },
+  { label: 'Harga', href: sectionHref('#pricing') },
+  { label: 'FAQ', href: sectionHref('#faq') },
+];
+
+// SSR active state: hanya exact path match.
+function isActiveSSR(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  if (href.startsWith('#') || href.startsWith('/#')) return false;
+  return href === currentPath;
+}
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 py-4 transition-[background-color,backdrop-filter,box-shadow] duration-300"
+>
+  <div class="max-w-7xl mx-auto px-6">
+    <nav class="flex items-center justify-between" aria-label="Navigasi utama">
+
+      <!-- Logo -->
+      <a href="/" aria-label="JAGATRIP — kembali ke beranda" class="flex items-center shrink-0">
+        <img
+          src="/images/logo-horizontal.webp"
+          alt="JAGATRIP"
+          class="h-9 md:h-10 w-auto"
+          width="180"
+          height="40"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="hidden lg:flex items-center gap-10" id="desktop-nav">
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              data-nav-link={link.href}
+              class:list={[
+                'nav-link font-semibold text-sm uppercase tracking-wider transition-colors hover:text-jaga-orange',
+                isActiveSSR(link.href) ? 'text-jaga-orange is-active' : 'text-gray-700',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- CTA + mobile toggle -->
+      <div class="flex items-center gap-3">
+        <a
+          href="#daftar"
+          class="hidden sm:inline-flex items-center gap-2 bg-jaga-orange hover:bg-jaga-orange-600 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:shadow-lg transition-all"
+        >
+          <span aria-hidden="true">💬</span>
+          Daftar Sekarang
+        </a>
+
+        <button
+          id="mobile-menu-btn"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Buka menu"
+          class="lg:hidden p-2 text-gray-900"
+          type="button"
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="4" y1="7" x2="20" y2="7" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="17" x2="20" y2="17" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<div
+  id="mobile-menu"
+  class="hidden fixed inset-0 z-60 bg-jaga-dark/60 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu navigasi"
+>
+  <div class="absolute top-0 right-0 bottom-0 w-72 max-w-[88vw] bg-white p-6 flex flex-col gap-2 overflow-y-auto shadow-2xl">
+    <div class="flex items-center justify-between mb-6">
+      <img src="/images/logo-horizontal.webp" alt="" class="h-8 w-auto" width="160" height="32" />
+      <button
+        id="mobile-menu-close"
+        aria-label="Tutup menu"
+        class="p-2 text-gray-900"
+        type="button"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18" />
+          <line x1="18" y1="6" x2="6" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    {links.map((link) => (
+      <a
+        href={link.href}
+        data-nav-link={link.href}
+        class:list={[
+          'nav-link block px-4 py-3 rounded-xl font-semibold transition-colors',
+          isActiveSSR(link.href)
+            ? 'bg-jaga-orange/10 text-jaga-orange is-active'
+            : 'text-gray-900 hover:bg-jaga-bg hover:text-jaga-orange',
+        ]}
+      >
+        {link.label}
+      </a>
+    ))}
+
+    <a
+      href="/kontak"
+      class="block px-4 py-3 rounded-xl font-semibold text-gray-900 hover:bg-jaga-bg hover:text-jaga-orange transition-colors"
+    >
+      Kontak
+    </a>
+
+    <a
+      href={wa}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-4 inline-flex items-center justify-center gap-2 bg-jaga-orange text-white px-6 py-3.5 rounded-full font-bold shadow-lg"
+    >
+      <span aria-hidden="true">💬</span>
+      Daftar via WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+  import { initMobileMenu } from '../../lib/mobile-menu';
+  import { initNavActiveState } from '../../lib/nav-active';
+  import { initStickyHeader } from '../../lib/sticky-header';
+  initMobileMenu();
+  initNavActiveState();
+  initStickyHeader();
+</script>

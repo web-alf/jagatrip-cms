@@ -1,0 +1,376 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/layout/Nav.astro';
+import Footer from '../components/layout/Footer.astro';
+import FloatingWA from '../components/layout/FloatingWA.astro';
+import { SITE, waLink } from '../data/site';
+import { breadcrumbSchema } from '../data/schemas/breadcrumb';
+
+const wa = waLink('Malaysia-Thailand', '24-28 Juni 2026');
+const waConsult = waLink('Konsultasi Admin');
+
+const extraSchemas = [
+  breadcrumbSchema([{ name: 'Daftar Harga', url: `${SITE.url}/harga` }]),
+];
+
+// ── Harga Jual per Tier (HARGA JUAL FIX TRIP JUNI) ───────────────────────────
+type PriceTier = { no: number; cities: string[]; price: string; priceNum: number; region: string; icon: string };
+
+const tiers: PriceTier[] = [
+  { no:1,  cities:['Padang','Pekanbaru'],                                                    price:'Rp 6.600.000',  priceNum:6600000,  region:'Sumatera',            icon:'🌴' },
+  { no:2,  cities:['Aceh (BTJ)','Batam','Medan','Palembang (PLM)'],                          price:'Rp 7.500.000',  priceNum:7500000,  region:'Sumatera',            icon:'🌴' },
+  { no:3,  cities:['Jakarta','Pontianak'],                                                    price:'Rp 7.900.000',  priceNum:7900000,  region:'Jawa / Kalimantan',   icon:'🏙️' },
+  { no:4,  cities:['Bali (Denpasar)','Balikpapan (BPN)','Semarang (SRG)','Surabaya'],       price:'Rp 8.600.000',  priceNum:8600000,  region:'Jawa / Bali',         icon:'🏖️' },
+  { no:5,  cities:['Jogja (YIA)','Makassar (UPG)'],                                          price:'Rp 8.800.000',  priceNum:8800000,  region:'Jawa / Sulawesi',     icon:'🏯' },
+  { no:6,  cities:['Lampung (TKG)'],                                                         price:'Rp 10.200.000', priceNum:10200000, region:'Sumatera',            icon:'🌴' },
+  { no:7,  cities:['Pangkal Pinang (PGK)','Tarakan (TRK)'],                                 price:'Rp 11.500.000', priceNum:11500000, region:'Kalimantan',          icon:'🌿' },
+  { no:8,  cities:['Lombok (LOP)'],                                                          price:'Rp 11.800.000', priceNum:11800000, region:'Nusa Tenggara',       icon:'🏝️' },
+  { no:9,  cities:['Banjarmasin (BDJ)','Bengkulu (BKS)'],                                   price:'Rp 12.500.000', priceNum:12500000, region:'Kalimantan / Sumatera',icon:'🌿' },
+  { no:10, cities:['NTT (Kupang / KOE)'],                                                   price:'Rp 13.000.000', priceNum:13000000, region:'Nusa Tenggara',       icon:'🏝️' },
+  { no:11, cities:['Palu (PLW)'],                                                            price:'Rp 13.900.000', priceNum:13900000, region:'Sulawesi',            icon:'⚓' },
+  { no:12, cities:['Maluku / Ambon (AMQ)','Palangkaraya (PKY)'],                            price:'Rp 15.200.000', priceNum:15200000, region:'Maluku / Kalimantan', icon:'🦜' },
+  { no:13, cities:['Gorontalo (GTO)','Sorong (SOQ)'],                                       price:'Rp 16.800.000', priceNum:16800000, region:'Sulawesi / Papua',    icon:'🦜' },
+  { no:14, cities:['Kendari (KDI)'],                                                         price:'Rp 18.900.000', priceNum:18900000, region:'Sulawesi',            icon:'⚓' },
+  { no:15, cities:['Jayapura (DJJ)'],                                                        price:'Rp 20.700.000', priceNum:20700000, region:'Papua',               icon:'🦅' },
+];
+
+// ── Detail Tiket — HARGA TIKET sheet ─────────────────────────────────────────
+// Source: Traveloka, termurah di waktu yang rundown-friendly (input 30 April 2026)
+// Kolom TOTAL & HPP diabaikan sesuai instruksi
+type FlightRow = {
+  no: number;
+  kota: string;
+  maskapai: string;
+  pergiWaktu: string;
+  pergiTiket: number;
+  pergiBagasi: number;
+  pulangWaktu: string;
+  pulangTiket: number;
+  pulangBagasi: number;
+  catatan?: string;
+};
+
+const flights: FlightRow[] = [
+  { no:1,  kota:'Jakarta',              maskapai:'Citilink – AirAsia Malaysia',          pergiWaktu:'15.55–19.10', pergiTiket:1250000,  pergiBagasi:300000,  pulangWaktu:'13.20–14.30', pulangTiket:1512000,  pulangBagasi:630000,  catatan:'Pembelian terpisah maupun sekalian, nominal harga sama' },
+  { no:2,  kota:'Pontianak',            maskapai:'AirAsia Berhad Malaysia – Batik Air',  pergiWaktu:'11.05–13.45', pergiTiket:1300000,  pergiBagasi:350000,  pulangWaktu:'16.00–16.45', pulangTiket:1280000,  pulangBagasi:350000,  catatan:'Bagasi 15 kg' },
+  { no:3,  kota:'Medan',                maskapai:'AirAsia Indonesia (2)',                 pergiWaktu:'19.20–19.15', pergiTiket:900000,   pergiBagasi:290000,  pulangWaktu:'14.35–14.35', pulangTiket:1310000,  pulangBagasi:500000 },
+  { no:4,  kota:'Padang',               maskapai:'AirAsia Berhad Malaysia (2)',           pergiWaktu:'16.25–18.35', pergiTiket:700000,   pergiBagasi:520000,  pulangWaktu:'15.50–16.00', pulangTiket:800000,   pulangBagasi:330000 },
+  { no:5,  kota:'Pekanbaru',            maskapai:'AirAsia Berhad Malaysia (2)',           pergiWaktu:'10.55–12.45', pergiTiket:750000,   pergiBagasi:450000,  pulangWaktu:'15.40–15.35', pulangTiket:950000,   pulangBagasi:470000 },
+  { no:6,  kota:'Surabaya',             maskapai:'Batik Air Malaysia (2)',                pergiWaktu:'08.40–12.20', pergiTiket:1400000,  pergiBagasi:365000,  pulangWaktu:'17.25–19.05', pulangTiket:1720000,  pulangBagasi:550000,  catatan:'Bagasi 15 kg' },
+  { no:7,  kota:'Jogja (YIA)',          maskapai:'Batik Air – AirAsia Malaysia',          pergiWaktu:'11.45–15.00', pergiTiket:1600000,  pergiBagasi:640000,  pulangWaktu:'15.25–17.05', pulangTiket:1800000,  pulangBagasi:650000 },
+  { no:8,  kota:'Bali (Denpasar)',      maskapai:'AirAsia Berhad Malaysia – AAX',         pergiWaktu:'16.40–19.45', pergiTiket:1800000,  pergiBagasi:400000,  pulangWaktu:'13.10–16.20', pulangTiket:1500000,  pulangBagasi:770000 },
+  { no:9,  kota:'Batam',                maskapai:'Batik Air – AirAsia Berhad Malaysia',   pergiWaktu:'11.00–13.10', pergiTiket:1100000,  pergiBagasi:540000,  pulangWaktu:'08.05–08.15', pulangTiket:1230000,  pulangBagasi:453000,  catatan:'Bagasi 15 kg & 20 kg' },
+  { no:10, kota:'Lombok (LOP)',         maskapai:'Batik Air Malaysia – Citilink',         pergiWaktu:'10.00–13.05', pergiTiket:2800000,  pergiBagasi:470000,  pulangWaktu:'20.10–11.40', pulangTiket:3630000,  pulangBagasi:1300000, catatan:'Bagasi 15 kg & 20 kg' },
+  { no:11, kota:'Makassar (UPG)',       maskapai:'Batik Air Malaysia (2)',                pergiWaktu:'07.35–11.00', pergiTiket:1800000,  pergiBagasi:480000,  pulangWaktu:'19.00–22.25', pulangTiket:1800000,  pulangBagasi:530000,  catatan:'Bagasi 15 kg, 20 kg Rp630K' },
+  { no:12, kota:'Aceh (BTJ)',           maskapai:'Super Air Jet – Batik Air Malaysia',    pergiWaktu:'11.00–13.35', pergiTiket:1450000,  pergiBagasi:140000,  pulangWaktu:'16.00–16.35', pulangTiket:950000,   pulangBagasi:392000,  catatan:'Bagasi pergi sudah include 10 kg (+5 kg), pulang 15 kg' },
+  { no:13, kota:'Lampung (TKG)',        maskapai:'AirAsia (3) – Lion Air',                pergiWaktu:'10.25–18.15', pergiTiket:2230000,  pergiBagasi:605000,  pulangWaktu:'13.20–19.40', pulangTiket:2600000,  pulangBagasi:800000,  catatan:'Tidak ada penerbangan langsung, transit CGK. Bagasi pulang CGK–TKG tersedia 10 kg' },
+  { no:14, kota:'Balikpapan (BPN)',     maskapai:'AirAsia Berhad Malaysia',               pergiWaktu:'19.15–22.20', pergiTiket:1500000,  pergiBagasi:1000000, pulangWaktu:'15.55–18.50', pulangTiket:1800000,  pulangBagasi:1200000 },
+  { no:15, kota:'Bengkulu (BKS)',       maskapai:'Citilink – Batik Air',                  pergiWaktu:'12.20–19.10', pergiTiket:2850000,  pergiBagasi:660000,  pulangWaktu:'08.50–15.10', pulangTiket:4100000,  pulangBagasi:0,       catatan:'Bagasi pulang sudah include 20 kg. Ada opsi Rp3,2Jt tapi belum bagasi & perjalanan >16 jam' },
+  { no:16, kota:'Palembang (PLM)',      maskapai:'AirAsia Berhad Malaysia (2)',           pergiWaktu:'10.30–13.00', pergiTiket:1100000,  pergiBagasi:622000,  pulangWaktu:'16.20–16.50', pulangTiket:1200000,  pulangBagasi:735000 },
+  { no:17, kota:'Pangkal Pinang (PGK)',maskapai:'Citilink Transit (2)',                   pergiWaktu:'12.15–19.10', pergiTiket:2650000,  pergiBagasi:972000,  pulangWaktu:'20.10–08.55', pulangTiket:3145000,  pulangBagasi:972000 },
+  { no:18, kota:'Semarang (SRG)',       maskapai:'AirAsia Berhad Malaysia (2)',           pergiWaktu:'11.20–14.45', pergiTiket:1430000,  pergiBagasi:836000,  pulangWaktu:'09.25–10.50', pulangTiket:1650000,  pulangBagasi:675000 },
+  { no:19, kota:'Banjarmasin (BDJ)',    maskapai:'Citilink',                              pergiWaktu:'12.50–19.10', pergiTiket:3250000,  pergiBagasi:1500000, pulangWaktu:'09.10–17.00', pulangTiket:3750000,  pulangBagasi:994000,  catatan:'Bagasi pulang Rp690K + Rp305K' },
+  { no:20, kota:'NTT (Kupang / KOE)',  maskapai:'Lion + AirAsia & AirAsia + Batik',      pergiWaktu:'09.25–21.25', pergiTiket:3600000,  pergiBagasi:801000,  pulangWaktu:'09.00–20.15', pulangTiket:3900000,  pulangBagasi:720000 },
+  { no:21, kota:'Palangkaraya (PKY)',   maskapai:'Garuda (2x)',                           pergiWaktu:'07.10–23.00', pergiTiket:4600000,  pergiBagasi:0,       pulangWaktu:'10.00–16.45', pulangTiket:4750000,  pulangBagasi:0,       catatan:'Bagasi PP include 30 kg. Opsi lain tidak worth it' },
+  { no:22, kota:'Tarakan (TRK)',        maskapai:'Super Air Jet + AirAsia Berhad (2x)',   pergiWaktu:'13.30–22.20', pergiTiket:2715000,  pergiBagasi:1610000, pulangWaktu:'15.55–10.10', pulangTiket:3230000,  pulangBagasi:1786000 },
+  { no:23, kota:'Kendari (KDI)',        maskapai:'Garuda (2x)',                           pergiWaktu:'12.05–23.00', pergiTiket:5300000,  pergiBagasi:0,       pulangWaktu:'16.10–10.50', pulangTiket:7550000,  pulangBagasi:0,       catatan:'Ada Citilink tapi tidak bisa tambah bagasi' },
+  { no:24, kota:'Palu (PLW)',           maskapai:'Garuda',                                pergiWaktu:'07.10–23.00', pergiTiket:5050000,  pergiBagasi:0,       pulangWaktu:'19.00–13.10', pulangTiket:3230000,  pulangBagasi:1050000, catatan:'Bagasi pergi 30 kg, pulang 20 kg. Paling worth it dengan Garuda' },
+  { no:25, kota:'Gorontalo (GTO)',      maskapai:'Garuda',                                pergiWaktu:'09.45–23.00', pergiTiket:5450000,  pergiBagasi:0,       pulangWaktu:'16.10–09.00', pulangTiket:5600000,  pulangBagasi:0,       catatan:'Penerbangan lain lebih lama dan lebih mahal' },
+  { no:26, kota:'Maluku / Ambon (AMQ)',maskapai:'Batik – Lion – AirAsia (PP)',            pergiWaktu:'07.15–21.25', pergiTiket:5200000,  pergiBagasi:651000,  pulangWaktu:'19.00–09.00', pulangTiket:4010000,  pulangBagasi:900000 },
+  { no:27, kota:'Sorong (SOQ)',         maskapai:'Garuda / Batik – Lion',                 pergiWaktu:'08.15–23.00', pergiTiket:6500000,  pergiBagasi:0,       pulangWaktu:'19.00–06.00', pulangTiket:4400000,  pulangBagasi:1423000, catatan:'Paling worth it. Bagasi pulang Rp630K + Rp795K' },
+  { no:28, kota:'Jayapura (DJJ)',       maskapai:'Garuda',                                pergiWaktu:'11.50–23.00', pergiTiket:7785000,  pergiBagasi:0,       pulangWaktu:'19.00–08.55', pulangTiket:6700000,  pulangBagasi:0,       catatan:'Pulang 3 stop. Opsi 2 stop +Rp500K' },
+  { no:29, kota:'Merauke (MKQ)',        maskapai:'Lion, Batik / Batik, Lion',             pergiWaktu:'07.45–11.00', pergiTiket:5500000,  pergiBagasi:1390000, pulangWaktu:'19.00–07.05', pulangTiket:5480000,  pulangBagasi:1650000, catatan:'⚠️ HARGA H-1 — Disarankan berangkat H-1 agar dapat harga setengah dari direct' },
+];
+
+function rp(n: number): string {
+  if (n === 0) return 'Include ✓';
+  return 'Rp ' + n.toLocaleString('id-ID');
+}
+
+const tabs = [
+  { id: 'trip-juni',    label: 'Harga Juni 2026' },
+  { id: 'detail-tiket', label: 'Detail Tiket' },
+];
+---
+
+<BaseLayout
+  title="Daftar Harga JAGATRIP — Malaysia-Thailand Juni 2026"
+  description="Daftar harga lengkap program JAGATRIP Malaysia-Thailand 24-28 Juni 2026 per kota keberangkatan, maskapai, jadwal, dan detail bagasi. Mulai Rp6.600.000/orang all-in."
+  extraSchemas={extraSchemas}
+>
+  <Nav />
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-20 overflow-hidden bg-jaga-bg" data-reveal="hero">
+      <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <span class="inline-block py-2 px-5 rounded-full bg-jaga-orange/10 text-jaga-orange font-bold text-sm mb-6 tracking-widest uppercase shadow-sm">
+          Malaysia & Thailand · 24–28 Juni 2026
+        </span>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight leading-tight mb-6">
+          Daftar Harga Program
+        </h1>
+        <p class="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto mb-4">
+          Harga bervariasi sesuai kota keberangkatan. Semua paket <strong class="text-gray-900">All-in</strong> — tiket pesawat PP sudah termasuk.
+        </p>
+        <p class="text-sm md:text-base text-red-600 font-semibold mb-8">
+          <span class="uppercase tracking-wider mr-1">Exclude:</span> Passport · Bagasi Tambahan
+        </p>
+        <div class="inline-flex flex-wrap gap-3 justify-center">
+          <div class="bg-white border border-gray-200 rounded-full px-5 py-2 text-sm font-semibold text-gray-700 shadow-sm">✈️ 29 Kota Keberangkatan</div>
+          <div class="bg-jaga-orange text-white rounded-full px-5 py-2 text-sm font-bold shadow-sm">🔥 Mulai Rp 6.600.000</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABS SECTION -->
+    <section class="py-16 md:py-24 bg-white" data-reveal="section">
+      <div class="max-w-6xl mx-auto px-6">
+
+        <!-- Tab nav -->
+        <div class="flex flex-wrap gap-2 mb-10 border-b border-gray-200">
+          {tabs.map((tab, i) => (
+            <button type="button" data-tab={tab.id}
+              class={`tab-btn px-6 py-3 font-bold text-sm rounded-t-xl border border-b-0 transition-colors ${i === 0 ? 'bg-jaga-orange text-white border-jaga-orange' : 'bg-white text-gray-600 border-gray-200 hover:text-jaga-orange'}`}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <!-- ── Tab 1: Harga Juni 2026 ────────────────────────────────────────── -->
+        <div id="panel-trip-juni" class="tab-panel">
+          <p class="text-gray-500 text-sm leading-relaxed bg-orange-50 border border-orange-200 rounded-xl px-5 py-3 mb-6">
+            <strong class="text-jaga-orange">CATATAN:</strong> Meeting point: KLIA (Kuala Lumpur International Airport).
+          </p>
+          <div class="overflow-x-auto rounded-3xl border border-gray-200 shadow-sm">
+            <table class="w-full text-left border-collapse min-w-[600px]">
+              <thead>
+                <tr class="bg-gray-900 text-white">
+                  <th class="py-4 px-5 font-bold text-sm uppercase tracking-wider w-10">#</th>
+                  <th class="py-4 px-5 font-bold text-sm uppercase tracking-wider">Provinsi / Kota</th>
+                  <th class="py-4 px-5 font-bold text-sm uppercase tracking-wider text-right whitespace-nowrap">Harga / Peserta</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                {tiers.map((row) => (
+                  <tr class="hover:bg-orange-50/50 transition-colors">
+                    <td class="py-4 px-5 text-gray-400 font-medium text-sm">{row.no}</td>
+                    <td class="py-4 px-5">
+                      <div class="flex flex-wrap gap-2">
+                        {row.cities.map(city => (
+                          <span class="inline-block bg-jaga-bg border border-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">{city}</span>
+                        ))}
+                      </div>
+                    </td>
+                    <td class="py-4 px-5 text-right">
+                      <span class="text-lg font-black text-jaga-orange">{row.price}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── Tab 2: Detail Tiket ────────────────────────────────────────────── -->
+        <div id="panel-detail-tiket" class="tab-panel hidden">
+
+          <!-- Date legend -->
+          <div class="flex justify-center sm:justify-end mb-6">
+            <div class="flex gap-4 items-center bg-gray-100 border border-gray-200 text-gray-700 px-5 py-3 rounded-xl text-sm">
+              <div class="text-center">
+                <p class="font-black text-gray-800 text-lg leading-none">✈️ Pergi</p>
+                <p class="text-gray-500 text-xs mt-0.5">24 Juni 2026</p>
+              </div>
+              <div class="text-gray-400 font-black">·</div>
+              <div class="text-center">
+                <p class="font-black text-gray-800 text-lg leading-none">🏠 Pulang</p>
+                <p class="text-gray-500 text-xs mt-0.5">28 Juni 2026</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search -->
+          <div class="relative mb-6">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+            <input id="city-search" type="text"
+              placeholder="Cari kota… contoh: Jakarta, Medan, Surabaya, BTJ"
+              class="w-full pl-12 pr-5 py-3.5 rounded-2xl border-2 border-gray-200 focus:border-jaga-orange focus:outline-none text-gray-700 font-medium placeholder:text-gray-400 text-sm" />
+          </div>
+
+          <!-- Flight cards -->
+          <div id="flight-list" class="space-y-3">
+            {flights.map((f) => (
+              <div class="flight-card rounded-2xl border border-gray-100 bg-white overflow-hidden hover:shadow-md hover:border-jaga-orange/30 transition-all"
+                   data-kota={f.kota.toLowerCase()}>
+
+                <!-- Card header -->
+                <div class="flex items-center justify-between px-5 py-4 bg-jaga-bg border-b border-gray-100 cursor-pointer flight-toggle">
+                  <div class="flex items-center gap-3">
+                    <span class="text-xs font-bold text-gray-400 w-6 text-center">{f.no}</span>
+                    <div>
+                      <p class="font-black text-gray-900 text-base">{f.kota}</p>
+                      <p class="text-xs text-gray-500 mt-0.5 font-medium">{f.maskapai}</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex items-center gap-2 text-xs text-gray-500">
+                      <span class="font-semibold">{f.pergiWaktu}</span>
+                      <span class="text-gray-300">→</span>
+                      <span class="font-semibold">{f.pulangWaktu}</span>
+                    </div>
+                    <span class="flight-chevron text-gray-400 font-bold text-sm transition-transform">▼</span>
+                  </div>
+                </div>
+
+                <!-- Card body (collapsible) -->
+                <div class="flight-body hidden px-5 py-4">
+                  <div class="grid md:grid-cols-2 gap-4" data-reveal-group>
+
+                    <!-- Pergi -->
+                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-4">
+                      <p class="text-xs font-black text-blue-600 uppercase tracking-wider mb-3">✈️ Pergi — 24 Juni 2026</p>
+                      <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                          <span class="text-xs text-gray-500 font-medium">Jadwal</span>
+                          <span class="font-bold text-gray-900 text-sm">{f.pergiWaktu}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                          <span class="text-xs text-gray-500 font-medium">Harga Tiket</span>
+                          <span class="font-bold text-gray-900 text-sm">{rp(f.pergiTiket)}</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-blue-200 pt-2">
+                          <span class="text-xs text-gray-500 font-medium">Bagasi</span>
+                          <span class={`font-bold text-sm ${f.pergiBagasi === 0 ? 'text-green-600' : 'text-gray-900'}`}>{rp(f.pergiBagasi)}</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-blue-100 rounded-lg px-3 py-1.5">
+                          <span class="text-xs font-bold text-blue-700">Subtotal Pergi</span>
+                          <span class="font-black text-blue-800 text-sm">{rp(f.pergiTiket + f.pergiBagasi)}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Pulang -->
+                    <div class="bg-purple-50 border border-purple-100 rounded-xl p-4">
+                      <p class="text-xs font-black text-purple-600 uppercase tracking-wider mb-3">🏠 Pulang — 28 Juni 2026</p>
+                      <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                          <span class="text-xs text-gray-500 font-medium">Jadwal</span>
+                          <span class="font-bold text-gray-900 text-sm">{f.pulangWaktu}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                          <span class="text-xs text-gray-500 font-medium">Harga Tiket</span>
+                          <span class="font-bold text-gray-900 text-sm">{rp(f.pulangTiket)}</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-purple-200 pt-2">
+                          <span class="text-xs text-gray-500 font-medium">Bagasi</span>
+                          <span class={`font-bold text-sm ${f.pulangBagasi === 0 ? 'text-green-600' : 'text-gray-900'}`}>{rp(f.pulangBagasi)}</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-purple-100 rounded-lg px-3 py-1.5">
+                          <span class="text-xs font-bold text-purple-700">Subtotal Pulang</span>
+                          <span class="font-black text-purple-800 text-sm">{rp(f.pulangTiket + f.pulangBagasi)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-3 flex justify-end">
+                    <a href={`https://wa.me/${SITE.waNumber}?text=${encodeURIComponent(`Halo admin, saya mau tanya harga dari ${f.kota} untuk JAGATRIP Malaysia-Thailand 24-28 Juni 2026. Mohon info lebih lanjut.`)}`}
+                       target="_blank" rel="noopener noreferrer"
+                       class="text-xs bg-jaga-orange text-white font-bold px-5 py-2 rounded-full hover:bg-jaga-orange-600 transition-colors">
+                      💬 Tanya / Daftar dari {f.kota}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Empty state -->
+          <div id="no-results" class="hidden text-center py-16">
+            <p class="text-4xl mb-4">🔍</p>
+            <p class="text-gray-500 font-medium">Kota tidak ditemukan. Hubungi admin untuk info lebih lanjut.</p>
+            <a href={waConsult} target="_blank" rel="noopener noreferrer"
+               class="inline-block mt-4 bg-jaga-orange text-white font-bold px-6 py-3 rounded-full text-sm hover:bg-jaga-orange-600 transition-colors">
+              Konsultasi Admin →
+            </a>
+          </div>
+
+          <p class="text-gray-400 text-xs text-center mt-8 leading-relaxed">
+            Waktu keberangkatan bisa berubah sewaktu-waktu.<br/>
+            Pastikan Anda konsultasikan kepada admin JAGATRIP.
+          </p>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-14 bg-gray-900 rounded-4xl p-10 md:p-12 text-center text-white">
+          <h2 class="text-2xl md:text-3xl font-black mb-3">Mau Daftar atau Ada Pertanyaan?</h2>
+          <p class="text-gray-300 mb-8 text-base leading-relaxed">
+            Tim kami siap membantu. Chat langsung untuk konfirmasi kota keberangkatanmu dan amankan kursi sebelum penuh.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href={wa} target="_blank" rel="noopener noreferrer"
+               class="flex items-center justify-center gap-2 w-full sm:w-auto bg-jaga-orange hover:bg-jaga-orange-600 text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+              💬 Daftar Sekarang
+            </a>
+            <a href={waConsult} target="_blank" rel="noopener noreferrer"
+               class="flex items-center justify-center gap-2 w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-gray-900 font-bold text-lg px-10 py-4 rounded-full transition-all">
+              Konsultasi Admin
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+  <FloatingWA />
+</BaseLayout>
+
+<script>
+  // ── Tab switching ──────────────────────────────────────────────────────────
+  document.querySelectorAll<HTMLButtonElement>('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('bg-jaga-orange','text-white','border-jaga-orange');
+        b.classList.add('bg-white','text-gray-600','border-gray-200');
+      });
+      btn.classList.add('bg-jaga-orange','text-white','border-jaga-orange');
+      btn.classList.remove('bg-white','text-gray-600','border-gray-200');
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById(`panel-${btn.dataset.tab}`)?.classList.remove('hidden');
+    });
+  });
+
+  // ── Flight card accordion ─────────────────────────────────────────────────
+  document.querySelectorAll<HTMLElement>('.flight-toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const card   = toggle.closest('.flight-card') as HTMLElement;
+      const body   = card.querySelector<HTMLElement>('.flight-body');
+      const chev   = card.querySelector<HTMLElement>('.flight-chevron');
+      const isOpen = !body?.classList.contains('hidden');
+      body?.classList.toggle('hidden', isOpen);
+      if (chev) chev.style.transform = isOpen ? '' : 'rotate(180deg)';
+    });
+  });
+
+  // ── City search ───────────────────────────────────────────────────────────
+  const searchInput = document.getElementById('city-search') as HTMLInputElement | null;
+  const flightCards = document.querySelectorAll<HTMLElement>('.flight-card');
+  const noResults   = document.getElementById('no-results');
+
+  searchInput?.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    let found = 0;
+    flightCards.forEach(card => {
+      const kota  = card.dataset.kota ?? '';
+      const match = !q || kota.includes(q);
+      card.classList.toggle('hidden', !match);
+      if (match) found++;
+    });
+    noResults?.classList.toggle('hidden', found > 0);
+  });
+</script>

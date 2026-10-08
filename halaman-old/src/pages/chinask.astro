@@ -1,0 +1,516 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// ── Materi S&K (dari dokumen resmi JAGATRIP #2 China) ──
+const snkSections = [
+  {
+    num: '1',
+    title: 'Definisi',
+    items: [
+      ['JAGATRIP', 'Penyelenggara program di bawah naungan JAGA GLOBAL.'],
+      ['Program', 'Rangkaian kegiatan JAGATRIP #2 — China (Beijing & Hangzhou) yang berlangsung pada 12–18 September 2026.'],
+      ['Peserta', 'Setiap orang yang terdaftar dan telah melakukan pembayaran untuk mengikuti Program.'],
+      ['Paket Termasuk Tiket Pesawat', 'Paket yang sudah termasuk tiket penerbangan internasional pulang-pergi.'],
+      ['Paket Tanpa Tiket Pesawat', 'Paket tanpa tiket penerbangan internasional; penerbangan diatur sendiri oleh Peserta.'],
+      ['Pihak Ketiga', 'Penyedia layanan di luar JAGATRIP, antara lain maskapai, hotel, penyelenggara pameran, operator kereta, dan agen visa.'],
+    ],
+  },
+  {
+    num: '2',
+    title: 'Cakupan Program',
+    items: [
+      ['Poin 1', 'Program berlangsung selama 7 (tujuh) hari di dua kota, Beijing dan Hangzhou, dengan perindahan antar kota menggunakan kereta cepat.'],
+      ['Poin 2', 'Agenda inti mencakup: kunjungan ke sekolah-sekolah di Beijing, keikutsertaan pada pameran CIFTIS 2026 (Beijing) dan Worlddidac Asia 2026 (Hangzhou), serta kegiatan pendukung sesuai itinerary.'],
+      ['Poin 3', 'Rangkaian dan jadwal rinci dapat menyesuaikan konfirmasi Pihak Ketiga. JAGATRIP akan menyampaikan pembaruan kepada Peserta.'],
+    ],
+  },
+  {
+    num: '3',
+    title: 'Pendaftaran & Kuota',
+    items: [
+      ['Poin 1', 'Pendaftaran dianggap sah setelah Peserta mengisi formulir resmi dan melakukan pembayaran uang muka sesuai ketentuan pada Bagian 4.'],
+      ['Poin 2', 'Kuota Program terbatas. Tempat dialokasikan berdasarkan urutan pembayaran uang muka yang diterima.'],
+      ['Poin 3', 'Program akan berjalan apabila jumlah Peserta memenuhi kuota minimum sebanyak 20 orang. Ketentuan bila kuota minimum tidak terpenuhi diatur pada Bagian 9.'],
+    ],
+  },
+  {
+    num: '4',
+    title: 'Harga & Pembayaran',
+    items: [
+      ['Poin 1', 'Program tersedia dalam dua pilihan paket (lihat tabel di bawah).'],
+      ['Poin 2', 'Uang muka minimal 30% dari biaya paket dibayarkan saat pendaftaran. Pelunasan dilakukan paling lambat H-10 hari sebelum keberangkatan.'],
+      ['Poin 3', 'Pembayaran dilakukan ke rekening resmi JAGATRIP. Pembayaran ke rekening lain di luar yang ditetapkan bukan tanggung jawab JAGATRIP.'],
+      ['Poin 4', 'Harga dihitung berdasarkan asumsi nilai tukar dan tarif Pihak Ketiga pada saat penyusunan. Apabila terjadi perubahan signifikan pada nilai tukar, harga tiket, atau tarif resmi sebelum pelunasan, JAGATRIP berhak meninjau kembali harga dengan pemberitahuan terlebih dahulu kepada Peserta.'],
+    ],
+    table: [
+      ['Termasuk Tiket Pesawat', 'Rp 23.800.000,-', 'Termasuk penerbangan internasional PP'],
+      ['Tanpa Tiket Pesawat', 'Rp 16.400.000,-', 'Penerbangan diatur sendiri oleh Peserta'],
+    ],
+  },
+  {
+    num: '5',
+    title: 'Yang Termasuk & Tidak Termasuk',
+    twoCol: true,
+    included: [
+      'Akomodasi hotel selama Program (sistem twin sharing).',
+      'Program dua pameran (CIFTIS & Worlddidac Asia) dan kunjungan sekolah di Beijing.',
+      'Tiket kereta cepat Beijing–Hangzhou, transportasi darat, dan konsumsi sesuai itinerary (menu halal).',
+      'Asuransi perjalanan, pendampingan tim, dan dokumentasi kegiatan.',
+      'Tiket penerbangan internasional PP (khusus Paket Termasuk Tiket Pesawat).',
+    ],
+    excluded: [
+      'Biaya pembuatan visa China (lihat Bagian 6).',
+      'Tiket penerbangan internasional (untuk Paket Tanpa Tiket Pesawat).',
+      'Pengeluaran pribadi: kelebihan bagasi, laundry, minibar, telepon, tips di luar ketentuan, dan belanja pribadi.',
+      'Biaya akibat perubahan rencana atas permintaan Peserta, serta biaya di luar itinerary resmi.',
+      'Permintaan kamar untuk satu orang (single supplement), dikenakan biaya tambahan.',
+    ],
+  },
+  {
+    num: '6',
+    title: 'Ketentuan Visa & Penolakan Visa',
+    items: [
+      ['Poin 1', 'Biaya visa China tidak termasuk dalam harga paket.'],
+      ['Poin 2', 'Visa tipe L (single entry). Persetujuan/penolakan sepenuhnya wewenang Kedutaan Besar / CVASC. JAGATRIP hanya membantu proses pengajuan dan TIDAK dapat menjamin visa terbit.'],
+      ['Poin 3', 'Pengurusan visa dapat dilakukan melalui JAGATRIP atau secara mandiri oleh Peserta.'],
+      ['Poin 4', 'Untuk pengurusan melalui JAGATRIP, dokumen wajib diserahkan lengkap & tepat waktu paling lambat 40 hari sebelum keberangkatan.'],
+      ['Poin 5', 'Biaya pengurusan visa via JAGATRIP: estimasi Rp 1.550.000,-/orang (tarif CVASC + jasa pelayanan, dapat berubah).'],
+      ['Poin 6', 'Pengurusan mandiri: JAGATRIP tidak bertanggung jawab atas proses/biaya/hasil. Salinan visa wajib diserahkan H-7 sebelum keberangkatan.'],
+      ['Poin 7', 'Biaya visa yang dibayarkan melalui JAGATRIP tidak dapat dikembalikan meskipun visa ditolak.'],
+    ],
+    subSections: [
+      {
+        heading: 'Apabila Visa Ditolak atau Tidak Terbit',
+        items: [
+          ['Poin 8', 'Penolakan murni Kedutaan (bukan kelalaian Peserta): sisa dana — setelah dikurangi biaya yang telah timbul (visa, tiket, deposit) — dikonversi menjadi KREDIT untuk program JAGATRIP berikutnya.'],
+          ['Poin 9', 'Kredit berlaku 6 bulan, atas nama Peserta, tidak dapat diuangkan. Selisih harga program berikutnya menjadi tanggungan Peserta.'],
+          ['Poin 10', 'Penolakan karena kelalaian Peserta (dokumen palsu/tidak lengkap, keterlambatan, riwayat imigrasi bermasalah): diperlakukan sebagai pembatalan (Bagian 8).'],
+          ['Poin 11', 'Dalam kedua kasus, biaya yang telah dikeluarkan dan tidak dapat ditarik kembali tetap tanggungan Peserta.'],
+          ['Poin 12', 'JAGATRIP mengupayakan pengajuan visa sedini mungkin. Peserta diimbau tidak menerbitkan tiket mandiri sebelum visa terbit.'],
+          ['Poin 13', 'Perubahan kebijakan Pemerintah China (termasuk bebas visa WNI) akan disesuaikan dengan kebijakan resmi.'],
+        ],
+      },
+    ],
+  },
+  {
+    num: '7',
+    title: 'Dokumen & Tanggung Jawab Peserta',
+    items: [
+      ['Poin 1', 'Peserta wajib memiliki paspor dengan masa berlaku minimal 6 (enam) bulan terhitung sejak tanggal keberangkatan.'],
+      ['Poin 2', 'Peserta bertanggung jawab atas kebenaran dan kelengkapan seluruh data serta dokumen.'],
+      ['Poin 3', 'Peserta wajib mematuhi hukum dan peraturan negara tujuan serta mengikuti arahan tim dan tata tertib Program.'],
+    ],
+  },
+  {
+    num: '8',
+    title: 'Pembatalan oleh Peserta',
+    items: [
+      ['Poin 1', 'Pembatalan wajib disampaikan secara tertulis. Tanggal penerimaan menjadi dasar perhitungan biaya pembatalan.'],
+      ['Poin 2', 'Biaya pembatalan dihitung dari total harga paket (lihat tabel di bawah).'],
+      ['Poin 3', 'Biaya yang telah dikeluarkan dan tidak dapat ditarik kembali dari Pihak Ketiga tetap tanggungan Peserta.'],
+      ['Poin 4', 'Peserta yang membatalkan tidak dapat mengalihkan keikutsertaan tanpa persetujuan tertulis JAGATRIP.'],
+      ['Poin 5', 'Pengembalian dana (jika ada) diproses setelah seluruh kewajiban kepada Pihak Ketiga diselesaikan.'],
+    ],
+    table: [
+      ['40 hari atau lebih', 'Uang muka hangus'],
+      ['39 – 20 hari', '50% dari harga paket'],
+      ['19 – 11 hari', '75% dari harga paket'],
+      ['10 hari s.d. hari keberangkatan / tidak hadir', '100% dari harga paket'],
+    ],
+  },
+  {
+    num: '9',
+    title: 'Pembatalan atau Perubahan oleh JAGATRIP',
+    items: [
+      ['Poin 1', 'Apabila kuota minimum tidak terpenuhi, JAGATRIP berhak menunda, menjadwalkan ulang, atau membatalkan Program.'],
+      ['Poin 2', 'Pembatalan oleh JAGATRIP karena kuota: dana dikembalikan dikurangi biaya yang tidak dapat ditarik kembali.'],
+      ['Poin 3', 'JAGATRIP berhak menyesuaikan itinerary, hotel, urutan kegiatan, atau jadwal demi kelancaran Program.'],
+    ],
+  },
+  {
+    num: '10',
+    title: 'Keadaan Kahar (Force Majeure)',
+    items: [
+      ['Poin 1', 'JAGATRIP tidak bertanggung jawab atas kegagalan/keterlambatan akibat keadaan di luar kendali (bencana, wabah, kebijakan pemerintah, dll).'],
+      ['Poin 2', 'Dalam keadaan kahar, JAGATRIP akan mengupayakan penjadwalan ulang/penyesuaian. Biaya yang tidak dapat ditarik kembali tidak dapat dikembalikan.'],
+    ],
+  },
+  {
+    num: '11',
+    title: 'Asuransi, Kesehatan & Keselamatan',
+    items: [
+      ['Poin 1', 'Program dilindungi asuransi perjalanan sesuai polis. Cakupan mengikuti penyedia asuransi.'],
+      ['Poin 2', 'Peserta wajib menyampaikan kondisi kesehatan khusus, alergi, atau kebutuhan diet sebelum keberangkatan.'],
+      ['Poin 3', 'Biaya penanganan medis di luar cakupan asuransi menjadi tanggungan Peserta.'],
+    ],
+  },
+  {
+    num: '12',
+    title: 'Tata Tertib Peserta',
+    items: [
+      ['Poin 1', 'Peserta wajib hadir tepat waktu dan mengikuti seluruh rangkaian kegiatan sesuai arahan tim.'],
+      ['Poin 2', 'Peserta menjaga nama baik Indonesia dan JAGATRIP, menghormati tuan rumah, serta mematuhi aturan setempat.'],
+      ['Poin 3', 'JAGATRIP berhak menghentikan keikutsertaan Peserta yang melanggar, tanpa pengembalian biaya.'],
+    ],
+  },
+  {
+    num: '13',
+    title: 'Dokumentasi & Publikasi',
+    items: [
+      ['Poin 1', 'JAGATRIP mendokumentasikan kegiatan. Peserta memberikan izin penggunaan dokumentasi untuk pelaporan dan promosi.'],
+      ['Poin 2', 'Peserta yang keberatan atas penggunaan citra dirinya dapat menyampaikan pemberitahuan tertulis sebelum keberangkatan.'],
+    ],
+  },
+  {
+    num: '14',
+    title: 'Batasan Tanggung Jawab',
+    items: [
+      ['Poin 1', 'JAGATRIP bertindak sebagai penyelenggara dan koordinator. Tidak bertanggung jawab atas kelalaian Pihak Ketiga.'],
+      ['Poin 2', 'JAGATRIP tidak bertanggung jawab atas kehilangan atau kerusakan barang pribadi Peserta.'],
+    ],
+  },
+  {
+    num: '15',
+    title: 'Hukum yang Berlaku & Penyelesaian Sengketa',
+    items: [
+      ['Poin 1', 'Syarat dan ketentuan ini tunduk pada hukum Negara Republik Indonesia.'],
+      ['Poin 2', 'Setiap perselisihan diupayakan diselesaikan secara musyawarah, kemudian jalur hukum Indonesia.'],
+      ['Poin 3', 'JAGATRIP berhak memperbarui syarat dan ketentuan sewaktu-waktu. Versi terbaru yang berlaku.'],
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Syarat & Ketentuan — JAGATRIP #2 China (Beijing & Hangzhou) | JAGATRIP"
+  description="Syarat & Ketentuan resmi JAGATRIP #2 — China (Beijing & Hangzhou), 12–18 September 2026. Berlaku sejak 2 Agustus 2026, Versi 1.0."
+  canonical="https://jagatrip.com/chinask"
+  ogType="article"
+>
+  <div class="sk" id="main">
+    <!-- HEADER -->
+    <header class="sk-header">
+      <div class="sk-wrap sk-header-inner">
+        <a href="/" class="sk-back" aria-label="Kembali ke beranda">← Beranda</a>
+        <a href="/china" class="sk-back" aria-label="Kembali ke LP China">LP China ↗</a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="sk-hero">
+      <div class="sk-wrap">
+        <span class="sk-badge">Syarat &amp; Ketentuan</span>
+        <h1>JAGATRIP #2 — China</h1>
+        <p class="sk-hero-sub">Beijing &amp; Hangzhou · Ekspedisi Internasional Pendidikan</p>
+        <div class="sk-hero-meta">
+          <span>📅 12–18 September 2026</span>
+          <span>📋 Berlaku sejak 2 Agustus 2026</span>
+          <span>📄 Versi 1.0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="sk-intro">
+      <div class="sk-wrap sk-wrap-narrow">
+        <p>Dengan mendaftar dan/atau melakukan pembayaran pada program JAGATRIP #2 — China, calon peserta dianggap telah <strong>membaca, memahami, dan menyetujui</strong> seluruh syarat dan ketentuan di bawah ini.</p>
+      </div>
+    </section>
+
+    <!-- S&K SECTIONS -->
+    <section class="sk-body">
+      <div class="sk-wrap sk-wrap-narrow">
+        {snkSections.map((sec) => (
+          <article class="sk-article" id={`bagian-${sec.num}`}>
+            <div class="sk-art-head">
+              <span class="sk-num">{sec.num}</span>
+              <h2>{sec.title}</h2>
+            </div>
+
+            {sec.items && (
+              <dl class="sk-dl">
+                {sec.items.map(([label, desc]) => (
+                  <div class="sk-dl-row">
+                    <dt>{label}</dt>
+                    <dd>{desc}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+
+            {sec.table && (
+              <div class="sk-table-wrap">
+                <table class="sk-table">
+                  <tbody>
+                    {sec.table.map((row) => (
+                      <tr>
+                        {row.map((cell, i) => <td class={i === 0 ? 'sk-td-key' : ''}>{cell}</td>)}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {sec.twoCol && (
+              <div class="sk-twocol">
+                <div class="sk-col sk-col-yes">
+                  <h3>✅ Termasuk</h3>
+                  <ul>{sec.included.map((x) => <li>{x}</li>)}</ul>
+                </div>
+                <div class="sk-col sk-col-no">
+                  <h3>❌ Tidak Termasuk</h3>
+                  <ul>{sec.excluded.map((x) => <li>{x}</li>)}</ul>
+                </div>
+              </div>
+            )}
+
+            {sec.subSections && sec.subSections.map((sub) => (
+              <div class="sk-sub">
+                <h3>{sub.heading}</h3>
+                <dl class="sk-dl">
+                  {sub.items.map(([label, desc]) => (
+                    <div class="sk-dl-row">
+                      <dt>{label}</dt>
+                      <dd>{desc}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))}
+          </article>
+        ))}
+
+        <!-- Pernyataan -->
+        <div class="sk-statement">
+          <h2>Pernyataan Persetujuan</h2>
+          <p>Dengan mendaftar dan/atau melakukan pembayaran, Peserta menyatakan telah <strong>membaca, memahami, dan menyetujui</strong> seluruh syarat dan ketentuan ini.</p>
+        </div>
+
+        <!-- Kontak -->
+        <div class="sk-contact">
+          <h3>Kontak Resmi JAGATRIP</h3>
+          <ul>
+            <li><span>WhatsApp/Admin:</span> <a href="https://wa.me/628139190363" target="_blank" rel="noopener">0813-9190-363</a></li>
+            <li><span>Situs:</span> <a href="/china">jagatrip.com/china</a></li>
+            <li><span>Rekening resmi:</span> BSI 7356358397 a.n. Jagatrip Mitra Edukasi</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: KONFIRMASI BACA S&K -->
+    <section class="sk-confirm" id="konfirmasi">
+      <div class="sk-wrap sk-wrap-narrow">
+        <h2>SAYA SUDAH MEMBACA S&amp;K DAN INGIN LANJUT KE PROSES BERIKUTNYA</h2>
+        <p>Jika Anda telah membaca dan memahami seluruh syarat &amp; ketentuan di atas, silakan lanjut mengisi formulir di bawah ini untuk proses pendaftaran.</p>
+        <a href="#daftar" class="sk-btn sk-btn-primary">👇 Lanjut Isi Formulir</a>
+      </div>
+    </section>
+
+    <!-- SECTION 4: ISI FORM -->
+    <section class="sk-form-section" id="daftar">
+      <div class="sk-wrap sk-wrap-narrow">
+        <div class="sk-form-card">
+          <h2>Formulir Pendaftaran</h2>
+          <p class="sk-form-lead">Isi data Anda. Setelah submit, Anda akan diarahkan ke WhatsApp Admin untuk konfirmasi.</p>
+          <form id="snk-form" novalidate>
+            <div class="sk-field">
+              <label for="nama">Nama Lengkap <span>*</span></label>
+              <input type="text" id="nama" name="nama" required autocomplete="name" placeholder="Nama lengkap Anda" />
+            </div>
+            <div class="sk-field">
+              <label for="domisili">Alamat / Domisili <span>*</span></label>
+              <input type="text" id="domisili" name="domisili" required placeholder="Kota / alamat domisili" />
+            </div>
+            <div class="sk-field">
+              <label for="wa">Nomor WhatsApp <span>*</span></label>
+              <input type="tel" id="wa" name="wa" required inputmode="tel" pattern="[0-9+() -]{8,20}" placeholder="0812XXXXXXXX" />
+            </div>
+            <button type="submit" class="sk-btn sk-btn-primary sk-btn-block">Daftar &amp; Lanjut ke WhatsApp Admin →</button>
+            <div id="snk-status" class="sk-status" hidden></div>
+            <p class="sk-form-note">Dengan men-submit, Anda menyatakan telah membaca dan menyetujui S&amp;K.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getUtm } from '../lib/utm';
+  import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
+  import { parseIndonesianPhone } from '../lib/phone-formatter';
+
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+  const WA_ADMIN = '628139190363';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('snk-form') as HTMLFormElement | null;
+    if (!form) return;
+    initFormGuard(form, 'chinask-form', '✓ Data Anda sudah terkirim. Tim JAGATRIP akan menghubungi Anda.');
+    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    const statusEl = document.getElementById('snk-status');
+
+    function showStatus(type: 'ok' | 'err', msg: string): void {
+      if (!statusEl) return;
+      statusEl.textContent = msg;
+      statusEl.className = `sk-status ${type}`;
+      statusEl.hidden = false;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const nama = (form.querySelector('#nama') as HTMLInputElement | null)?.value.trim() ?? '';
+      const domisili = (form.querySelector('#domisili') as HTMLInputElement | null)?.value.trim() ?? '';
+      const rawWa = (form.querySelector('#wa') as HTMLInputElement | null)?.value.trim() ?? '';
+      if (!nama || !domisili || !rawWa) { showStatus('err', 'Semua field wajib diisi.'); return; }
+
+      const parsedPhone = parseIndonesianPhone(rawWa);
+      const wa = parsedPhone.e164 || rawWa;
+      const isDuplicate = isPhoneSubmitted('chinask-form', wa);
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Memproses...'; }
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            _sheet: 'China_SK', nama, domisili, wa,
+            ...getUtm(), source: 'S&K China (/chinask)', timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch (err) { console.error('Log error:', err); }
+
+      const win = window as any;
+      if (win.fbq) { try { win.fbq('track', 'Lead', { content_name: 'S&K China' }); } catch (e) { console.error(e); } }
+
+      const greeting = isDuplicate
+        ? `Hai Admin, saya sudah baca S&K dan sebelumnya sudah mendaftar dengan nomor ini, ingin konfirmasi kelanjutan proses pendaftaran.\n\nNama: ${nama}\nDomisili: ${domisili}\nNo. WA: ${wa}`
+        : `Hai Admin, saya sudah baca S&K dan sudah isi form. Selanjutnya bagaimana?\n\nNama: ${nama}\nDomisili: ${domisili}\nNo. WA: ${wa}`;
+      const waUrl = `https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(greeting)}`;
+      showStatus('ok', isDuplicate ? 'Sudah terdaftar sebelumnya. Mengalihkan ke WhatsApp...' : 'Berhasil! Mengalihkan ke WhatsApp...');
+      lockForm(form, 'chinask-form', isDuplicate ? '✓ Anda sudah terdaftar sebelumnya.' : '✓ Data Anda sudah terkirim.', wa);
+      setTimeout(() => { window.location.href = waUrl; }, 500);
+    });
+  });
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  :global(body){margin:0}
+  .sk{
+    --orange:#FF6B36;--orange-dark:#E4551F;--orange-soft:#FFEDE3;--cream:#FAF2F7;
+    --navy:#1B2430;--navy-2:#2D3B4E;--teal:#0E7C86;--teal-soft:#E0F2F1;
+    --ink:#1B2430;--muted:#5E6B7A;--line:#E8DDE8;--green:#16A34A;--red:#C0392B;
+    --shadow:0 8px 24px rgba(27,36,48,.08);
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);line-height:1.65;display:block;background:var(--cream)
+  }
+  .sk *{box-sizing:border-box}
+  .sk h1,.sk h2,.sk h3{line-height:1.25;margin:0}
+  .sk p{margin:0}
+  .sk a{color:var(--orange);text-decoration:none;font-weight:600}
+  .sk a:hover{text-decoration:underline}
+  .sk-wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  .sk-wrap-narrow{max-width:760px}
+
+  /* HEADER */
+  .sk-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .sk-header-inner{display:flex;justify-content:space-between;align-items:center;height:54px}
+  .sk-back{font-size:.85rem;font-weight:600;color:var(--navy)}
+
+  /* HERO */
+  .sk-hero{background:linear-gradient(135deg,var(--navy) 0%,#0F1A28 100%);color:#fff;padding:48px 0 40px;text-align:center}
+  .sk-badge{display:inline-block;background:var(--orange);color:#fff;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:30px;margin-bottom:16px}
+  .sk-hero h1{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;color:#fff}
+  .sk-hero-sub{font-size:1.05rem;color:#c8d3e0;margin-top:8px}
+  .sk-hero-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 20px;margin-top:20px;font-size:.85rem;color:#9fb0c6}
+  .sk-hero-meta span{background:rgba(255,255,255,.08);padding:5px 14px;border-radius:20px}
+
+  /* INTRO */
+  .sk-intro{padding:32px 0 8px}
+  .sk-intro p{font-size:1rem;color:var(--navy-2);text-align:center}
+
+  /* BODY */
+  .sk-body{padding:24px 0 56px}
+  .sk-article{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 26px;margin-bottom:20px;box-shadow:var(--shadow)}
+  .sk-art-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid var(--orange-soft)}
+  .sk-num{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:var(--orange);color:#fff;font-weight:800;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+  .sk-art-head h2{font-size:1.25rem;font-weight:800;color:var(--navy)}
+
+  .sk-dl{margin:0}
+  .sk-dl-row{display:grid;grid-template-columns:160px 1fr;gap:12px 20px;padding:10px 0;border-bottom:1px solid #f3eef3}
+  .sk-dl-row:last-child{border-bottom:0}
+  .sk-dl dt{font-weight:700;color:var(--orange);font-size:.88rem;line-height:1.5}
+  .sk-dl dd{margin:0;color:var(--navy-2);font-size:.92rem;line-height:1.6}
+
+  .sk-table-wrap{overflow-x:auto;margin:16px 0;border-radius:10px;border:1px solid var(--line)}
+  .sk-table{width:100%;border-collapse:collapse;font-size:.9rem}
+  .sk-table td{padding:12px 16px;border-bottom:1px solid var(--line)}
+  .sk-table tr:last-child td{border-bottom:0}
+  .sk-table tr:nth-child(even){background:var(--cream)}
+  .sk-td-key{font-weight:700;color:var(--navy);white-space:nowrap}
+
+  .sk-twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  .sk-col{border-radius:12px;padding:20px}
+  .sk-col-yes{background:#f0fdf4;border:1px solid #bbf7d0}
+  .sk-col-no{background:#fef2f2;border:1px solid #fecaca}
+  .sk-col h3{font-size:.95rem;font-weight:800;margin-bottom:12px}
+  .sk-col-yes h3{color:var(--green)}
+  .sk-col-no h3{color:var(--red)}
+  .sk-col ul{list-style:none;margin:0;padding:0}
+  .sk-col li{position:relative;padding-left:24px;margin-bottom:10px;font-size:.88rem;color:var(--navy-2);line-height:1.55}
+  .sk-col-yes li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
+  .sk-col-no li::before{content:"✕";position:absolute;left:0;color:var(--red);font-weight:800}
+
+  .sk-sub{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line)}
+  .sk-sub h3{font-size:1rem;color:var(--teal);font-weight:700;margin-bottom:12px}
+
+  .sk-statement{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border-radius:14px;padding:28px 26px;text-align:center;margin-bottom:20px}
+  .sk-statement h2{color:#fff;font-size:1.3rem;margin-bottom:10px}
+  .sk-statement p{color:rgba(255,255,255,.95);font-size:.95rem}
+
+  .sk-contact{background:var(--teal-soft);border-radius:14px;padding:24px 26px}
+  .sk-contact h3{font-size:1rem;color:var(--teal);margin-bottom:14px}
+  .sk-contact ul{list-style:none;margin:0;padding:0}
+  .sk-contact li{font-size:.9rem;color:var(--navy-2);margin-bottom:8px}
+  .sk-contact li span{font-weight:700;color:var(--navy)}
+
+  /* CONFIRM SECTION */
+  .sk-confirm{text-align:center;padding:48px 0;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .sk-confirm h2{font-size:clamp(1.1rem,3.5vw,1.5rem);font-weight:800;color:var(--navy);line-height:1.4;margin-bottom:12px}
+  .sk-confirm p{color:var(--muted);font-size:.95rem;margin-bottom:24px}
+
+  /* FORM */
+  .sk-form-section{padding:48px 0 64px}
+  .sk-form-card{background:#fff;border-radius:18px;padding:36px 32px;box-shadow:0 12px 40px rgba(27,36,48,.12);border:1px solid var(--line)}
+  .sk-form-card h2{font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+  .sk-form-lead{color:var(--muted);font-size:.9rem;margin-bottom:24px}
+  .sk-field{margin-bottom:18px}
+  .sk-field label{display:block;font-weight:600;font-size:.85rem;color:var(--navy);margin-bottom:6px}
+  .sk-field label span{color:var(--orange)}
+  .sk-field input{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:.95rem;background:var(--cream)}
+  .sk-field input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,54,.15)}
+  .sk-btn{display:inline-block;background:var(--orange);color:#fff;font-weight:700;padding:14px 32px;border-radius:40px;border:none;cursor:pointer;font-size:1rem;transition:.2s;box-shadow:0 8px 20px rgba(255,107,54,.3);text-decoration:none}
+  .sk-btn:hover{background:var(--orange-dark);transform:translateY(-2px);text-decoration:none}
+  .sk-btn-primary{background:var(--orange);color:#fff}
+  .sk-btn-block{width:100%;text-align:center}
+  .sk-btn-block:disabled{opacity:.7;cursor:not-allowed;transform:none}
+  .sk-status{margin-top:14px;padding:11px 14px;border-radius:10px;font-size:.85rem;text-align:center}
+  .sk-status.ok{background:#e7f7ec;color:var(--green)}
+  .sk-status.err{background:#fdecec;color:var(--red)}
+  .sk-form-note{text-align:center;font-size:.78rem;color:var(--muted);margin-top:14px}
+
+  @media(max-width:680px){
+    .sk-dl-row{grid-template-columns:1fr;gap:4px}
+    .sk-dl dt{font-size:.82rem}
+    .sk-twocol{grid-template-columns:1fr}
+    .sk-form-card{padding:28px 22px}
+    .sk-article{padding:22px 18px}
+  }
+  @media(prefers-reduced-motion:reduce){.sk *{transition:none!important}}
+</style>

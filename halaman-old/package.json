@@ -1,0 +1,32 @@
+{
+  "name": "jagatrip-web",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "bun run build && wrangler dev",
+    "astro": "astro",
+    "generate-types": "wrangler types",
+    "deploy": "bun run build && wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/cloudflare": "^13.3.0",
+    "@astrojs/sitemap": "^3.7.2",
+    "@tailwindcss/vite": "^4.2.4",
+    "astro": "^6.2.1",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.87.0"
+  },
+  "overrides": {
+    "vite": "^7"
+  }
+}

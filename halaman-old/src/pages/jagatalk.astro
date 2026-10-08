@@ -1,0 +1,509 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/layout/Footer.astro';
+
+const schedule = [
+  { icon: '👨‍🎓', name: 'Kak Rafie',  univ: 'Universiti Utara Malaysia (UUM), Malaysia',                date: '28 Mei 2026' },
+  { icon: '👨‍🏫', name: 'Pak Dedi',   univ: 'Founder IDN Boarding School (Program Sekolah Internasional)', date: '5 Juni 2026' },
+  { icon: '🧑‍🎓', name: 'Kak Ismail', univ: 'National Dong Hwa University, Taiwan',                     date: '12 Juni 2026' },
+  { icon: '🧑‍🎓', name: 'Kak Abu',    univ: 'University of Glasgow, Skotlandia',                        date: '19 Juni 2026' },
+  { icon: '🧑‍🎓', name: 'Kak Yasin',  univ: 'Guilin University of Electronic Technology, China',       date: '10 Juli 2026' },
+  { icon: '👨‍🎓', name: 'Kak Nibras', univ: 'Guilin University of Electronic Technology, China',       date: '24 Juli 2026' },
+  { icon: '👨‍🎓', name: 'Kak Syafiq', univ: 'Cheng Shiu University, Taiwan',                            date: '7 Agustus 2026' },
+  { icon: '🧑‍🎓', name: 'Kak Najwan', univ: 'Universitas Islam Madinah, Arab Saudi',                    date: '4 September 2026' },
+];
+
+const included = [
+  { n: '01', h: '🎓 E-Sertifikat Resmi', p: 'Sertifikat digital resmi JAGATRIP untuk setiap peserta yang mengikuti sesi — bisa masuk CV, portofolio profesional, atau syarat sekolah/kampus.', hi: true },
+  { n: '02', h: '🎥 Rekaman Full Sesi', p: 'Rekaman penuh webinar (120 menit) — bisa Anda tonton ulang kapan saja, dari negara mana saja. Rekaman dikirim maksimal H+2 setelah sesi.', hi: true },
+  { n: '03', h: '📚 Materi How to Apply Beasiswa', p: 'Modul eksklusif berisi panduan step-by-step apply beasiswa: pilih beasiswa yang cocok, siapkan dokumen, tulis motivation letter, sampai interview.', hi: true },
+  { n: '04', h: '💬 Sesi Tanya Jawab Bebas', p: 'Alokasi 20–30 menit khusus tanya jawab langsung dengan narasumber. Dari hal teknis perkuliahan sampai kegalauan personal.', hi: false },
+  { n: '05', h: '🌍 Jaringan Circle Internasional', p: 'Networking dengan narasumber & sesama peserta yang berbagi mimpi kuliah luar negeri. Banyak alumni sesi kami yang lanjut konsultasi via DM.', hi: false },
+  { n: '06', h: '✈️ Jalur Prioritas Edutrip', p: 'Akses eksklusif dan info tercepat untuk bergabung dalam program study visit internasional premium bersama JAGATRIP.', hi: false },
+];
+
+const steps = [
+  { n: '1', h: 'Isi Formulir', p: 'Lengkapi data (nama, instansi, domisili, WhatsApp) di form pendaftaran online.' },
+  { n: '2', h: 'Hubungi WA Admin', p: 'Setelah submit, Anda diarahkan ke WhatsApp admin untuk memulai pendaftaran.' },
+  { n: '3', h: 'Transfer Rp 39.000', p: 'Lakukan pembayaran via transfer bank atau e-wallet. Bukti dikirim ke admin.' },
+  { n: '4', h: 'Gabung Grup Peserta', p: 'Setelah verifikasi, Anda masuk grup WhatsApp peserta untuk info & reminder.' },
+  { n: '5', h: 'Terima Link Zoom', p: 'Link Zoom dikirim H-1 sebelum sesi. Rekaman & materi menyusul H+2.' },
+];
+
+const faqs = [
+  ['Berapa biayanya dan apa yang saya dapatkan?', 'Rp 39.000 per peserta — sekali bayar untuk 1 sesi webinar. Anda mendapatkan: akses live 120 menit via Zoom, e-sertifikat resmi, rekaman penuh sesi, modul how to apply beasiswa, akses grup peserta, dan jalur prioritas info edutrip JAGATRIP.'],
+  ['Metode pembayaran apa saja yang tersedia?', 'Transfer bank (BCA, Mandiri, BNI, BRI) dan e-wallet (DANA, GoPay, OVO, ShopeePay). Detail rekening dikirim admin setelah Anda mengisi formulir pendaftaran.'],
+  ['Bagaimana kalau saya tidak bisa hadir live?', 'Peserta terdaftar tetap mendapatkan rekaman penuh sesi (dikirim H+2), e-sertifikat, dan materi beasiswa. Jadi meskipun berhalangan hadir, Anda tetap dapat semua benefit.'],
+  ['Apakah e-sertifikatnya resmi dan bisa dipakai?', 'Ya. E-sertifikat diterbitkan resmi oleh PT Jagatrip Mitra Edukasi dan bisa Anda pakai untuk CV, portofolio profesional, kelengkapan tugas sekolah/kampus, atau bukti pengembangan diri.'],
+  ['Materi "How to Apply Beasiswa" itu isinya apa saja?', 'Modul PDF eksklusif yang membahas: cara memilih beasiswa yang cocok dengan profil Anda, checklist dokumen wajib, template motivation letter & personal statement, tips wawancara beasiswa, hingga daftar beasiswa aktif per negara tujuan.'],
+  ['Saya bukan siswa SMA/mahasiswa, masih boleh ikut?', 'Sangat boleh. Audiens JAGATALK terbuka untuk siswa SMA, mahasiswa, orangtua, guru/pendidik, dan siapapun yang tertarik mempelajari sistem pendidikan internasional.'],
+  ['Apa hubungan JAGATALK dengan edutrip JAGATRIP?', 'JAGATALK adalah inisiatif edukasi berbayar dari JAGATRIP. Peserta JAGATALK yang tertarik program edutrip mendapatkan priority info & special offer untuk bergabung ke study visit internasional kami.'],
+  ['Bisakah saya minta refund kalau sesi dibatalkan?', 'Bila sesi dibatalkan oleh tim JAGATRIP karena alasan teknis apapun, Anda mendapat pilihan: refund 100%, atau kredit untuk sesi Jagatalk berikutnya.'],
+];
+---
+
+<BaseLayout
+  title="JAGATALK PREMIUM by JAGATRIP — Webinar Kuliah Luar Negeri + E-Sertifikat & Materi Beasiswa"
+  description="Sesi webinar eksklusif JAGATRIP: insight riil kuliah luar negeri dari mahasiswa & alumni Indonesia. Dapatkan e-sertifikat resmi, rekaman penuh, dan materi how to apply beasiswa. Hanya Rp 39.000 per peserta."
+  canonical="https://jagatrip.com/jagatalk"
+  ogType="website"
+  gtmId="GTM-NR8XFKP9"
+>
+  <main id="main" class="jw">
+    <!-- HEADER (logo jagatalk, mengikuti /jagatalk02) -->
+    <header class="jw-topbar">
+      <div class="jw-container jw-topbar-inner">
+        <a href="/" class="jw-brand" aria-label="JAGATALK — kembali ke beranda">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M50 5 C30 5, 15 10, 12 25 L12 55 C12 78, 30 92, 50 95 C70 92, 88 78, 88 55 L88 25 C85 10, 70 5, 50 5 Z" fill="none" stroke="#0E7C86" stroke-width="6" stroke-linejoin="round"/>
+            <rect x="30" y="34" width="40" height="26" rx="7" fill="#FF6B1A"/>
+            <path d="M36 60 L32 70 L46 60 Z" fill="#FF6B1A"/>
+            <circle cx="42" cy="47" r="2.5" fill="white"/><circle cx="50" cy="47" r="2.5" fill="white"/><circle cx="58" cy="47" r="2.5" fill="white"/>
+          </svg>
+          <span class="jw-brand-text"><span class="c1">jaga</span><span class="c2">talk</span></span>
+          <span class="jw-brand-badge">PREMIUM</span>
+        </a>
+        <nav class="jw-nav-links" aria-label="Navigasi JAGATALK Premium">
+          <a href="#jadwal">Jadwal</a>
+          <a href="#included">Yang Didapat</a>
+          <a href="#faq">FAQ</a>
+          <a href="#final-cta" class="jw-nav-cta">Daftar Sekarang</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="jw-hero">
+      <div class="jw-container jw-hero-inner">
+        <div>
+          <span class="jw-eyebrow">Webinar Premium · Setiap Minggu</span>
+          <h1>Insight Kuliah Luar Negeri, <span>Plus Bekal Beasiswa</span> Langsung dari Sumbernya.</h1>
+          <p class="jw-hero-desc">Sesi eksklusif bareng mahasiswa & alumni Indonesia yang sedang menjalani kuliah di luar negeri. Angka riil, strategi jujur, plus materi khusus <em>how to apply beasiswa</em>.</p>
+          <p class="jw-hero-lead">Tanpa clickbait. Tanpa motivator generik. Sesi 120 menit yang beneran Anda bawa pulang.</p>
+          <a href="#final-cta" class="jw-cta">🎯 Amankan Kursi Anda Sekarang</a>
+          <div class="jw-hero-meta">
+            <span class="jw-price-tag"><span class="lbl">Hanya</span> Rp 39.000 / peserta</span>
+            <span>· Online via Zoom · <strong>E-Sertifikat + Rekaman + Materi Beasiswa</strong></span>
+          </div>
+        </div>
+        <div class="jw-hero-visual">
+          <img src="/images/jagatalk/flyer-jt-premium.webp" alt="Flyer JAGATALK PREMIUM #7 — M. Syafiq Robbani, Cheng Shiu University Taiwan, 7 Agustus 2026" width="1254" height="1254" loading="eager" />
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="jw-stats">
+      <div class="jw-container jw-stats-inner">
+        <div><div class="stat-num">10+</div><div class="stat-lbl">Negara Tujuan</div></div>
+        <div><div class="stat-num">30+</div><div class="stat-lbl">Narasumber Aktif</div></div>
+        <div><div class="stat-num">Rp39rb</div><div class="stat-lbl">Investasi Peserta</div></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="jw-pad" id="tentang">
+      <div class="jw-container">
+        <span class="jw-tag">Apa itu JAGATALK Premium</span>
+        <h2 class="jw-title">Bukan webinar generic. <span>Ini investasi ilmu.</span></h2>
+        <p class="jw-lead">Lupakan webinar dengan slide PPT 100 halaman dan motivator yang belum pernah ke luar negeri. JAGATALK menghadirkan suara nyata — dari mahasiswa, alumni, dan praktisi yang sedang atau pernah hidup di negeri tujuan. Kini dengan format berbayar yang lebih fokus, materi eksklusif, dan bukti kompetensi resmi.</p>
+        <div class="jw-about-grid">
+          <div class="jw-about-card"><div class="jw-about-icon">🎙️</div><h3>Real Voices</h3><p>Narasumber utama adalah mahasiswa & alumni Indonesia yang sedang menjalani kuliah di luar negeri. Cerita yang Anda dengar = pengalaman langsung, bukan teori kelas.</p></div>
+          <div class="jw-about-card"><div class="jw-about-icon">🌏</div><h3>10+ Negara Tujuan</h3><p>Setiap minggu bahas 1 negara/topik berbeda: Malaysia, Taiwan, China, Arab Saudi, Turki, boarding school internasional, dan lainnya.</p></div>
+          <div class="jw-about-card"><div class="jw-about-icon">💎</div><h3>Terjangkau, Bernilai</h3><p>Rp 39.000 — investasi kecil untuk dapetin insight, e-sertifikat resmi, rekaman full, plus materi beasiswa yang biasanya dijual terpisah.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEXT WEBINAR -->
+    <section class="jw-pad jw-next" id="jadwal">
+      <div class="jw-container">
+        <span class="jw-tag">Jadwal Terdekat</span>
+        <h2 class="jw-title">Webinar minggu ini.</h2>
+        <p class="jw-lead">Slot Zoom terbatas. Amankan kursi Anda sebelum penuh.</p>
+        <div class="jw-next-inner">
+          <div class="jw-next-poster">
+            <img src="/images/jagatalk/flyer-jt-premium.webp" alt="Flyer JAGATALK PREMIUM #7 — M. Syafiq Robbani, Cheng Shiu University Taiwan, 7 Agustus 2026" width="1254" height="1254" loading="lazy" />
+          </div>
+          <div class="jw-next-info">
+            <dl>
+              <dt>🎯</dt><dd><div class="lbl">Topik</div><div class="val">Roadmap Kuliah di Luar Negeri: Dari Persiapan Hingga Lolos</div></dd>
+              <dt>🎙️</dt><dd><div class="lbl">Narasumber</div><div class="val">M. Syafiq Robbani · Teknik Industri &amp; Manajemen, Cheng Shiu University, Taiwan</div></dd>
+              <dt>📅</dt><dd><div class="lbl">Tanggal</div><div class="val">Jumat, 7 Agustus 2026</div></dd>
+              <dt>🕢</dt><dd><div class="lbl">Waktu</div><div class="val">19.30 – 21.30 WIB</div></dd>
+              <dt>💻</dt><dd><div class="lbl">Platform</div><div class="val">Zoom Meeting (link H-1 di grup)</div></dd>
+            </dl>
+            <a href="#final-cta" class="jw-cta">🎯 Amankan Kursi Sekarang</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section class="jw-pad" id="jadwal-lengkap">
+      <div class="jw-container">
+        <span class="jw-tag">Jadwal Lengkap JAGATALK</span>
+        <h2 class="jw-title">Ngobrol langsung dengan yang sudah mengalami.</h2>
+        <p class="jw-lead">Mereka bukan motivator. Mereka mahasiswa Indonesia yang sedang menjalani kuliah di luar negeri — dan siap cerita jujur. Catat tanggalnya, amankan kursi Anda.</p>
+        <div class="jw-sched-grid">
+          {schedule.map((s) => (
+            <div class="jw-sched-card"><div class="sched-icon">{s.icon}</div><div class="sched-name">{s.name}</div><div class="sched-univ">{s.univ}</div><div class="sched-date">{s.date}</div></div>
+          ))}
+        </div>
+        <p class="jw-note-line">Jadwal dapat berubah sewaktu-waktu. Pantau terus update info di instagram <a href="https://instagram.com/jagatrip.id" rel="noopener">@jagatrip.id</a> atau hubungi Admin via Whatsapp.</p>
+      </div>
+    </section>
+
+    <!-- INCLUDED -->
+    <section class="jw-pad jw-included" id="included">
+      <div class="jw-container">
+        <span class="jw-tag">Yang Anda Dapat</span>
+        <h2 class="jw-title">6 hal yang Anda bawa pulang. <span>Bukan sekadar 120 menit Zoom.</span></h2>
+        <p class="jw-lead">Investasi Rp 39.000 mendapatkan paket lengkap berikut — tiga di antaranya adalah value baru yang tidak tersedia di sesi versi sebelumnya.</p>
+        <div class="jw-inc-grid">
+          {included.map((it) => (
+            <div class:list={["jw-inc-card", { highlight: it.hi }]}>
+              <div class="inc-num">{it.n}</div>
+              <h3>{it.h}</h3>
+              <p>{it.p}</p>
+            </div>
+          ))}
+        </div>
+        <div class="jw-price-cta">
+          <div class="price-label">Investasi Total</div>
+          <div class="price-big"><span class="prefix">Rp</span>39.000</div>
+          <div class="price-sub">per peserta — sekali bayar untuk paket lengkap di atas</div>
+          <a href="#final-cta" class="price-btn">🎯 Amankan Kursi Saya</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW -->
+    <section class="jw-pad jw-how">
+      <div class="jw-container">
+        <span class="jw-tag">Cara Daftar</span>
+        <h2 class="jw-title">5 langkah simple, kursi Anda diamankan.</h2>
+        <p class="jw-lead">Proses pendaftaran cepat dan terkonfirmasi. Rata-rata peserta selesai dalam &lt; 10 menit.</p>
+        <div class="jw-how-steps">
+          {steps.map((s) => (
+            <div class="jw-step-card"><div class="step-num">{s.n}</div><h4>{s.h}</h4><p>{s.p}</p></div>
+          ))}
+        </div>
+        <div class="jw-how-note">
+          <h4>💡 Kenapa Kini Berbayar?</h4>
+          <p>Format berbayar memungkinkan kami menghadirkan materi lebih fokus, e-sertifikat resmi, rekaman berkualitas produksi, dan modul beasiswa eksklusif. Investasi kecil Anda juga membantu kami menghadirkan narasumber terbaik secara konsisten. Setiap peserta serius mendapatkan nilai jauh lebih besar dari yang dibayarkan.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA + FORM (ISI FORM — berada di atas FAQ sesuai revisi) -->
+    <section class="jw-final" id="final-cta">
+      <div class="jw-container">
+        <h2>Webinar berikutnya <span>tinggal hitung hari.</span></h2>
+        <p class="lead">Slot Zoom terbatas tiap minggu. Investasi Rp 39.000 untuk sesi 120 menit, e-sertifikat, rekaman full, dan modul beasiswa eksklusif.</p>
+        <div class="jw-form-card">
+          <h3>Formulir Pendaftaran</h3>
+          <p class="form-lead">Lengkapi data di bawah. Setelah submit, Anda diarahkan ke WhatsApp Admin untuk instruksi pembayaran.</p>
+          <form id="reg-form-jagatalk-premium" novalidate>
+            <div class="jw-form-group">
+              <label for="nama">Nama Lengkap <span>*</span></label>
+              <input type="text" id="nama" name="nama" required autocomplete="name" placeholder="Nama lengkap Anda">
+            </div>
+            <div class="jw-form-group">
+              <label for="instansi">Asal Instansi <span>*</span></label>
+              <input type="text" id="instansi" name="instansi" required autocomplete="organization" placeholder="Sekolah / kampus / lembaga">
+            </div>
+            <div class="jw-form-group">
+              <label for="domisili">Domisili <span>*</span></label>
+              <input type="text" id="domisili" name="domisili" required placeholder="Kota / kabupaten domisili">
+            </div>
+            <div class="jw-form-group">
+              <label for="wa">Nomor WhatsApp Aktif <span>*</span></label>
+              <input type="tel" id="wa" name="wa" required inputmode="tel" pattern="[0-9+() -]{8,20}" placeholder="0812XXXXXXXX">
+            </div>
+            <button type="submit" class="jw-form-submit">Daftar &amp; Lanjut ke WhatsApp Admin →</button>
+            <div id="reg-status-jagatalk-premium" class="jw-reg-status" hidden></div>
+            <p class="form-footer">Investasi: Rp 39.000 per peserta · Termasuk e-sertifikat, rekaman, materi beasiswa</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ (berada di bawah ISI FORM sesuai revisi) -->
+    <section class="jw-pad" id="faq">
+      <div class="jw-container">
+        <span class="jw-tag">Pertanyaan Umum</span>
+        <h2 class="jw-title">Yang sering ditanyakan.</h2>
+        <p class="jw-lead">Kalau jawaban di sini belum cukup, langsung WhatsApp admin di form di atas.</p>
+        <div class="jw-faq-list">
+          {faqs.map(([q, a]) => (
+            <details class="jw-faq-item"><summary>{q}</summary><p>{a}</p></details>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer jagatalk />
+</BaseLayout>
+
+<script>
+  import { getUtm } from '../lib/utm';
+  import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
+  import { parseIndonesianPhone } from '../lib/phone-formatter';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('reg-form-jagatalk-premium') as HTMLFormElement | null;
+    if (!form) return;
+    initFormGuard(form, 'jagatalk-premium-form', '✓ Pendaftaran Anda sudah terkirim. Admin JAGATALK akan menghubungi Anda.');
+
+    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    const statusEl = document.getElementById('reg-status-jagatalk-premium');
+    // Admin 1: Dwita, Admin 2: Kamariya
+    const admins = ['6281128506576', '628139190363'];
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+
+    function showStatus(type: 'ok' | 'err', msg: string): void {
+      if (!statusEl) return;
+      statusEl.textContent = msg;
+      statusEl.className = `jw-reg-status ${type}`;
+      statusEl.hidden = false;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const nama = (form.querySelector('#nama') as HTMLInputElement | null)?.value.trim();
+      const instansi = (form.querySelector('#instansi') as HTMLInputElement | null)?.value.trim();
+      const domisili = (form.querySelector('#domisili') as HTMLInputElement | null)?.value.trim();
+      const rawWa = (form.querySelector('#wa') as HTMLInputElement | null)?.value.trim();
+
+      if (!nama || !instansi || !domisili || !rawWa) {
+        showStatus('err', 'Semua field wajib diisi.');
+        return;
+      }
+
+      const parsedPhone = parseIndonesianPhone(rawWa);
+      const wa = parsedPhone.e164 || rawWa;
+      const isDuplicate = isPhoneSubmitted('jagatalk-premium-form', wa);
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Memproses...'; }
+
+      const selectedAdmin = admins[Math.floor(Math.random() * admins.length)];
+      const greeting = isDuplicate
+        ? `Hai admin JAGATALK Premium, saya ${nama} dari ${instansi} (${domisili}) sebelumnya sudah mendaftar dengan nomor ini, ingin konfirmasi langkah selanjutnya.`
+        : `Hai admin JAGATALK Premium, saya ${nama} dari ${instansi} (${domisili}) telah mengisi form pendaftaran webinar JAGATALK Premium (Rp 39.000). Bagaimana langkah pembayaran selanjutnya?`;
+      const waUrl = `https://wa.me/${selectedAdmin}?text=${encodeURIComponent(greeting)}`;
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            _sheet: 'LP_Jagatalk_Premium',
+            nama,
+            instansi,
+            domisili,
+            wa,
+            ...getUtm(),
+            source: 'JAGATALK Premium Landing Page (/jagatalk)',
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch (err) {
+        console.error('Error logging lead to Google Sheet:', err);
+      }
+
+      const win = window as any;
+      if (win.fbq) {
+        try { win.fbq('track', 'Lead', { content_name: 'Jagatalk Premium' }); } catch (e) { console.error('FB Pixel error:', e); }
+      }
+
+      showStatus('ok', isDuplicate ? 'Sudah terdaftar sebelumnya. Mengalihkan ke WhatsApp...' : 'Pendaftaran berhasil! Mengalihkan ke WhatsApp...');
+      lockForm(form, 'jagatalk-premium-form', isDuplicate ? '✓ Anda sudah terdaftar sebelumnya.' : '✓ Pendaftaran berhasil dikirim.', wa);
+      setTimeout(() => { window.location.href = waUrl; }, 500);
+    });
+  });
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+  .jw{
+    --orange:#E85D1F;--orange-dark:#C64A11;--orange-light:#FF8A45;--dark-blue:#1B3A6B;
+    --cream:#FDF6EB;--cream-dark:#F5EAD7;--white:#fff;--black:#282828;--gray:#6E6E6E;--gray-light:#E5E5E5;
+    font-family:'Poppins',system-ui,-apple-system,sans-serif;color:#1a1a1a;line-height:1.6;display:block;background:var(--cream)
+  }
+  .jw *,.jw *::before,.jw *::after{box-sizing:border-box}
+  .jw img{max-width:100%;display:block}
+  .jw a{color:inherit;text-decoration:none}
+  .jw-container{max-width:1140px;margin:0 auto;padding:0 24px}
+
+  /* HEADER */
+  .jw-topbar{position:sticky;top:0;z-index:100;background:rgba(253,246,235,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(232,93,31,.15);padding:12px 0}
+  .jw-topbar-inner{display:flex;justify-content:space-between;align-items:center}
+  .jw-brand{display:flex;align-items:center;gap:8px}
+  .jw-brand svg{width:40px;height:40px;display:block;flex-shrink:0}
+  .jw-brand-text{font-weight:800;font-size:22px;letter-spacing:-.5px}
+  .jw-brand-text .c1{color:#0E7C86}
+  .jw-brand-text .c2{color:#FF6B1A}
+  .jw-brand-badge{background:var(--orange);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;margin-left:4px;letter-spacing:.5px}
+  .jw-nav-links{display:flex;align-items:center;gap:26px}
+  .jw-nav-links > a:not(.jw-nav-cta){font-size:14px;font-weight:500;color:var(--dark-blue);transition:color .2s}
+  .jw-nav-links > a:not(.jw-nav-cta):hover{color:var(--orange)}
+  .jw a.jw-nav-cta{background:var(--orange);color:#fff;padding:9px 20px;border-radius:24px;font-size:13px;font-weight:600;transition:background .2s}
+  .jw a.jw-nav-cta:hover{background:var(--orange-dark)}
+  @media (max-width:820px){
+    .jw-nav-links > a:not(.jw-nav-cta){display:none}
+  }
+  @media (max-width:520px){
+    .jw-brand svg{width:34px;height:34px}
+    .jw-brand-text{font-size:19px}
+    .jw-brand-badge{display:none}
+    .jw a.jw-nav-cta{padding:8px 14px;font-size:12px}
+  }
+
+  /* HERO */
+  .jw-hero{padding:56px 0 80px;background:radial-gradient(ellipse at top right,rgba(232,93,31,.10),transparent 60%),radial-gradient(ellipse at bottom left,rgba(27,58,107,.06),transparent 60%),var(--cream)}
+  .jw-hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .jw-eyebrow{display:inline-block;background:rgba(232,93,31,.12);color:var(--orange);padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+  .jw-hero h1{font-size:clamp(30px,5vw,44px);line-height:1.15;color:var(--dark-blue);font-weight:700;margin-bottom:18px}
+  .jw-hero h1 span{color:var(--orange)}
+  .jw-hero-desc{font-size:17px;color:#444;margin-bottom:22px}
+  .jw-hero-lead{font-size:15px;color:var(--gray);border-left:3px solid var(--orange);padding-left:14px;margin-bottom:28px}
+  .jw a.jw-cta{display:inline-block;background:var(--orange);color:var(--white);padding:16px 32px;border-radius:30px;font-weight:600;font-size:16px;transition:all .2s;box-shadow:0 8px 24px rgba(232,93,31,.35)}
+  .jw a.jw-cta:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 28px rgba(232,93,31,.45)}
+  .jw-hero-meta{margin-top:22px;font-size:14px;color:var(--gray);display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+  .jw-hero-meta strong{color:var(--dark-blue);font-weight:700}
+  .jw-price-tag{display:inline-flex;align-items:center;gap:8px;background:var(--dark-blue);color:var(--white);padding:8px 16px;border-radius:20px;font-size:15px;font-weight:700}
+  .jw-price-tag .lbl{font-size:11px;font-weight:500;opacity:.85;text-transform:uppercase;letter-spacing:1px}
+  .jw-hero-visual{border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(27,58,107,.20);max-width:440px;margin-inline:auto}
+  .jw-hero-visual img{width:100%;height:auto;display:block}
+
+  /* STATS */
+  .jw-stats{background:var(--dark-blue);color:var(--white);padding:40px 0}
+  .jw-stats-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
+  .stat-num{font-size:40px;font-weight:800;color:var(--orange-light);line-height:1}
+  .stat-lbl{font-size:13px;opacity:.85;margin-top:6px}
+
+  /* SECTION BASE */
+  .jw-pad{padding:80px 0}
+  .jw-tag{display:inline-block;color:var(--orange);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+  .jw-title{font-size:clamp(26px,4vw,34px);color:var(--dark-blue);font-weight:700;line-height:1.2;margin-bottom:16px}
+  .jw-title span{color:var(--orange)}
+  .jw-lead{font-size:17px;color:#444;max-width:720px;margin-bottom:40px}
+
+  /* ABOUT */
+  .jw-about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .jw-about-card{background:var(--white);padding:32px 28px;border-radius:16px;border:1px solid var(--cream-dark);transition:transform .2s,box-shadow .2s}
+  .jw-about-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(27,58,107,.10)}
+  .jw-about-icon{font-size:32px;width:64px;height:64px;background:rgba(232,93,31,.10);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .jw-about-card h3{font-size:20px;color:var(--dark-blue);margin-bottom:10px}
+  .jw-about-card p{color:var(--gray);font-size:15px}
+
+  /* NEXT WEBINAR */
+  .jw-next{background:var(--cream-dark)}
+  .jw-next-inner{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;background:var(--white);padding:32px;border-radius:24px;box-shadow:0 12px 40px rgba(27,58,107,.08)}
+  .jw-next-poster{border-radius:16px;overflow:hidden;box-shadow:0 16px 40px rgba(27,58,107,.12)}
+  .jw-next-poster img{width:100%;height:auto;display:block}
+  .jw-next-info dl{display:grid;grid-template-columns:auto 1fr;gap:12px 16px;margin-bottom:24px}
+  .jw-next-info dt{font-size:22px}
+  .jw-next-info dd .lbl{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px}
+  .jw-next-info dd .val{font-size:15px;color:var(--dark-blue);font-weight:600}
+
+  /* SCHEDULE */
+  .jw-sched-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+  .jw-sched-card{background:var(--white);padding:24px 20px;border-radius:14px;border:1px solid var(--cream-dark)}
+  .sched-icon{font-size:26px;margin-bottom:10px}
+  .sched-name{font-weight:700;color:var(--dark-blue);margin-bottom:4px}
+  .sched-univ{font-size:13px;color:var(--gray);margin-bottom:10px;min-height:40px}
+  .sched-date{font-size:12px;color:var(--orange);font-weight:700}
+  .jw-note-line{margin-top:20px;color:var(--gray);font-size:14px}
+  .jw-note-line a{color:var(--orange);font-weight:600}
+
+  /* INCLUDED */
+  .jw-included{background:linear-gradient(180deg,var(--white),var(--cream))}
+  .jw-inc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .jw-inc-card{background:var(--white);padding:28px;border-radius:16px;border:2px solid var(--cream-dark);position:relative;overflow:hidden}
+  .jw-inc-card.highlight{border-color:var(--orange);background:linear-gradient(180deg,#fff,#FFF9F4)}
+  .jw-inc-card.highlight::before{content:"★ TERBARU";position:absolute;top:14px;right:14px;background:var(--orange);color:var(--white);font-size:10px;padding:3px 10px;border-radius:12px;font-weight:700;letter-spacing:.5px}
+  .inc-num{font-size:12px;color:var(--orange);font-weight:700;letter-spacing:2px;margin-bottom:6px}
+  .jw-inc-card h3{font-size:19px;color:var(--dark-blue);margin-bottom:8px}
+  .jw-inc-card p{font-size:14.5px;color:var(--gray)}
+
+  /* PRICE CTA */
+  .jw-price-cta{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:var(--white);padding:60px 40px;border-radius:24px;text-align:center;margin:40px 0 0;box-shadow:0 24px 60px rgba(232,93,31,.30)}
+  .jw-price-cta .price-label{font-size:14px;letter-spacing:3px;text-transform:uppercase;opacity:.9}
+  .jw-price-cta .price-big{font-size:clamp(52px,10vw,72px);font-weight:800;line-height:1;margin:8px 0 6px}
+  .jw-price-cta .price-big .prefix{font-size:.44em;vertical-align:top;margin-right:4px}
+  .jw-price-cta .price-sub{font-size:15px;opacity:.95;margin-bottom:24px}
+  .jw-price-cta .price-btn{display:inline-block;background:var(--white);color:var(--orange);padding:16px 40px;border-radius:30px;font-weight:700;font-size:16px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+  .jw-price-cta .price-btn:hover{transform:translateY(-2px)}
+
+  /* HOW */
+  .jw-how{background:var(--cream-dark)}
+  .jw-how-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:32px}
+  .jw-step-card{background:var(--white);padding:24px 20px;border-radius:14px;text-align:center;border:1px solid var(--cream-dark)}
+  .step-num{width:40px;height:40px;border-radius:50%;background:var(--orange);color:var(--white);font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:18px}
+  .jw-step-card h4{font-size:15px;color:var(--dark-blue);margin-bottom:6px}
+  .jw-step-card p{font-size:13px;color:var(--gray)}
+  .jw-how-note{background:rgba(27,58,107,.06);border-left:4px solid var(--dark-blue);padding:20px 24px;border-radius:8px}
+  .jw-how-note h4{color:var(--dark-blue);margin-bottom:6px;font-size:16px}
+  .jw-how-note p{font-size:14px;color:#444}
+
+  /* FAQ */
+  .jw-faq-list{max-width:780px}
+  .jw-faq-item{background:var(--white);border:1px solid var(--cream-dark);border-radius:12px;margin-bottom:12px;padding:20px 24px}
+  .jw-faq-item summary{cursor:pointer;font-weight:600;color:var(--dark-blue);font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .jw-faq-item summary::-webkit-details-marker{display:none}
+  .jw-faq-item summary::after{content:"+";color:var(--orange);font-weight:700;font-size:24px;transition:transform .2s;flex-shrink:0}
+  .jw-faq-item[open] summary::after{transform:rotate(45deg)}
+  .jw-faq-item p{margin-top:12px;color:var(--gray);font-size:15px}
+
+  /* FINAL FORM */
+  .jw-final{background:var(--dark-blue);color:var(--white);padding:100px 0}
+  .jw-final h2{color:var(--white);font-size:clamp(30px,5vw,40px);text-align:center;margin-bottom:12px}
+  .jw-final h2 span{color:var(--orange-light)}
+  .jw-final .lead{text-align:center;opacity:.85;max-width:640px;margin:0 auto 40px;font-size:16px}
+  .jw-form-card{max-width:500px;margin:0 auto;background:var(--white);color:var(--black);padding:40px;border-radius:20px;box-shadow:0 40px 80px rgba(0,0,0,.3)}
+  .jw-form-card h3{color:var(--dark-blue);font-size:22px;margin-bottom:6px}
+  .jw-form-card .form-lead{color:var(--gray);font-size:14px;margin-bottom:24px}
+  .jw-form-group{margin-bottom:16px}
+  .jw-form-group label{display:block;font-size:13px;color:var(--dark-blue);font-weight:600;margin-bottom:6px}
+  .jw-form-group label span{color:var(--orange)}
+  .jw-form-group input{width:100%;padding:14px 16px;border:2px solid var(--cream-dark);border-radius:10px;font-family:inherit;font-size:15px;transition:border-color .2s}
+  .jw-form-group input:focus{outline:none;border-color:var(--orange)}
+  .jw-form-submit{width:100%;padding:16px;background:var(--orange);color:var(--white);border:none;border-radius:30px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;transition:background .2s;margin-top:8px}
+  .jw-form-submit:hover{background:var(--orange-dark)}
+  .jw-form-submit:disabled{opacity:.7;cursor:not-allowed}
+  .jw-reg-status{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:13px;text-align:center}
+  .jw-reg-status.ok{background:#e7f7ec;color:#1b7a3d}
+  .jw-reg-status.err{background:#fdecec;color:#c0392b}
+  .form-footer{text-align:center;font-size:12px;color:var(--gray);margin-top:14px}
+
+  /* RESPONSIVE */
+  @media (max-width:900px){
+    .jw-hero-inner{grid-template-columns:1fr}
+    .jw-hero-visual{max-width:360px;margin-inline:auto;order:-1}
+    .jw-about-grid,.jw-inc-grid,.jw-next-inner,.jw-how-steps{grid-template-columns:1fr}
+    .jw-pad{padding:56px 0}
+    .jw-final{padding:64px 0}
+    .jw-footer-inner{grid-template-columns:1fr;gap:32px}
+  }
+  @media (max-width:720px){
+    .jw-stats-inner{grid-template-columns:repeat(3,1fr);gap:20px}
+  }
+  @media (max-width:520px){
+    .jw-hero{padding:40px 0 56px}
+    .jw-form-card{padding:28px 22px}
+    .jw-price-cta{padding:44px 24px}
+    .jw-next-poster{max-width:300px;margin-inline:auto}
+    .jw-stats-inner{grid-template-columns:1fr;gap:24px}
+    .jw-footer-bottom{flex-direction:column;align-items:flex-start;text-align:left}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .jw *{transition:none!important}
+  }
+</style>

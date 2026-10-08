@@ -1,0 +1,19 @@
+@theme {
+  /* === JAGA Brand Colors (from fix.html) === */
+  --color-jaga-orange:      #E8611F;
+  --color-jaga-orange-600:  #e55a2b;
+  --color-jaga-orange-500:  #f97316;
+  --color-jaga-orange-400:  #fb923c;
+  --color-jaga-orange-50:   #fff7ed;
+  --color-jaga-bg:          #FAF7F2;
+  --color-jaga-dark:        #0F172A;
+
+  /* WhatsApp */
+  --color-wa: #25D366;
+
+  /* Font */
+  --font-sans: var(--font-sans, 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+
+  /* Layout */
+  --container-max: 80rem;
+}

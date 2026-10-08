@@ -1,0 +1,102 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* === Base === */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-jaga-bg);
+  color: #1F2937;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-jaga-orange);
+  color: white;
+}
+
+@layer base {
+  img {
+    max-width: 100%;
+    display: block;
+  }
+}
+a { transition: color 0.2s ease; }
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  background: var(--color-jaga-orange);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 16px; }
+
+:focus-visible {
+  outline: 2px solid var(--color-jaga-orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Scroll offset — compensate for fixed navbar height */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Scroll reveal — state pending hanya dipasang JS, jadi konten tetap terlihat tanpa JS. */
+[data-reveal-state="pending"] {
+  opacity: 0;
+  transform: translate3d(0, 1.25rem, 0);
+}
+
+[data-reveal="item"][data-reveal-state="pending"] {
+  transform: translate3d(0, .875rem, 0);
+}
+
+[data-reveal="hero"][data-reveal-state="pending"] {
+  transform: translate3d(0, .625rem, 0);
+}
+
+[data-reveal-state="visible"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity 560ms cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms),
+    transform 620ms cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms);
+}
+
+[data-reveal="item"][data-reveal-state="visible"] {
+  transition-duration: 500ms, 560ms;
+}
+
+[data-reveal="hero"][data-reveal-state="visible"] {
+  transition-duration: 380ms, 440ms;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  [data-reveal-state] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

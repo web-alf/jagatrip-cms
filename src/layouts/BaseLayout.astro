@@ -1,0 +1,105 @@
+---
+import BaseSEO  from '../components/seo/BaseSEO.astro';
+import JsonLd   from '../components/seo/JsonLd.astro';
+import Tracking from '../components/seo/Tracking.astro';
+import { SITE } from '../data/site';
+import { organizationSchema } from '../data/schemas/organization';
+import { websiteSchema }      from '../data/schemas/website';
+import '../styles/lp.css'; // CSS lama (dulu global.css); global.css sekarang milik situs baru
+
+interface Props {
+  title:        string;
+  description:  string;
+  canonical?:   string;
+  ogImage?:     string;
+  ogType?:      string;
+  noindex?:     boolean;
+  extraSchemas?: object[];
+  gtmId?:       string;
+  /** Container GTM tambahan (mis. untuk tracker kedua). Dipasang bersama gtmId. */
+  gtmId2?:      string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  ogType,
+  noindex      = false,
+  extraSchemas = [],
+  gtmId,
+  gtmId2,
+} = Astro.props;
+
+const schemas = [
+  organizationSchema(),
+  websiteSchema(),
+  ...extraSchemas,
+];
+---
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* Google Tag Manager (Astro 7: komentar HTML di dalam ekspresi tidak didukung) */}
+    {gtmId && (
+      <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${gtmId}');`} />
+    )}
+    {gtmId2 && (
+      <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${gtmId2}');`} />
+    )}
+
+    <BaseSEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      ogImage={ogImage}
+      ogType={ogType}
+      noindex={noindex}
+    />
+
+    <!-- Preload LCP image (mobile-first) -->
+    <link rel="preload" as="image" type="image/webp" href="/jagatrip-hero-sm.webp" media="(max-width: 640px)" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" href="/jagatrip-hero.webp" media="(min-width: 641px)" fetchpriority="high" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/logo-icon.webp" />
+    <link rel="apple-touch-icon" href="/images/logo-icon.webp" />
+
+    <!-- JSON-LD -->
+    <JsonLd schemas={schemas} />
+
+    <!-- Tracking (Meta Pixel, dll) -->
+    <Tracking />
+  </head>
+  <body>
+    {gtmId && (
+      <noscript set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />
+    )}
+    {gtmId2 && (
+      <noscript set:html={`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId2}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`} />
+    )}
+    <a href="#main" class="skip-link">Langsung ke konten</a>
+    <slot />
+    <script>
+      import { initZarazEvents } from '../lib/zaraz-events';
+      import { initRevealMotion } from '../lib/reveal';
+      import { captureUtm } from '../lib/utm';
+      captureUtm();
+      initZarazEvents();
+      initRevealMotion();
+    </script>
+  </body>
+</html>

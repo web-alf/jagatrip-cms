@@ -1,0 +1,1117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "JAGATALK #8 — Roadmap Sekolah Membangun Program Internasional";
+const pageDesc = "Sesi eksklusif untuk kepala sekolah, manajemen, founder & yayasan yang siap berhenti bertanya “mulai dari mana” — dan mulai bergerak dengan roadmap yang jelas dan praktis.";
+
+const FAQS = [
+  {
+    q: "Saya bukan kepala sekolah — apakah tetap boleh ikut?",
+    a: "Boleh. Sesi ini terbuka untuk siapapun yang punya peran strategis di sekolah swasta: founder, direktur, ketua yayasan, wakil kepala sekolah, atau guru senior yang sedang dipersiapkan untuk peran leadership."
+  },
+  {
+    q: "Apa bedanya paket Regular dan Premium?",
+    a: "Paket Regular memberikan akses penuh ke webinar, semua materi, rekaman, worksheet, dan sertifikat. Paket Premium menambahkan Prioritas Undangan ke Exclusive Meet-Up dengan PIC Kampus Mitra Jagatrip di Malaysia — sesi terpisah yang dijadwalkan beberapa minggu setelah webinar utama."
+  },
+  {
+    q: "Apakah Meet-Up dengan kampus Malaysia langsung menghasilkan MoU?",
+    a: "Tidak — Meet-Up adalah sesi awareness & introduction. Anda mendapatkan akses bertanya langsung ke PIC kampus tentang program & kriteria kolaborasi. Kalau tertarik melanjutkan ke partnership formal, tahap berikutnya (due diligence & MoU) dapat difasilitasi Jagatrip sesuai kebutuhan."
+  },
+  {
+    q: "Kapan Exclusive Meet-Up dilaksanakan?",
+    a: "Meet-Up dijadwalkan beberapa minggu setelah Jagatalk #8. Tanggal final akan diinformasikan maksimal 7 hari setelah webinar utama. Peserta Premium mendapat notifikasi via email & WhatsApp."
+  },
+  {
+    q: "Bagaimana kalau saya berhalangan hadir di hari-H?",
+    a: "Tidak masalah. Rekaman lengkap akan dikirim ke email Anda maksimal 3 hari setelah acara. Anda tetap bisa menonton di waktu senggang."
+  },
+  {
+    q: "Bisa reimburse ke sekolah atau yayasan?",
+    a: "Ya. E-sertifikat resmi Jagatrip yang Anda terima bisa dijadikan bukti untuk reimburse biaya ke institusi Anda (sesuai policy masing-masing)."
+  },
+  {
+    q: "Bagaimana metode pembayaran?",
+    a: "Setelah Anda submit form, admin kami akan menghubungi Anda via WhatsApp untuk konfirmasi paket & instruksi pembayaran. Kami menerima transfer bank, e-wallet, dan virtual account."
+  }
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDesc}
+  canonical="https://jagatrip.com/jagatalk8"
+  ogImage="/images/jagatalk/flyer-jw8-v3.avif"
+  ogType="website"
+>
+  <!-- Google Fonts: Caveat, Plus Jakarta Sans, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet" />
+
+  <div style="width:100%; overflow-x:hidden; background:#FFFFFF; color:#0B2341; font-family:'Plus Jakarta Sans', system-ui, sans-serif;">
+
+    <!-- ============ HEADER ============ -->
+    <header style="position:sticky; top:0; z-index:60; background:#FFFFFF; border-bottom:1px solid #E2E8F0;">
+      <div class="jt8-header-container" style="max-width:1240px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+        <!-- Logo -->
+        <a href="#beranda" style="display:flex; align-items:center; gap:10px; white-space:nowrap; text-decoration:none; flex-shrink:0;">
+          <img src="/images/jagatalk/logo-jagatalk.png" alt="JAGATALK #8" class="jt8-header-logo" style="height:44px; width:auto; display:block;" />
+        </a>
+
+        <!-- Desktop Nav (screens >= 768px) -->
+        <nav class="jt8-desktop-nav hidden md:flex" style="margin-left:auto; align-items:center; gap:28px;">
+          <a href="#beranda" style="font-size:14.5px; font-weight:600; color:#475569;" style-hover="color:#0B2341;">Beranda</a>
+          <a href="#tentang" style="font-size:14.5px; font-weight:600; color:#475569;" style-hover="color:#0B2341;">Tentang</a>
+          <a href="#materi" style="font-size:14.5px; font-weight:600; color:#475569;" style-hover="color:#0B2341;">Materi</a>
+          <a href="#harga" style="font-size:14.5px; font-weight:600; color:#475569;" style-hover="color:#0B2341;">Harga</a>
+          <button type="button" class="btn-go-form" style="background:#F97316; color:#FFFFFF; border:none; border-radius:10px; padding:12px 20px; min-height:44px; font-size:14.5px; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(11,35,65,0.12);" style-hover="background:#EA6A0B;">Daftar Sekarang</button>
+        </nav>
+
+        <!-- Mobile Controls (screens < 768px) -->
+        <div class="jt8-mobile-controls flex md:hidden" style="align-items:center; gap:10px;">
+          <button type="button" class="btn-go-form jt8-mobile-cta" style="background:#F97316; color:#FFFFFF; border:none; border-radius:8px; padding:9px 15px; min-height:38px; font-size:13.5px; font-weight:700; cursor:pointer; white-space:nowrap; box-shadow:0 1px 2px rgba(11,35,65,0.12);" style-hover="background:#EA6A0B;">Daftar</button>
+          <button type="button" id="jt8-menu-toggle" aria-label="Toggle Menu" style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; width:38px; height:38px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#0B2341; padding:0;">
+            <svg id="jt8-icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <svg id="jt8-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown Menu Drawer -->
+      <div id="jt8-mobile-drawer" class="jt8-mobile-drawer" style="display:none; background:#FFFFFF; border-top:1px solid #F1F5F9; box-shadow:0 14px 30px -10px rgba(11,35,65,0.18); padding:16px 20px 24px;">
+        <nav style="display:flex; flex-direction:column; gap:6px;">
+          <a href="#beranda" class="jt8-drawer-link" style="display:block; font-size:15px; font-weight:700; color:#0B2341; padding:12px 8px; border-bottom:1px solid #F1F5F9; text-decoration:none;">Beranda</a>
+          <a href="#tentang" class="jt8-drawer-link" style="display:block; font-size:15px; font-weight:700; color:#0B2341; padding:12px 8px; border-bottom:1px solid #F1F5F9; text-decoration:none;">Tentang</a>
+          <a href="#materi" class="jt8-drawer-link" style="display:block; font-size:15px; font-weight:700; color:#0B2341; padding:12px 8px; border-bottom:1px solid #F1F5F9; text-decoration:none;">Materi</a>
+          <a href="#harga" class="jt8-drawer-link" style="display:block; font-size:15px; font-weight:700; color:#0B2341; padding:12px 8px; border-bottom:1px solid #F1F5F9; text-decoration:none;">Harga</a>
+          <button type="button" class="btn-go-form jt8-drawer-link" style="margin-top:12px; width:100%; background:#F97316; color:#FFFFFF; border:none; border-radius:10px; padding:14px; min-height:48px; font-size:15px; font-weight:700; cursor:pointer; text-align:center;">Daftar Sekarang</button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section id="beranda" style="position:relative; overflow:hidden; background:linear-gradient(160deg,#FFFFFF 0%,#FFFDF9 45%,#FFF3E4 100%); border-bottom:1px solid #F1E9DD;">
+      <div style="position:absolute; inset:0; background-image:radial-gradient(#F9731622 1.1px, transparent 1.1px); background-size:26px 26px; opacity:0.55; pointer-events:none;"></div>
+      <div style="position:absolute; right:-140px; top:-120px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #FFE3C4 0%, #FFF3E4 60%, rgba(255,243,228,0) 72%); pointer-events:none;"></div>
+      <div class="jt8-section-pad" style="position:relative; max-width:1240px; margin:0 auto; padding:clamp(36px,4.5vw,64px) 24px clamp(40px,4.5vw,60px); display:flex; flex-wrap:wrap; gap:clamp(32px,5vw,72px); align-items:center;">
+
+        <div style="flex:1 1 440px; min-width:0;">
+          <div style="display:inline-flex; align-items:center; gap:10px; border:1px solid #FED7AA; background:#FFF7ED; color:#C2410C; border-radius:999px; padding:8px 14px; font-size:12.5px; font-weight:700; letter-spacing:0.04em;">
+            <span style="width:6px; height:6px; border-radius:50%; background:#F97316; display:inline-block;"></span>
+            JAGATALK #8 | Webinar Eksklusif Manajemen Sekolah
+          </div>
+
+          <h1 class="jt8-hero-h1" style="margin:22px 0 0; font-size:clamp(22px,5.2vw,56px); line-height:1.15; letter-spacing:-0.03em; font-weight:800; color:#0B2341;">ROADMAP SEKOLAH MEMBANGUN<span style="color:#F97316; display:inline-block;">PROGRAM INTERNASIONAL</span></h1>
+
+          <p class="jt8-hero-sub-text" style="margin: 16px 0 0; font-family: 'Montserrat', sans-serif; font-size: clamp(26px,2.6vw,34px); font-weight: 700; color: #F97316; line-height: 1.1">Dari yang sudah membangunnya 6 kali.</p>
+
+          <p style="margin:14px 0 0; max-width:560px; font-size:16.5px; line-height:1.7; color:#475569; text-wrap:pretty;">Sesi eksklusif untuk kepala sekolah, manajemen, founder &amp; yayasan yang siap berhenti bertanya “mulai dari mana” — dan mulai bergerak dengan roadmap yang jelas dan praktis.</p>
+
+          <div style="margin-top:30px; display:flex; flex-wrap:wrap; align-items:center; gap:16px;">
+            <button type="button" class="btn-go-form jt8-btn-mobile-full" style="background:#F97316; color:#FFFFFF; border:none; border-radius:12px; padding:17px 30px; min-height:56px; font-size:16.5px; font-weight:800; letter-spacing:-0.01em; cursor:pointer; box-shadow:0 8px 20px rgba(249,115,22,0.28);" style-hover="background:#EA6A0B; transform:translateY(-2px);">Amankan Kursi Anda</button>
+          </div>
+
+          <div class="jt8-meta-container" style="margin-top:26px; padding-top:22px; border-top:1px solid #E9DFD1; display:flex; flex-wrap:wrap; gap:14px 28px;">
+            <div style="display:flex; gap:11px; align-items:center;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8" style="flex:none;"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg>
+              <div><div style="font-size:10.5px; font-weight:800; letter-spacing:0.12em; color:#94A3B8;">TANGGAL</div><div style="margin-top:2px; font-size:14.5px; font-weight:700; color:#0B2341;">23 September 2026</div></div>
+            </div>
+            <div style="display:flex; gap:11px; align-items:center;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8" style="flex:none;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+              <div><div style="font-size:10.5px; font-weight:800; letter-spacing:0.12em; color:#94A3B8;">JAM</div><div style="margin-top:2px; font-size:14.5px; font-weight:700; color:#0B2341;">19.30 WIB</div></div>
+            </div>
+            <div style="display:flex; gap:11px; align-items:center;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8" style="flex:none;"><rect x="2" y="6" width="14" height="12" rx="2"></rect><path d="M16 11l6-3v8l-6-3z"></path></svg>
+              <div><div style="font-size:10.5px; font-weight:800; letter-spacing:0.12em; color:#94A3B8;">PLATFORM</div><div style="margin-top:2px; font-size:14.5px; font-weight:700; color:#0B2341;">Via Zoom Meeting</div></div>
+            </div>
+          </div>
+          
+        </div>
+
+        <div style="flex:1 1 420px; min-width:0; display:flex; justify-content:center;">
+          <div style="position:relative; width:100%; max-width:500px;">
+            <div style="position:relative; border-radius:16px; overflow:hidden; background:#EEF0F6; box-shadow:0 24px 50px -32px rgba(11,35,65,0.45);">
+              <img src="/dedi-photo.jpg" alt="Muhammad Dedi Gunawan — Founder Jagatrip &amp; 6 Sekolah IDN" style="display:block; width:100%; aspect-ratio:4/5; object-fit:cover; object-position:50% 12%;">
+              <div style="position: absolute; left: 0; top: 0; width: 130px; height: 4px; background: #F97316"></div>
+            </div>
+
+            <div style="margin-top:16px; display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; padding-top:16px; border-top:1px solid #E2E8F0;">
+              <div style="min-width:0;">
+                <div style="font-size:10.5px; font-weight:800; letter-spacing:0.14em; color:#C2410C;">PEMATERI</div>
+                <div style="margin-top:4px; font-size:18px; font-weight:800; letter-spacing:-0.02em; color:#0B2341;">Dedi Gunawan</div>
+                <div style="margin-top:2px; font-size:13.5px; font-weight:600; color:#64748B;">Founder Jagatrip &amp; 6 Sekolah IDN</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ SECTION TENTANG ============ -->
+    <section id="tentang" style="background:#FFF7ED; border-bottom:1px solid #FDE7CE;">
+      <div class="jt8-section-pad" style="max-width:1240px; margin:0 auto; padding:clamp(40px,4.5vw,64px) 24px;">
+        <div style="max-width:900px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:0.14em; color:#C2410C;"><span class="eyebrow" style="border: 0px solid; margin: 0px 0px 8px; padding: 0px 0px 0px 26px; display: inline-block; color: rgb(232, 93, 31); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; position: relative; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center; background-color: rgb(253, 246, 235);">Untuk Anda yang Merasakan Ini</span></div>
+          <h2 style="margin:14px 0 0; font-size:clamp(26px,3.1vw,40px); line-height:1.22; letter-spacing:-0.02em; font-weight:800; color:#0B2341; text-wrap:pretty;">Anda Bingung Membangun Sekolah Memiliki Reputasi dan Kolaborasi Global?</h2>
+          <p style="margin:18px 0 0; font-size:16.5px; line-height:1.7; color:#475569;">Kalau Anda mencentang minimal 1 dari 4 ini, Anda harus ikut sesi webinar ini:</p>
+        </div>
+
+        <div class="jt8-grid-pain" style="margin-top:40px; display:grid; grid-template-columns:repeat(2, 1fr); gap:0 clamp(28px,4vw,64px);">
+          <div style="display:flex; gap:18px; padding:22px 0; border-top:1px solid #F1D9BE;">
+            <div style="flex:none; width:30px; height:30px; border-radius:8px; background:#FFFFFF; border:1px solid #FED7AA; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3"><path d="M4 12.5l5 5L20 6.5"></path></svg></div>
+            <p style="margin:0; font-size:15.5px; line-height:1.68; color:#475569;">Yayasan atau owner mulai bertanya <strong style="color:#0B2341;">“kapan sekolah kita bisa naik kelas ke level internasional?”</strong> — dan Anda belum punya jawaban yang meyakinkan.</p>
+          </div>
+          
+          <div style="display:flex; gap:18px; padding:22px 0; border-top:1px solid #F1D9BE;">
+            <div style="flex:none; width:30px; height:30px; border-radius:8px; background:#FFFFFF; border:1px solid #FED7AA; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3"><path d="M4 12.5l5 5L20 6.5"></path></svg></div>
+            <p style="margin:0; font-size:15.5px; line-height:1.68; color:#475569;">Anda sudah membaca artikel, ikut seminar, bahkan mempertimbangkan konsultan pendidikan — tapi <strong style="color:#0B2341;">semua terasa terlalu teoritis</strong> atau terlalu mahal.</p>
+          </div>
+          <div style="display:flex; gap:18px; padding:22px 0; border-top:1px solid #F1D9BE;">
+            <div style="flex:none; width:30px; height:30px; border-radius:8px; background:#FFFFFF; border:1px solid #FED7AA; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3"><path d="M4 12.5l5 5L20 6.5"></path></svg></div>
+            <p style="margin:0; font-size:15.5px; line-height:1.68; color:#475569;">Anda tahu sekolah butuh perubahan — tapi bingung <strong style="color:#0B2341;">apa dulu yang harus dibenahi</strong>: SDM guru, kurikulum, branding, atau infrastruktur?</p>
+          </div>
+          <div style="display:flex; gap:18px; padding:22px 0; border-top:1px solid #F1D9BE; border-bottom:1px solid #F1D9BE;">
+            <div style="flex:none; width:30px; height:30px; border-radius:8px; background:#FFFFFF; border:1px solid #FED7AA; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3"><path d="M4 12.5l5 5L20 6.5"></path></svg></div>
+            <p style="margin:0; font-size:15.5px; line-height:1.68; color:#475569;">Anda ingin sekolah punya <strong style="color:#0B2341;">MoU aktif dengan kampus atau sekolah luar negeri</strong>, tapi tidak tahu bagaimana cara membuka pintu itu secara kredibel.</p>
+          </div>
+        </div>
+
+        <div class="jt8-callout" style="margin-top:40px; display:flex; flex-wrap:wrap; align-items:center; gap:24px; justify-content:space-between; background:#FFFFFF; border:1px solid #FED7AA; border-left:4px solid #F97316; border-radius:12px; padding:24px 26px;">
+          <p style="margin:0; max-width:720px; font-size:16px; line-height:1.65; color:#0B2341; font-weight:600;">Jika salah satu kondisi di atas terasa familiar, yang Anda butuhkan bukan lebih banyak teori — tetapi urutan langkah yang jelas.</p>
+          <a href="#materi" style="font-size:14.5px; font-weight:700; color:#C2410C; white-space:nowrap;">Lihat Roadmap yang Akan Dipelajari ↓</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============ SECTION FASILITAS PESERTA ============ -->
+    <section style="background:#F8FAFC; border-bottom:1px solid #E2E8F0;">
+      <div class="jt8-section-pad" style="max-width:1240px; margin:0 auto; padding:clamp(40px,4.5vw,64px) 24px;">
+        <div style="max-width:780px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:0.14em; color:#C2410C;">FASILITAS PESERTA</div>
+          <h2 style="margin:14px 0 0; font-size:clamp(26px,3vw,38px); line-height:1.2; letter-spacing:-0.02em; font-weight:800; color:#0B2341;">Pengalaman Belajar Interaktif &amp; Resource Eksklusif</h2>
+          <p style="margin:16px 0 0; font-size:16.5px; line-height:1.7; color:#475569;">Seluruh peserta—paket Regular maupun Premium—mendapatkan akses ke toolkit eksekusi lengkap berikut:</p>
+        </div>
+
+        <div class="jt8-grid-fasilitas" style="margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px;">
+          <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:24px; transition:transform 220ms ease, box-shadow 220ms ease;" style-hover="transform:translateY(-3px); box-shadow:0 10px 24px -14px rgba(11,35,65,0.3);">
+            <div style="width:38px; height:38px; border-radius:9px; background:#FFF7ED; display:flex; align-items:center; justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8"><rect x="2" y="6" width="14" height="12" rx="2"></rect><path d="M16 11l6-3v8l-6-3z"></path></svg></div>
+            <h3 style="margin:16px 0 0; font-size:16px; font-weight:800; color:#0B2341;">Live Session Bersama Dedi Gunawan</h3>
+            <p style="margin:8px 0 0; font-size:14.5px; line-height:1.65; color:#64748B;">Sesi interaktif langsung dengan pemilik 6 sekolah IDN.</p>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:24px; transition:transform 220ms ease, box-shadow 220ms ease;" style-hover="transform:translateY(-3px); box-shadow:0 10px 24px -14px rgba(11,35,65,0.3);">
+            <div style="width:38px; height:38px; border-radius:9px; background:#FFF7ED; display:flex; align-items:center; justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M10 8.5l6 3.5-6 3.5z"></path></svg></div>
+            <h3 style="margin:16px 0 0; font-size:16px; font-weight:800; color:#0B2341;">Rekaman Video Full Sesi</h3>
+            <p style="margin:8px 0 0; font-size:14.5px; line-height:1.65; color:#64748B;">Akses selama 3 bulan.</p>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:24px; transition:transform 220ms ease, box-shadow 220ms ease;" style-hover="transform:translateY(-3px); box-shadow:0 10px 24px -14px rgba(11,35,65,0.3);">
+            <div style="width:38px; height:38px; border-radius:9px; background:#FFF7ED; display:flex; align-items:center; justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"></path><path d="M9 12h7M9 16h5"></path></svg></div>
+            <h3 style="margin:16px 0 0; font-size:16px; font-weight:800; color:#0B2341;">Lembar Kerja Roadmap Sekolah</h3>
+            <p style="margin:8px 0 0; font-size:14.5px; line-height:1.65; color:#64748B;">Worksheet terstruktur untuk diisi selama sesi.</p>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:24px; transition:transform 220ms ease, box-shadow 220ms ease;" style-hover="transform:translateY(-3px); box-shadow:0 10px 24px -14px rgba(11,35,65,0.3);">
+            <div style="width:38px; height:38px; border-radius:9px; background:#FFF7ED; display:flex; align-items:center; justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8"><circle cx="12" cy="9" r="5"></circle><path d="M8.5 13.5L7 21l5-2.5L17 21l-1.5-7.5"></path></svg></div>
+            <h3 style="margin:16px 0 0; font-size:16px; font-weight:800; color:#0B2341;">E-Sertifikat Resmi Jagatrip</h3>
+            <p style="margin:8px 0 0; font-size:14.5px; line-height:1.65; color:#64748B;">Sertifikat digital resmi untuk bukti reimburse.</p>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:24px; transition:transform 220ms ease, box-shadow 220ms ease;" style-hover="transform:translateY(-3px); box-shadow:0 10px 24px -14px rgba(11,35,65,0.3);">
+            <div style="width:38px; height:38px; border-radius:9px; background:#FFF7ED; display:flex; align-items:center; justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8"><circle cx="9" cy="9" r="3.5"></circle><path d="M2.5 19c0-3.3 2.9-5 6.5-5s6.5 1.7 6.5 5"></path><path d="M16 6.5a3 3 0 010 6M18 19c0-2.4-.8-3.6-2-4.4"></path></svg></div>
+            <h3 style="margin:16px 0 0; font-size:16px; font-weight:800; color:#0B2341;">Grup Diskusi Alumni</h3>
+            <p style="margin:8px 0 0; font-size:14.5px; line-height:1.65; color:#64748B;">Networking dengan kepala sekolah &amp; founder dari seluruh Indonesia.</p>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:24px; transition:transform 220ms ease, box-shadow 220ms ease;" style-hover="transform:translateY(-3px); box-shadow:0 10px 24px -14px rgba(11,35,65,0.3);">
+            <div style="width:38px; height:38px; border-radius:9px; background:#FFF7ED; display:flex; align-items:center; justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8"><path d="M21 12a8 8 0 11-3.1-6.3"></path><path d="M12 8v4.5M12 16h.01"></path></svg></div>
+            <h3 style="margin:16px 0 0; font-size:16px; font-weight:800; color:#0B2341;">Sesi Q&amp;A Prioritas</h3>
+            <p style="margin:8px 0 0; font-size:14.5px; line-height:1.65; color:#64748B;">Konsultasi langsung ke pemateri via Raise Hand.</p>
+          </div>
+        </div>
+
+        <div class="jt8-banner-box" style="margin-top:32px; background:#0B2341; border-radius:12px; padding:28px 30px; display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between;">
+          <p style="margin:0; max-width:760px; font-size:16.5px; line-height:1.6; color:#FFFFFF; font-weight:600;">Bukan hanya menonton webinar. <span style="color:#FDBA74;">Anda pulang membawa resource yang bisa langsung digunakan bersama tim sekolah.</span></p>
+          <button type="button" class="btn-go-form jt8-btn-mobile-full" style="background:#F97316; color:#FFFFFF; border:none; border-radius:10px; padding:14px 24px; min-height:48px; font-size:15px; font-weight:700; cursor:pointer; white-space:nowrap;" style-hover="background:#EA6A0B;">Amankan Kursi Anda</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION PEMATERI ============ -->
+    <section style="background:#FFFFFF; border-bottom:1px solid #F1F5F9;">
+      <div class="jt8-section-pad" style="max-width:1240px; margin:0 auto; padding:clamp(40px,4.5vw,64px) 24px; display:flex; flex-wrap:wrap; gap:clamp(32px,5vw,64px); align-items:flex-start;">
+        <div style="flex:1 1 340px; min-width:0;">
+          <div style="position:relative; max-width:460px;">
+            <div class="jt8-accent-box" style="position: absolute; right: -16px; bottom: -16px; width: 150px; height: 150px; border-radius: 12px; background-color: #FFDDB3"></div>
+            <img src="/images/jagatalk/flyer-jw8-v3.avif" alt="JAGATALK #8 Flyer — Dedi Gunawan" style="position:relative; display:block; width:100%; height:auto; border-radius:14px; border:1px solid #E2E8F0; box-shadow:0 18px 40px -22px rgba(11,35,65,0.45);">
+          </div>
+        </div>
+        <div style="flex:1 1 400px; min-width:0;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:0.14em; color:#C2410C;">PEMATERI</div>
+          <h2 style="margin:12px 0 0; font-size:clamp(28px,3.2vw,42px); line-height:1.12; letter-spacing:-0.025em; font-weight:800; color:#0B2341;">Dedi Gunawan</h2>
+          <p style="margin:10px 0 0; font-size:16.5px; font-weight:700; color:#F97316;">Founder Jagatrip &amp; 6 Sekolah IDN</p>
+
+          <div style="margin-top:26px; display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:0 32px;">
+            <div style="display:flex; gap:12px; padding:12px 0; border-top:1px solid #E2E8F0;"><span style="color:#F97316; font-weight:800; font-size:14px;">—</span><span style="font-size:15px; line-height:1.6; color:#334155;">Founder IDN Boarding School</span></div>
+            <div style="display:flex; gap:12px; padding:12px 0; border-top:1px solid #E2E8F0;"><span style="color:#F97316; font-weight:800; font-size:14px;">—</span><span style="font-size:15px; line-height:1.6; color:#334155;">Owner Annaba Bilingual School</span></div>
+            <div style="display:flex; gap:12px; padding:12px 0; border-top:1px solid #E2E8F0;"><span style="color:#F97316; font-weight:800; font-size:14px;">—</span><span style="font-size:15px; line-height:1.6; color:#334155;">Owner Ma'had Tahfidz IDN &amp; Politeknik IDN</span></div>
+            <div style="display:flex; gap:12px; padding:12px 0; border-top:1px solid #E2E8F0;"><span style="color:#F97316; font-weight:800; font-size:14px;">—</span><span style="font-size:15px; line-height:1.6; color:#334155;">Owner IDN Mecca-Madina School</span></div>
+            <div style="display:flex; gap:12px; padding:12px 0; border-top:1px solid #E2E8F0;"><span style="color:#F97316; font-weight:800; font-size:14px;">—</span><span style="font-size:15px; line-height:1.6; color:#334155;">Founder IDN Backpacker School</span></div>
+            <div style="display:flex; gap:12px; padding:12px 0; border-top:1px solid #E2E8F0;"><span style="color:#F97316; font-weight:800; font-size:14px;">—</span><span style="font-size:15px; line-height:1.6; color:#334155;">Backpacker 30+ negara</span></div>
+            <div style="display:flex; gap:12px; padding:12px 0; border-top:1px solid #E2E8F0; border-bottom:1px solid #E2E8F0;"><span style="color:#F97316; font-weight:800; font-size:14px;">—</span><span style="font-size:15px; line-height:1.6; color:#334155;">Praktisi pendidikan, bukan konsultan</span></div>
+          </div>
+
+          <blockquote style="margin:28px 0 0; padding:22px 24px; background:#F8FAFC; border-left:4px solid #F97316; border-radius:0 12px 12px 0;">
+            <p style="margin:0; font-size:17px; line-height:1.6; font-style:italic; font-weight:600; color:#0B2341;">“Saya sudah menghadapi setiap pertanyaan yang Anda hadapi sekarang. Yang saya bagi bukan teori — ini yang bekerja.”</p>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION ALUR SESI ============ -->
+    <section style="background:#FFFDF9; border-bottom:1px solid #F1E9DD;">
+      <div class="jt8-section-pad" style="max-width:1240px; margin:0 auto; padding:clamp(40px,4.5vw,64px) 24px;">
+        <div style="display:flex; flex-wrap:wrap; gap:32px; align-items:flex-end; justify-content:space-between;">
+          <div style="max-width:620px;">
+            <div style="font-size:12px; font-weight:800; letter-spacing:0.14em; color:#C2410C;">ALUR SESI</div>
+            <h2 style="margin:14px 0 0; font-size:clamp(26px,3vw,38px); line-height:1.2; letter-spacing:-0.02em; font-weight:800; color:#0B2341;">Bukan Webinar Pasif.</h2>
+          </div>
+          <p style="margin:0; max-width:520px; font-size:16px; line-height:1.7; color:#475569;">Anda tidak sekadar menonton — Anda akan pulang membawa lembar kerja yang sudah terisi &amp; roadmap yang siap dipresentasikan ke yayasan.</p>
+        </div>
+
+        <div style="margin-top:44px; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:14px; overflow:hidden;">
+          <div class="jt8-alur-item" style="display:flex; flex-wrap:wrap; gap:18px; align-items:baseline; padding:24px 26px; border-bottom:1px solid #E2E8F0;">
+            <span style="flex:none; width:40px; font-size:13px; font-weight:800; letter-spacing:0.08em; color:#F97316;">01</span>
+            <h3 class="jt8-alur-heading" style="margin:0; flex:0 0 200px; font-size:17px; font-weight:800; color:#0B2341;">Opening</h3>
+            <p class="jt8-alur-text" style="margin:0; flex:1 1 260px; font-size:15px; line-height:1.65; color:#64748B;">Framing masalah industri &amp; penetapan objektif sesi.</p>
+          </div>
+          <div class="jt8-alur-item" style="display:flex; flex-wrap:wrap; gap:18px; align-items:baseline; padding:24px 26px; border-bottom:1px solid #E2E8F0;">
+            <span style="flex:none; width:40px; font-size:13px; font-weight:800; letter-spacing:0.08em; color:#F97316;">02</span>
+            <h3 class="jt8-alur-heading" style="margin:0; flex:0 0 200px; font-size:17px; font-weight:800; color:#0B2341;">Pemaparan</h3>
+            <p class="jt8-alur-text" style="margin:0; flex:1 1 260px; font-size:15px; line-height:1.65; color:#64748B;">Roadmap Praktis Program Internasional</p>
+          </div>
+          <div class="jt8-alur-item" style="display:flex; flex-wrap:wrap; gap:18px; align-items:baseline; padding:24px 26px; border-bottom:1px solid #E2E8F0;">
+            <span style="flex:none; width:40px; font-size:13px; font-weight:800; letter-spacing:0.08em; color:#F97316;">03</span>
+            <h3 class="jt8-alur-heading" style="margin:0; flex:0 0 200px; font-size:17px; font-weight:800; color:#0B2341;">Isi Lembar Kerja</h3>
+            <p class="jt8-alur-text" style="margin:0; flex:1 1 260px; font-size:15px; line-height:1.65; color:#64748B;">Sesi terpandu untuk menyusun action plan sekolah.</p>
+          </div>
+          <div class="jt8-alur-item" style="display:flex; flex-wrap:wrap; gap:18px; align-items:baseline; padding:24px 26px;">
+            <span style="flex:none; width:40px; font-size:13px; font-weight:800; letter-spacing:0.08em; color:#F97316;">04</span>
+            <h3 class="jt8-alur-heading" style="margin:0; flex:0 0 200px; font-size:17px; font-weight:800; color:#0B2341;">Q&amp;A</h3>
+            <p class="jt8-alur-text" style="margin:0; flex:1 1 260px; font-size:15px; line-height:1.65; color:#64748B;">Tanya jawab prioritas langsung dengan pemateri.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION HARGA ============ -->
+    <section id="harga" style="background:#FFFFFF; border-bottom:1px solid #F1F5F9;">
+      <div class="jt8-section-pad" style="max-width:1240px; margin:0 auto; padding:clamp(40px,4.5vw,64px) 24px;">
+        <div style="max-width:860px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:0.14em; color:#C2410C;">PILIH PAKET</div>
+          <h2 style="margin:14px 0 0; font-size:clamp(24px,2.7vw,34px); line-height:1.28; letter-spacing:-0.02em; font-weight:800; color:#0B2341; text-wrap:pretty;">Dua Opsi. Pilih Sesuai Ambisi Sekolah Anda.</h2>
+          <p style="margin:10px 0 0; font-size:15px; line-height:1.6; color:#475569;">Regular untuk yang butuh dasar roadmap. Premium untuk yang siap satu langkah lebih jauh — bertemu langsung dengan PIC kampus mitra di Malaysia.</p>
+        </div>
+
+        <div class="jt8-grid-pricing" style="margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:24px; align-items:start;">
+
+          <!-- Regular Card -->
+          <div class="jt8-pricing-card" style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:14px; padding:32px;">
+            <div style="font-size:13px; font-weight:800; letter-spacing:0.1em; color:#64748B;">REGULAR</div>
+            <p style="margin:10px 0 0; font-size:15px; line-height:1.6; color:#475569;">Untuk kepala sekolah yang membutuhkan kerangka roadmap.</p>
+            <div style="margin-top:22px; display:flex; align-items:baseline; gap:8px;">
+              <span style="font-size:40px; font-weight:800; letter-spacing:-0.03em; color:#0B2341;">Rp99.000</span>
+              <span style="font-size:14px; color:#94A3B8; font-weight:600;">/peserta</span>
+            </div>
+            <div style="margin:26px 0 0; padding-top:22px; border-top:1px solid #E2E8F0; display:grid; gap:13px;">
+              <div style="display:flex; gap:11px; align-items:flex-start;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3" style="margin-top:3px; flex:none;"><path d="M4 12.5l5 5L20 6.5"></path></svg><span style="font-size:15px; line-height:1.55; color:#334155;">Live webinar full session</span></div>
+              <div style="display:flex; gap:11px; align-items:flex-start;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3" style="margin-top:3px; flex:none;"><path d="M4 12.5l5 5L20 6.5"></path></svg><span style="font-size:15px; line-height:1.55; color:#334155;">Rekaman webinar 3 bulan</span></div>
+              <div style="display:flex; gap:11px; align-items:flex-start;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3" style="margin-top:3px; flex:none;"><path d="M4 12.5l5 5L20 6.5"></path></svg><span style="font-size:15px; line-height:1.55; color:#334155;">Lembar Kerja Roadmap Sekolah</span></div>
+              <div style="display:flex; gap:11px; align-items:flex-start;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3" style="margin-top:3px; flex:none;"><path d="M4 12.5l5 5L20 6.5"></path></svg><span style="font-size:15px; line-height:1.55; color:#334155;">E-Sertifikat Jagatrip</span></div>
+              <div style="display:flex; gap:11px; align-items:flex-start;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3" style="margin-top:3px; flex:none;"><path d="M4 12.5l5 5L20 6.5"></path></svg><span style="font-size:15px; line-height:1.55; color:#334155;">Akses grup diskusi alumni</span></div>
+            </div>
+            <button type="button" id="btn-pick-regular" style="margin-top:28px; width:100%; background:#FFFFFF; color:#0B2341; border:1.5px solid #0B2341; border-radius:10px; padding:15px 20px; min-height:52px; font-size:15.5px; font-weight:700; cursor:pointer;" style-hover="background:#0B2341; color:#FFFFFF;">Pilih Regular</button>
+          </div>
+
+          <!-- Premium Card -->
+          <div class="jt8-pricing-card" style="background:#FFFFFF; border:1px solid #FED7AA; border-top:4px solid #F97316; border-radius:14px; padding:32px; box-shadow:0 20px 45px -30px rgba(11,35,65,0.5);">
+            <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;">
+              <div style="font-size:13px; font-weight:800; letter-spacing:0.1em; color:#0B2341;">PREMIUM</div>
+              <span style="background:#FFF7ED; border:1px solid #FED7AA; color:#C2410C; font-size:11px; font-weight:800; letter-spacing:0.08em; border-radius:999px; padding:6px 12px;">PALING DIREKOMENDASIKAN</span>
+            </div>
+            <p style="margin:10px 0 0; font-size:15px; line-height:1.6; color:#475569;">Untuk kepala sekolah yang siap satu langkah lebih jauh.</p>
+            <div style="margin-top:22px; display:flex; align-items:baseline; gap:8px;">
+              <span style="font-size:40px; font-weight:800; letter-spacing:-0.03em; color:#0B2341;">Rp129.000</span>
+              <span style="font-size:14px; color:#94A3B8; font-weight:600;">/peserta</span>
+            </div>
+            <div style="margin-top:14px; display:inline-flex; align-items:center; gap:8px; background:#0B2341; color:#FFFFFF; border-radius:8px; padding:8px 12px; font-size:12.5px; font-weight:700; letter-spacing:0.04em;">
+              <span style="width:6px; height:6px; border-radius:50%; background:#F97316;"></span>Maks. 20 Seat
+            </div>
+            <div style="margin:26px 0 0; padding-top:22px; border-top:1px solid #E2E8F0; display:grid; gap:13px;">
+              <div style="display:flex; gap:11px; align-items:flex-start;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3" style="margin-top:3px; flex:none;"><path d="M4 12.5l5 5L20 6.5"></path></svg><span style="font-size:15px; line-height:1.55; color:#334155;">Semua benefit paket Regular</span></div>
+              <div style="display:flex; gap:11px; align-items:flex-start;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="3" style="margin-top:3px; flex:none;"><path d="M4 12.5l5 5L20 6.5"></path></svg><span style="font-size:15px; line-height:1.55; color:#0B2341; font-weight:700;">Prioritas Undangan Exclusive Meet-Up online dengan PIC Kampus Mitra Jagatrip di Malaysia<span style="display:block; margin-top:5px; font-size:13.5px; font-weight:500; color:#64748B;">Isi form &amp; chat admin untuk detail skema.</span></span></div>
+            </div>
+            <button type="button" id="btn-pick-premium" style="margin-top:28px; width:100%; background:#F97316; color:#FFFFFF; border:none; border-radius:10px; padding:15px 20px; min-height:52px; font-size:15.5px; font-weight:800; cursor:pointer; box-shadow:0 8px 18px -8px rgba(249,115,22,0.6);" style-hover="background:#EA6A0B;">Pilih Premium</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION FORM ============ -->
+    <section id="form" style="background:#0B2341;">
+      <div class="jt8-section-pad" style="max-width:1240px; margin:0 auto; padding:clamp(40px,4.5vw,64px) 24px;">
+        <div style="max-width:640px; margin:0 auto 36px; text-align:center;">
+          <div style="display:inline-flex; align-items:center; gap:9px; background:rgba(249,115,22,0.14); border:1px solid rgba(249,115,22,0.5); color:#FDBA74; border-radius:999px; padding:8px 14px; font-size:12.5px; font-weight:800; letter-spacing:0.06em;">
+            <span style="width:6px; height:6px; border-radius:50%; background:#F97316;"></span>SLOT TERBATAS!
+          </div>
+          <h2 style="margin:20px 0 0; font-size:clamp(28px,3.4vw,44px); line-height:1.12; letter-spacing:-0.025em; font-weight:800; color:#FFFFFF;">Amankan Kursi Anda Sekarang.</h2>
+          <div style="margin:18px auto 0; display:flex; flex-wrap:wrap; justify-content:center; gap:10px;">
+            <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:9px 16px; font-size:13.5px; font-weight:700; color:#FFFFFF;">23 September 2026</span>
+            <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:9px 16px; font-size:13.5px; font-weight:700; color:#FFFFFF;">19.30 WIB</span>
+            <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:9px 16px; font-size:13.5px; font-weight:700; color:#FFFFFF;">Via Zoom Meeting</span>
+          </div>
+          <p style="margin:16px auto 0; max-width:560px; font-size:16.5px; line-height:1.7; color:#CBD5E1;">Isi form di bawah — setelah submit Anda akan langsung diarahkan ke WhatsApp Admin resmi kami untuk konfirmasi paket &amp; pembayaran.</p>
+        </div>
+
+        <div style="max-width:560px; margin:0 auto;">
+          <div style="background:#FFFFFF; border-radius:14px; padding:clamp(24px,3vw,36px); box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);">
+            <div id="jt8-form-wrap">
+              <h3 style="margin:0; font-size:20px; font-weight:800; color:#0B2341;">Form Pendaftaran</h3>
+              <p style="margin:6px 0 0; font-size:14.5px; color:#64748B;">Cukup 3 kolom. Waktu Anda berharga.</p>
+
+              <form id="landing-reg-form" style="margin-top:24px; display:grid; gap:16px;">
+                <label style="display:block;">
+                  <span style="display:block; font-size:13px; font-weight:700; color:#0B2341; margin-bottom:7px;">Nama Lengkap</span>
+                  <input id="input-nama" type="text" placeholder="Nama sesuai identitas" style="width:100%; min-height:48px; border:1px solid #E2E8F0; border-radius:10px; padding:13px 14px; font-size:15px; color:#0B2341; outline:none; background:#FFFFFF;" required>
+                </label>
+
+                <label style="display:block;">
+                  <span style="display:block; font-size:13px; font-weight:700; color:#0B2341; margin-bottom:7px;">Asal Lembaga / Domisili</span>
+                  <input id="input-lembaga" type="text" placeholder="Contoh: SMP Al-Hikmah Jakarta" style="width:100%; min-height:48px; border:1px solid #E2E8F0; border-radius:10px; padding:13px 14px; font-size:15px; color:#0B2341; outline:none; background:#FFFFFF;" required>
+                </label>
+
+                <label style="display:block;">
+                  <span style="display:block; font-size:13px; font-weight:700; color:#0B2341; margin-bottom:7px;">Nomor WhatsApp Aktif</span>
+                  <input id="input-wa" type="tel" placeholder="08xxxxxxxxxx" style="width:100%; min-height:48px; border:1px solid #E2E8F0; border-radius:10px; padding:13px 14px; font-size:15px; color:#0B2341; outline:none; background:#FFFFFF;" required>
+                </label>
+
+                <div>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#0B2341; margin-bottom:9px;">Pilih Paket</span>
+                  <div class="jt8-pkg-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:10px;">
+                    <button type="button" id="form-pkg-regular" style="display:flex; flex-direction:column; align-items:flex-start; padding:14px 16px; min-height:62px; cursor:pointer; text-align:left; border-radius:10px; background:#FFF7ED; border:1.5px solid #F97316; color:#0B2341; transition:all 180ms ease;">
+                      <span style="font-size:14.5px; font-weight:800;">Regular</span>
+                      <span style="font-size:13px; color:#64748B; margin-top:3px;">Rp99.000</span>
+                    </button>
+                    <button type="button" id="form-pkg-premium" style="display:flex; flex-direction:column; align-items:flex-start; padding:14px 16px; min-height:62px; cursor:pointer; text-align:left; border-radius:10px; background:#FFFFFF; border:1.5px solid #E2E8F0; color:#0B2341; transition:all 180ms ease;">
+                      <span style="font-size:14.5px; font-weight:800;">Premium</span>
+                      <span style="font-size:13px; color:#64748B; margin-top:3px;">Rp129.000</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div id="form-err-msg" style="display:none; color:#DC2626; font-size:13px; font-weight:600; text-align:center;"></div>
+
+                <button type="submit" id="form-submit-btn" class="jt8-btn-mobile-full" style="margin-top:6px; width:100%; background:#F97316; color:#FFFFFF; border:none; border-radius:10px; padding:17px 22px; min-height:56px; font-size:16.5px; font-weight:800; cursor:pointer; box-shadow:0 10px 22px -10px rgba(249,115,22,0.75);">Daftar &amp; Amankan Kursi →</button>
+                <p style="margin:0; font-size:13px; line-height:1.6; color:#64748B; text-align:center;">Admin akan menghubungi Anda melalui WhatsApp untuk konfirmasi paket &amp; pembayaran.</p>
+              </form>
+              <div style="font-size:11.5px; color:#C2410C; background:rgba(249,115,22,0.08); border:1px solid rgba(249,115,22,0.22); border-radius:6px; padding:8px 12px; margin-top:14px; text-align:center; line-height:1.45;">⚠️ <b>Catatan:</b> Form ini hanya dapat diisi <b>1 kali</b> per perangkat untuk menjaga validitas data calon peserta.</div>
+            </div>
+
+            <div id="jt8-ok-area" style="display:none; text-align:center; padding:24px 8px;">
+              <div style="width:52px; height:52px; border:2px solid #F97316; border-radius:50%; color:#F97316; display:flex; align-items:center; justify-content:center; font-size:24px; margin:0 auto 16px; font-weight:800;">✓</div>
+              <h4 id="jt8-ok-title" style="font-size:22px; font-weight:800; color:#0B2341; margin:0 0 10px;">Pendaftaran Terkirim</h4>
+              <p id="jt8-ok-desc" style="font-size:14.5px; color:#64748B; line-height:1.6; margin:0 auto; max-width:420px;">Mengalihkan ke WhatsApp Admin…</p>
+              <a id="jt8-ok-btn" href="https://wa.me/628139190363" target="_blank" style="display:none; margin-top:20px; background:#F97316; color:#FFFFFF; padding:14px 24px; border-radius:10px; font-weight:800; font-size:15px; text-decoration:none; box-shadow:0 8px 18px -8px rgba(249,115,22,0.6);">Chat WhatsApp Admin ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION FAQ ============ -->
+    <section style="background:#FFFFFF;">
+      <div class="jt8-section-pad" style="max-width:900px; margin:0 auto; padding:clamp(40px,4.5vw,64px) 24px;">
+        <div style="font-size:12px; font-weight:800; letter-spacing:0.14em; color:#C2410C;">PERTANYAAN UMUM</div>
+        <h2 style="margin:14px 0 32px; font-size:clamp(26px,3vw,38px); line-height:1.2; letter-spacing:-0.02em; font-weight:800; color:#0B2341;">Yang Sering Ditanyakan.</h2>
+
+        <div style="display:grid; gap:12px;">
+          {FAQS.map((f, i) => (
+            <div class="faq-item" data-faq-index={i} style="border:1px solid #E2E8F0; border-radius:12px; background:#FFFFFF; overflow:hidden;">
+              <button type="button" class="faq-btn" style="width:100%; display:flex; gap:16px; align-items:center; justify-content:space-between; text-align:left; background:transparent; border:none; padding:20px 22px; min-height:56px; cursor:pointer;">
+                <span style="font-size:16px; font-weight:700; line-height:1.5; color:#0B2341;">{f.q}</span>
+                <span class="faq-icon-sign" style="flex:none; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:700; line-height:1; background:#FFF7ED; color:#C2410C; transition:all 180ms ease;">+</span>
+              </button>
+              <div class="faq-panel" style="display:none;">
+                <p style="margin:0; padding:0 22px 22px; font-size:15px; line-height:1.72; color:#475569;">{f.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer style="background:#0B2341; color:#FFFFFF;">
+      <div class="jt8-section-pad" style="max-width:1240px; margin:0 auto; padding:clamp(36px,4vw,52px) 24px 28px; display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:36px;">
+        <div style="width: 100%; max-width: 578px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <img src="/images/jagatalk/logo-jagatalk.png" alt="JAGATALK #8" style="height:44px; width:auto; display:block; filter: brightness(0) invert(1);" />
+          </div>
+          <p style="margin:12px 0 0; font-size:15px; color:#CBD5E1; font-style:italic;">Travel to Learn, Learn to Lead.</p>
+        </div>
+
+        <div>
+          <div style="font-size:11.5px; font-weight:800; letter-spacing:0.12em; color:#F97316;">INFO &amp; KONTAK</div>
+          <div style="margin-top:14px; display:grid; gap:12px; font-size:15px; color:#CBD5E1;">
+            <a href="https://wa.me/6281128506576" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:11px; color:#CBD5E1; min-height:28px; text-decoration:none;" style-hover="color:#FDBA74;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex:none;"><path d="M12.04 2C6.6 2 2.2 6.4 2.2 11.84c0 1.94.54 3.75 1.48 5.29L2 22l4.99-1.63a9.8 9.8 0 005.05 1.39c5.43 0 9.84-4.4 9.84-9.84S17.47 2 12.04 2zm5.72 13.9c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.02.24-3.44-.71-2.9-1.14-4.72-4.16-4.86-4.36-.14-.19-1.14-1.52-1.14-2.9 0-1.37.72-2.05.97-2.33.25-.29.54-.36.73-.36l.53.01c.17 0 .4-.06.61.47.22.53.75 1.85.82 1.99.07.14.11.3.02.48-.9.19-.14.3-.28.47l-.41.48c-.14.14-.28.29-.13.57.14.29.63 1.1 1.36 1.78.93.87 1.71 1.14 1.96 1.28.24.15.39.12.53-.7.15-.19.68-.79.86-1.07.19-.28.37-.23.63-.14.25.1 1.6.76 1.87.9.28.14.46.21.53.33.07.12.07.68-.17 1.36z"></path></svg>
+              <span>+62 811-2850-6576</span>
+            </a>
+            <a href="https://instagram.com/jagatrip.id" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:11px; color:#CBD5E1; min-height:28px; text-decoration:none;" style-hover="color:#FDBA74;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" style="flex:none;"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+              <span>@jagatrip.id</span>
+            </a>
+            <a href="mailto:official@jagatrip.com" style="display:flex; align-items:center; gap:11px; color:#CBD5E1; min-height:28px; text-decoration:none;" style-hover="color:#FDBA74;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" style="flex:none;"><rect x="2.5" y="5" width="19" height="14" rx="2.5"></rect><path d="M3.5 7l8.5 6 8.5-6"></path></svg>
+              <span>official@jagatrip.com</span>
+            </a>
+            <a href="https://maps.google.com/?q=Semarang,+Indonesia" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:11px; color:#CBD5E1; min-height:28px; text-decoration:none;" style-hover="color:#FDBA74;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" style="flex:none;"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
+              <span>Semarang, Indonesia</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,0.12);">
+        <div class="jt8-section-pad" style="max-width:1240px; margin:0 auto; padding:20px 24px; font-size:13.5px; color:#94A3B8;">© 2026 Jagatrip · JAGATALK #8 · Semua hak dilindungi.</div>
+      </div>
+    </footer>
+
+  </div>
+</BaseLayout>
+
+<!-- ============ INTERACTIVE CLIENT LOGIC ============ -->
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Support style-hover and style-focus attributes exactly as designed in Dropcanvas
+    document.querySelectorAll('[style-hover]').forEach(el => {
+      const orig = el.getAttribute('style') || '';
+      const hover = el.getAttribute('style-hover') || '';
+      el.addEventListener('mouseenter', () => {
+        el.setAttribute('style', orig + ';' + hover);
+      });
+      el.addEventListener('mouseleave', () => {
+        el.setAttribute('style', orig);
+      });
+    });
+
+    document.querySelectorAll('[style-focus]').forEach(el => {
+      const orig = el.getAttribute('style') || '';
+      const focus = el.getAttribute('style-focus') || '';
+      el.addEventListener('focus', () => {
+        el.setAttribute('style', orig + ';' + focus);
+      });
+      el.addEventListener('blur', () => {
+        el.setAttribute('style', orig);
+      });
+    });
+
+    // 1b. Mobile Navigation Drawer Toggle
+    const menuToggle = document.getElementById('jt8-menu-toggle');
+    const mobileDrawer = document.getElementById('jt8-mobile-drawer');
+    const iconMenu = document.getElementById('jt8-icon-menu');
+    const iconClose = document.getElementById('jt8-icon-close');
+    let drawerOpen = false;
+
+    function setDrawer(open) {
+      drawerOpen = open;
+      if (mobileDrawer) mobileDrawer.style.display = open ? 'block' : 'none';
+      if (iconMenu) iconMenu.style.display = open ? 'none' : 'block';
+      if (iconClose) iconClose.style.display = open ? 'block' : 'none';
+    }
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setDrawer(!drawerOpen);
+      });
+    }
+
+    document.querySelectorAll('.jt8-drawer-link').forEach(link => {
+      link.addEventListener('click', () => setDrawer(false));
+    });
+
+    document.addEventListener('click', (e) => {
+      if (drawerOpen && mobileDrawer && !mobileDrawer.contains(e.target) && !menuToggle?.contains(e.target)) {
+        setDrawer(false);
+      }
+    });
+
+    // 2. Smooth Scroll to Form
+    const formEl = document.getElementById('form');
+    function goForm() {
+      if (formEl) {
+        const top = formEl.getBoundingClientRect().top + window.scrollY - 72;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }
+
+    document.querySelectorAll('.btn-go-form').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        goForm();
+      });
+    });
+
+    // 3. Package Selection (Regular vs Premium)
+    let selectedPkg = "Regular";
+    const regBtn = document.getElementById('form-pkg-regular');
+    const premBtn = document.getElementById('form-pkg-premium');
+
+    function updatePkgUi() {
+      if (selectedPkg === "Regular") {
+        if (regBtn) {
+          regBtn.style.background = "#FFF7ED";
+          regBtn.style.border = "1.5px solid #F97316";
+        }
+        if (premBtn) {
+          premBtn.style.background = "#FFFFFF";
+          premBtn.style.border = "1.5px solid #E2E8F0";
+        }
+      } else {
+        if (premBtn) {
+          premBtn.style.background = "#FFF7ED";
+          premBtn.style.border = "1.5px solid #F97316";
+        }
+        if (regBtn) {
+          regBtn.style.background = "#FFFFFF";
+          regBtn.style.border = "1.5px solid #E2E8F0";
+        }
+      }
+    }
+
+    function pick(pkg) {
+      selectedPkg = pkg;
+      updatePkgUi();
+      goForm();
+    }
+
+    const btnPickReg = document.getElementById('btn-pick-regular');
+    const btnPickPrem = document.getElementById('btn-pick-premium');
+    if (btnPickReg) btnPickReg.addEventListener('click', () => pick('Regular'));
+    if (btnPickPrem) btnPickPrem.addEventListener('click', () => pick('Premium'));
+
+    if (regBtn) regBtn.addEventListener('click', () => { selectedPkg = 'Regular'; updatePkgUi(); });
+    if (premBtn) premBtn.addEventListener('click', () => { selectedPkg = 'Premium'; updatePkgUi(); });
+
+    // 4. FAQ Accordion logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    let openFaqIdx = -1;
+
+    faqItems.forEach((item, idx) => {
+      const btn = item.querySelector('.faq-btn');
+      const sign = item.querySelector('.faq-icon-sign');
+      const panel = item.querySelector('.faq-panel');
+
+      if (btn && sign && panel) {
+        btn.addEventListener('click', () => {
+          if (openFaqIdx === idx) {
+            // Close currently open
+            openFaqIdx = -1;
+            panel.style.display = 'none';
+            sign.textContent = '+';
+            sign.style.background = '#FFF7ED';
+            sign.style.color = '#C2410C';
+          } else {
+            // Close all
+            faqItems.forEach(other => {
+              const otherSign = other.querySelector('.faq-icon-sign');
+              const otherPanel = other.querySelector('.faq-panel');
+              if (otherSign) {
+                otherSign.textContent = '+';
+                otherSign.style.background = '#FFF7ED';
+                otherSign.style.color = '#C2410C';
+              }
+              if (otherPanel) otherPanel.style.display = 'none';
+            });
+
+            // Open clicked
+            openFaqIdx = idx;
+            panel.style.display = 'block';
+            sign.textContent = '–';
+            sign.style.background = '#F97316';
+            sign.style.color = '#FFFFFF';
+          }
+        });
+      }
+    });
+
+    // 5. Form Submission & WhatsApp Redirect
+    function formatPhone(raw) {
+      if (!raw) return { sheetWa: '', waNumber: '', digits: '' };
+      let digits = raw.toString().replace(/[^0-9]/g, '');
+      let e164 = '';
+      if (digits.startsWith('0')) {
+        e164 = '62' + digits.slice(1);
+      } else if (digits.startsWith('6208')) {
+        e164 = '62' + digits.slice(3);
+      } else if (digits.startsWith('62')) {
+        e164 = digits;
+      } else if (digits.startsWith('8')) {
+        e164 = '62' + digits;
+      } else {
+        e164 = '62' + digits;
+      }
+      const localPhone = '0' + e164.slice(2);
+      const sheetWa = "'" + localPhone;
+      return { sheetWa, waNumber: e164, digits: localPhone };
+    }
+
+    const regForm = document.getElementById('landing-reg-form');
+    const inputNama = document.getElementById('input-nama');
+    const inputLembaga = document.getElementById('input-lembaga');
+    const inputWa = document.getElementById('input-wa');
+    const submitBtn = document.getElementById('form-submit-btn');
+
+    if (inputWa) {
+      inputWa.addEventListener('input', (e) => {
+        const cleaned = e.target.value.replace(/[^0-9+\-\s]/g, '');
+        if (cleaned !== e.target.value) {
+          e.target.value = cleaned;
+        }
+      });
+    }
+
+    if (regForm) {
+      regForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const nama = inputNama ? inputNama.value.trim() : '';
+        const lembaga = inputLembaga ? inputLembaga.value.trim() : '';
+        const rawWa = inputWa ? inputWa.value.trim() : '';
+        const phone = formatPhone(rawWa);
+
+        if (!nama || !lembaga || !rawWa) {
+          window.alert('Mohon lengkapi Nama, Asal Lembaga, dan Nomor WhatsApp.');
+          return;
+        }
+
+        if (phone.digits.length < 9 || phone.digits.length > 15) {
+          window.alert('Format nomor WhatsApp tidak valid (contoh: 081234567890).');
+          return;
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Mengarahkan ke WhatsApp...';
+        }
+
+        // Send to Apps Script Webhook
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+        try {
+          const params = new URLSearchParams(window.location.search);
+          fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            keepalive: true,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              _sheet: 'LP_Jagatalk8',
+              nama: nama,
+              institusi: lembaga,
+              instansi: lembaga,
+              asal_lembaga: lembaga,
+              wa: phone.sheetWa,
+              paket: selectedPkg,
+              source: 'JAGATALK #8 (' + selectedPkg + ') Landing Page (/jagatalk8)',
+              timestamp: new Date().toISOString(),
+              utm_source: params.get('utm_source') || '',
+              utm_medium: params.get('utm_medium') || '',
+              utm_campaign: params.get('utm_campaign') || '',
+              utm_term: params.get('utm_term') || '',
+              utm_content: params.get('utm_content') || '',
+              gclid: params.get('gclid') || '',
+              fbclid: params.get('fbclid') || ''
+            })
+          }).catch((err) => console.error('Webhook error:', err));
+        } catch (err) {
+          console.error('Fetch error:', err);
+        }
+
+        // Meta Pixel & GTM Events
+        if (window.fbq) {
+          try { window.fbq('track', 'Lead'); } catch (err) { console.error('FB Pixel error:', err); }
+        }
+        if (window.dataLayer) {
+          try {
+            window.dataLayer.push({
+              event: 'lead_form_submit',
+              form_name: 'jagatalk8',
+              user_name: nama,
+              user_instansi: lembaga,
+              user_package: selectedPkg
+            });
+          } catch (err) {
+            console.error('GTM error:', err);
+          }
+        }
+
+        // WhatsApp redirect (matches Jagatalk 8 Landing.dc.html exactly)
+        const text = "Halo Admin Jagatrip, saya ingin mendaftar JAGATALK #8.%0ANama: " + encodeURIComponent(nama) + "%0AAsal Lembaga/Domisili: " + encodeURIComponent(lembaga) + "%0ANo. WhatsApp: " + encodeURIComponent(phone.digits) + "%0APaket: " + selectedPkg;
+        const waUrl = "https://wa.me/6281128506576?text=" + text;
+
+        setTimeout(() => {
+          window.location.href = waUrl;
+        }, 300);
+      });
+    }
+  });
+</script>
+
+<style is:global>
+  body {
+    margin: 0 !important;
+    background: #FFFFFF !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    color: #0B2341 !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  a {
+    color: #F97316;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #C2410C;
+  }
+  input, select, button, textarea {
+    font-family: inherit;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  @keyframes jtline {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* ============ HEADER DESKTOP & MOBILE ============ */
+  .jt8-header-container {
+    height: 72px;
+    padding: 0 24px;
+  }
+  .jt8-desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .jt8-mobile-controls {
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+  .jt8-mobile-drawer {
+    display: none;
+  }
+
+  @media (max-width: 868px) {
+    .jt8-header-logo {
+      height: 36px !important;
+    }
+    .jt8-desktop-nav {
+      display: none !important;
+    }
+    .jt8-mobile-controls {
+      display: flex !important;
+    }
+    .jt8-header-container {
+      height: 64px !important;
+      padding: 0 16px !important;
+    }
+    .jt8-section-pad {
+      padding-top: clamp(28px, 4vw, 44px) !important;
+      padding-bottom: clamp(28px, 4vw, 44px) !important;
+      padding-left: 18px !important;
+      padding-right: 18px !important;
+    }
+    .jt8-hero-h1 {
+      font-size: clamp(22px, 5.2vw, 38px) !important;
+      line-height: 1.15 !important;
+    }
+    .jt8-hero-sub-text {
+      font-size: clamp(19px, 4.2vw, 26px) !important;
+      line-height: 1.25 !important;
+    }
+    .jt8-alur-item {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 8px !important;
+      padding: 18px 20px !important;
+    }
+    .jt8-alur-heading {
+      flex: none !important;
+      width: 100% !important;
+    }
+    .jt8-alur-text {
+      flex: none !important;
+      width: 100% !important;
+    }
+    .jt8-btn-mobile-full {
+      width: 100% !important;
+      text-align: center !important;
+      justify-content: center !important;
+    }
+    .jt8-accent-box {
+      right: -8px !important;
+      bottom: -8px !important;
+      width: 90px !important;
+      height: 90px !important;
+    }
+    .jt8-callout {
+      padding: 16px 18px !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 14px !important;
+    }
+    .jt8-pricing-card {
+      padding: 24px 20px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .jt8-section-pad {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+    .jt8-grid-pain,
+    .jt8-grid-materi,
+    .jt8-grid-fasilitas,
+    .jt8-grid-pricing {
+      grid-template-columns: 1fr !important;
+    }
+    .jt8-pkg-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .jt8-meta-container {
+      gap: 12px 16px !important;
+    }
+    .jt8-accent-box {
+      display: none !important;
+    }
+    .jt8-alur-item {
+      padding: 16px 14px !important;
+    }
+    .jt8-banner-box {
+      padding: 20px 18px !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+    }
+    .faq-btn {
+      padding: 16px 16px !important;
+    }
+    .faq-panel p {
+      padding: 0 16px 16px !important;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .jt8-section-pad {
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+    .jt8-header-container {
+      padding: 0 12px !important;
+    }
+    .jt8-mobile-cta {
+      padding: 7px 10px !important;
+      font-size: 12px !important;
+    }
+    .jt8-hero-h1 {
+      font-size: 21px !important;
+    }
+    .jt8-hero-sub-text {
+      font-size: 17px !important;
+    }
+  }
+</style>
+
+<script>
+  import { getUtm } from '../lib/utm';
+  import { lockForm, isFormSubmitted, isPhoneSubmitted } from '../lib/form-guard';
+  import { parseIndonesianPhone, formatPhoneInputRealtime } from '../lib/phone-formatter';
+
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+  const WA_ADMIN = '628139190363'; // Admin Kamariya
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // ── 1. Cek Kuncian Device (1 Device 1 Kali) ──
+    const formWrap = document.getElementById('jt8-form-wrap');
+    const okArea = document.getElementById('jt8-ok-area');
+    const okTitle = document.getElementById('jt8-ok-title');
+    const okDesc = document.getElementById('jt8-ok-desc');
+    const okBtn = document.getElementById('jt8-ok-btn') as HTMLAnchorElement | null;
+    const form = document.getElementById('landing-reg-form') as HTMLFormElement | null;
+
+    if (isFormSubmitted('jagatalk8-form')) {
+      if (formWrap) formWrap.style.display = 'none';
+      if (okArea) {
+        okArea.style.display = 'block';
+        if (okTitle) okTitle.textContent = 'Pendaftaran Sudah Terdaftar';
+        if (okDesc) okDesc.textContent = 'Terima kasih! Anda sudah mendaftarkan minat pada sesi Jagatalk #8 pada perangkat ini.';
+        if (okBtn) {
+          okBtn.style.display = 'inline-block';
+          okBtn.href = `https://wa.me/${WA_ADMIN}?text=${encodeURIComponent('Halo Admin, saya sebelumnya sudah mendaftar Jagatalk #8, ingin konfirmasi status pendaftaran saya.')}`;
+        }
+      }
+    }
+
+    // ── 2. Toggle Pilihan Paket ──
+    let currentPkg = 'Regular';
+    const pkgRegBtn = document.getElementById('form-pkg-regular');
+    const pkgPremBtn = document.getElementById('form-pkg-premium');
+
+    function selectPkg(pkg: 'Regular' | 'Premium') {
+      currentPkg = pkg;
+      if (pkgRegBtn && pkgPremBtn) {
+        if (pkg === 'Regular') {
+          pkgRegBtn.style.background = '#FFF7ED';
+          pkgRegBtn.style.borderColor = '#F97316';
+          pkgPremBtn.style.background = '#FFFFFF';
+          pkgPremBtn.style.borderColor = '#E2E8F0';
+        } else {
+          pkgPremBtn.style.background = '#FFF7ED';
+          pkgPremBtn.style.borderColor = '#F97316';
+          pkgRegBtn.style.background = '#FFFFFF';
+          pkgRegBtn.style.borderColor = '#E2E8F0';
+        }
+      }
+    }
+
+    pkgRegBtn?.addEventListener('click', () => selectPkg('Regular'));
+    pkgPremBtn?.addEventListener('click', () => selectPkg('Premium'));
+
+    // Tombol di pricing section -> scroll to form & set paket
+    const pickReg = document.getElementById('btn-pick-regular');
+    const pickPrem = document.getElementById('btn-pick-premium');
+
+    pickReg?.addEventListener('click', () => {
+      selectPkg('Regular');
+      document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' });
+    });
+    pickPrem?.addEventListener('click', () => {
+      selectPkg('Premium');
+      document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // ── 3. Real-time phone formatting ──
+    const waInput = document.getElementById('input-wa') as HTMLInputElement | null;
+    waInput?.addEventListener('input', () => {
+      waInput.value = formatPhoneInputRealtime(waInput.value);
+      const errMsg = document.getElementById('form-err-msg');
+      if (errMsg) errMsg.style.display = 'none';
+    });
+
+    // ── 4. Form Submit Handler (Combo: LocalStorage + WhatsApp) ──
+    if (form) {
+      const errMsg = document.getElementById('form-err-msg');
+      const submitBtn = document.getElementById('form-submit-btn') as HTMLButtonElement | null;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nama = (document.getElementById('input-nama') as HTMLInputElement)?.value.trim() ?? '';
+        const lembaga = (document.getElementById('input-lembaga') as HTMLInputElement)?.value.trim() ?? '';
+        const rawWa = (document.getElementById('input-wa') as HTMLInputElement)?.value.trim() ?? '';
+
+        if (nama.length < 3) {
+          if (errMsg) { errMsg.textContent = 'Mohon isi nama lengkap (minimal 3 karakter).'; errMsg.style.display = 'block'; }
+          return;
+        }
+        if (lembaga.length < 2) {
+          if (errMsg) { errMsg.textContent = 'Mohon isi asal lembaga / domisili.'; errMsg.style.display = 'block'; }
+          return;
+        }
+
+        const parsed = parseIndonesianPhone(rawWa);
+        if (!parsed.isValid) {
+          if (errMsg) { errMsg.textContent = parsed.error || 'Mohon isi nomor WhatsApp yang valid (contoh: 0812-3456-7890).'; errMsg.style.display = 'block'; }
+          return;
+        }
+
+        const wa = parsed.e164;
+        const isDuplicate = isPhoneSubmitted('jagatalk8-form', wa);
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Mengirim...';
+        }
+
+        try {
+          await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              _sheet: 'LP_Jagatalk8',
+              nama,
+              nama_lengkap: nama,
+              asal_lembaga: lembaga,
+              institusi: lembaga,
+              domisili: lembaga,
+              wa,
+              whatsapp: wa,
+              paket: currentPkg,
+              ...getUtm(),
+              source: 'JAGATALK #8 Landing Page (/jagatalk8)',
+              timestamp: new Date().toISOString(),
+            }),
+          });
+        } catch (err) {
+          console.error('Submit error:', err);
+        }
+
+        const win = window as any;
+        if (win.fbq) { try { win.fbq('track', 'Lead', { content_name: 'Jagatalk 8' }); } catch (err) { console.error(err); } }
+
+        // Kunci form & simpan nomor WA
+        lockForm(form, 'jagatalk8-form', undefined, wa);
+
+        // Teks WhatsApp cerdas (Baru vs Duplikat)
+        const greeting = isDuplicate
+          ? `Halo Admin, saya ${nama} sebelumnya sudah mendaftar Jagatalk #8 (Paket ${currentPkg}) dengan nomor ini, ingin konfirmasi kelanjutan pendaftaran.`
+          : `Halo Admin, saya ${nama} dari ${lembaga} mendaftar Jagatalk #8 (Paket ${currentPkg}). Mohon konfirmasi pembayaran. Terima kasih!`;
+        const waUrl = `https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(greeting)}`;
+
+        if (formWrap) formWrap.style.display = 'none';
+        if (okArea) {
+          okArea.style.display = 'block';
+          if (okTitle) okTitle.textContent = isDuplicate ? 'Konfirmasi Terkirim' : 'Pendaftaran Terkirim';
+          if (okDesc) okDesc.textContent = 'Mengalihkan ke WhatsApp Admin…';
+        }
+
+        setTimeout(() => {
+          window.location.href = waUrl;
+        }, 600);
+      });
+    }
+
+    // ── 5. Accordion FAQ Interaktif ──
+    const faqBtns = document.querySelectorAll<HTMLButtonElement>('.faq-btn');
+    faqBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const panel = item?.querySelector<HTMLElement>('.faq-panel');
+        const sign = btn.querySelector<HTMLElement>('.faq-icon-sign');
+        if (!panel) return;
+        const isOpen = panel.style.display === 'block';
+        panel.style.display = isOpen ? 'none' : 'block';
+        if (sign) {
+          sign.textContent = isOpen ? '+' : '–';
+          sign.style.background = isOpen ? '#FFF7ED' : '#F97316';
+          sign.style.color = isOpen ? '#C2410C' : '#FFFFFF';
+        }
+      });
+    });
+  });
+</script>

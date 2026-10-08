@@ -1,0 +1,512 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/layout/Nav.astro';
+import Footer from '../components/layout/Footer.astro';
+import { SITE } from '../data/site';
+---
+
+<BaseLayout
+  title="JAGATRIP #3 — Benchmarking Pendidikan Malaysia · Thailand · Singapura"
+  description="Edutrip & studi banding internasional 3 negara: Malaysia, Thailand, Singapura. 11–17 Desember 2026, 7 hari 6 malam, kuota 30 peserta. Daftar sekarang."
+  canonical="https://jagatrip.com/batch3"
+  ogType="website"
+>
+  <Nav />
+
+  <main id="main">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-jaga-bg overflow-hidden" data-reveal="hero">
+      <div class="absolute top-0 right-0 w-[36rem] h-[36rem] bg-jaga-orange/10 rounded-full blur-3xl -z-0"></div>
+      <div class="absolute bottom-0 left-0 w-96 h-96 bg-jaga-orange/5 rounded-full blur-3xl -z-0"></div>
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center" data-reveal-group>
+
+          <div>
+            <div class="flex items-center gap-2 mb-5">
+              <img src="/images/flags/my.svg" alt="Malaysia" width="34" height="23" class="h-6 md:h-7 w-auto rounded-sm shadow-sm" loading="eager" />
+              <span class="text-gray-300">→</span>
+              <img src="/images/flags/sg.svg" alt="Singapura" width="34" height="23" class="h-6 md:h-7 w-auto rounded-sm shadow-sm" loading="eager" />
+              <span class="text-gray-300">→</span>
+              <img src="/images/flags/th.svg" alt="Thailand" width="34" height="23" class="h-6 md:h-7 w-auto rounded-sm shadow-sm" loading="eager" />
+            </div>
+            <span class="inline-block py-2 px-5 rounded-full bg-gray-900 text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase mb-6">
+              JAGATRIP #3 · Edutrip &amp; Studi Banding
+            </span>
+            <h1 class="text-4xl md:text-6xl font-black text-gray-900 tracking-tight leading-[1.05] mb-6">
+              Benchmarking Pendidikan<br>
+              <span class="text-jaga-orange">3 Negara ASEAN.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 font-medium leading-relaxed mb-8 max-w-xl">
+              Ekspedisi belajar lintas Malaysia, Thailand, dan Singapura — seminar internasional, kunjungan sekolah &amp; kampus, serta wisata edukatif dalam satu perjalanan.
+            </p>
+
+            <div class="flex flex-wrap gap-3 mb-8">
+              <span class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2 text-sm font-bold text-gray-800 shadow-sm">📅 11–17 Des 2026</span>
+              <span class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2 text-sm font-bold text-gray-800 shadow-sm">⏱ 7 Hari 6 Malam</span>
+              <span class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2 text-sm font-bold text-gray-800 shadow-sm">🔥 Kuota 30 Peserta</span>
+            </div>
+
+            <div class="flex flex-wrap gap-4">
+              <a href="#form" class="bg-jaga-orange hover:bg-jaga-orange-600 text-white px-8 py-4 rounded-full font-bold text-base md:text-lg shadow-[0_10px_30px_rgba(232,97,31,0.3)] hover:shadow-[0_15px_40px_rgba(232,97,31,0.4)] transition-all duration-300 transform hover:-translate-y-1">
+                Daftar Sekarang
+              </a>
+              <a href="#itinerary" class="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-8 py-4 rounded-full font-bold text-base md:text-lg transition-all duration-300">
+                Lihat Itinerary
+              </a>
+            </div>
+          </div>
+
+          <!-- Ringkasan -->
+          <div class="bg-white rounded-4xl shadow-[0_25px_60px_rgba(0,0,0,0.12)] border border-gray-100 p-8 md:p-10">
+            <div class="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
+              <p class="text-xs font-bold uppercase tracking-[0.25em] text-gray-400">MISSION PASS / 03</p>
+              <span class="inline-flex items-center gap-2 text-xs font-bold text-jaga-orange"><span class="w-2 h-2 rounded-full bg-jaga-orange animate-pulse"></span> Pendaftaran Dibuka</span>
+            </div>
+            <div class="grid grid-cols-3 gap-4 mb-8 text-center" data-reveal-group>
+              <div>
+                <p class="text-2xl md:text-3xl font-black text-gray-900">3</p>
+                <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Negara</p>
+              </div>
+              <div>
+                <p class="text-2xl md:text-3xl font-black text-gray-900">7</p>
+                <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Hari</p>
+              </div>
+              <div>
+                <p class="text-2xl md:text-3xl font-black text-jaga-orange">30</p>
+                <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Kuota</p>
+              </div>
+            </div>
+            <dl class="space-y-4 text-sm">
+              <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">Tanggal</dt>
+                <dd class="text-gray-900 font-bold">11–17 Des 2026</dd>
+              </div>
+              <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">Rute</dt>
+                <dd class="text-gray-900 font-bold text-right">Kuala Lumpur →<br>Singapura → Thailand</dd>
+              </div>
+              <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+                <dt class="text-gray-500 font-medium">Agenda Edukasi</dt>
+                <dd class="text-gray-900 font-bold">Seminar · 4 sekolah</dd>
+              </div>
+              <div class="flex justify-between items-center">
+                <dt class="text-gray-500 font-medium">Tiket Pesawat</dt>
+                <dd class="text-gray-900 font-bold">Paket All-In tersedia</dd>
+              </div>
+            </dl>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== STRIP / STATS ===================== -->
+    <section class="bg-jaga-orange text-white" data-reveal="section">
+      <div class="max-w-7xl mx-auto px-6 py-6 md:py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center" data-reveal-group>
+        <div><p class="text-3xl md:text-4xl font-black">3</p><p class="text-xs md:text-sm font-semibold uppercase tracking-wider opacity-90">Negara ASEAN</p></div>
+        <div><p class="text-3xl md:text-4xl font-black">4</p><p class="text-xs md:text-sm font-semibold uppercase tracking-wider opacity-90">Kunjungan Sekolah</p></div>
+        <div><p class="text-3xl md:text-4xl font-black">1</p><p class="text-xs md:text-sm font-semibold uppercase tracking-wider opacity-90">Seminar Internasional</p></div>
+        <div><p class="text-3xl md:text-4xl font-black">30</p><p class="text-xs md:text-sm font-semibold uppercase tracking-wider opacity-90">Kuota Peserta</p></div>
+      </div>
+    </section>
+
+    <!-- ===================== KONSEP ===================== -->
+    <section id="konsep" class="py-24 bg-white" data-reveal="section">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span class="inline-block py-2 px-5 rounded-full bg-jaga-orange/10 text-jaga-orange font-bold text-xs uppercase tracking-[0.25em] mb-5">Konsep Program</span>
+          <h2 class="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mb-6 leading-tight">
+            Bukan sekadar jalan-jalan,<br><span class="text-jaga-orange">bukan studi banding biasa.</span>
+          </h2>
+          <p class="text-lg md:text-xl text-gray-600 font-medium max-w-3xl mx-auto leading-relaxed">
+            Ekspedisi benchmarking pendidikan yang memadukan pembelajaran lapangan, diplomasi budaya, dan wisata edukatif dalam satu perjalanan lintas tiga negara.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6" data-reveal-group>
+          <div class="bg-jaga-bg border border-gray-100 rounded-3xl p-8 hover:shadow-md transition-shadow">
+            <p class="text-5xl font-black text-jaga-orange mb-3">01</p>
+            <h3 class="text-xl font-black text-gray-900 mb-2">Praktik Terbaik ASEAN</h3>
+            <p class="text-gray-600 leading-relaxed">Menembus praktik pendidikan terbaik kawasan — dari Malaysia &amp; Thailand hingga Singapura.</p>
+          </div>
+          <div class="bg-jaga-bg border border-gray-100 rounded-3xl p-8 hover:shadow-md transition-shadow">
+            <p class="text-5xl font-black text-jaga-orange mb-3">02</p>
+            <h3 class="text-xl font-black text-gray-900 mb-2">Inspirasi Nyata</h3>
+            <p class="text-gray-600 leading-relaxed">Setiap kunjungan dirancang untuk dibawa pulang sebagai inspirasi nyata bagi lembaga peserta.</p>
+          </div>
+          <div class="bg-jaga-bg border border-gray-100 rounded-3xl p-8 hover:shadow-md transition-shadow">
+            <p class="text-5xl font-black text-jaga-orange mb-3">03</p>
+            <h3 class="text-xl font-black text-gray-900 mb-2">Jejaring Lintas Negara</h3>
+            <p class="text-gray-600 leading-relaxed">Membangun relasi profesional dengan sesama praktisi pendidikan dan lembaga di tiga negara.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BANNER BENCHMARKING ===================== -->
+    <section class="bg-jaga-orange" data-reveal="section">
+      <div class="max-w-5xl mx-auto px-6 py-12 md:py-14 text-center text-white">
+        <p class="text-4xl mb-4">🎓</p>
+        <h3 class="text-2xl md:text-3xl font-black mb-3">Benchmarking Pendidikan yang Membekas</h3>
+        <p class="text-base md:text-lg opacity-95 max-w-3xl mx-auto leading-relaxed">
+          Setiap agenda disusun agar peserta pulang membawa wawasan terapan — bukan sekadar dokumentasi perjalanan, tetapi bekal nyata untuk lembaga masing-masing.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== KEUNGGULAN ===================== -->
+    <section id="keunggulan" class="py-24 bg-jaga-bg border-t border-gray-200" data-reveal="section">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span class="inline-block py-2 px-5 rounded-full bg-jaga-orange/10 text-jaga-orange font-bold text-xs uppercase tracking-[0.25em] mb-5">Keunggulan</span>
+          <h2 class="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mb-4">Enam Nilai Utama Program</h2>
+          <p class="text-lg text-gray-600 font-medium max-w-2xl mx-auto">Bukan trip biasa — setiap titik dirancang untuk pengalaman yang nempel.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" data-reveal-group>
+          {[
+            { icon: '🔬', title: 'Benchmarking Sekolah', body: 'Kunjungan langsung ke sekolah unggulan, bukan sekadar melihat dari luar.' },
+            { icon: '🎤', title: 'Seminar Internasional', body: 'Seminar bersama praktisi pendidikan di Kuala Lumpur.' },
+            { icon: '💬', title: 'Workshop & Dialog', body: 'Dialog interaktif di setiap kunjungan lembaga.' },
+            { icon: '🗺️', title: 'City Tour Edukatif', body: 'Menjelajah KLCC, Merlion, hingga Songkhla secara bermakna.' },
+            { icon: '🤝', title: 'Networking Eksklusif', body: 'Membangun jejaring lintas lembaga dan negara.' },
+            { icon: '🏛️', title: 'Diplomasi Budaya', body: 'Kunjungan budaya yang memperkaya perspektif peserta.' },
+          ].map((c) => (
+            <div class="bg-white border border-gray-100 rounded-3xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div class="w-14 h-14 rounded-2xl bg-jaga-orange/10 flex items-center justify-center text-2xl mb-4">{c.icon}</div>
+              <h3 class="text-lg font-black text-gray-900 mb-2">{c.title}</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">{c.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DESTINASI ===================== -->
+    <section id="destinasi" class="py-24 bg-white" data-reveal="section">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span class="inline-block py-2 px-5 rounded-full bg-jaga-orange/10 text-jaga-orange font-bold text-xs uppercase tracking-[0.25em] mb-5">Destinasi</span>
+          <h2 class="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mb-4">Tiga Negara, Banyak Titik Bermakna</h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5" data-reveal-group>
+          {[
+            { flag: 'MALAYSIA', place: 'Kuala Lumpur', desc: 'KLCC, Petronas, dan jantung metropolitan Malaysia.' },
+            { flag: 'MALAYSIA', place: 'Batu Caves & Genting', desc: 'Ikon wisata alam & dataran tinggi Genting Highland.' },
+            { flag: 'MALAYSIA', place: 'Johor Bahru', desc: 'Gerbang selatan & Masjid Temenggong Daeng Ibrahim.' },
+            { flag: 'SINGAPURA', place: 'Merlion & Jewel Changi', desc: 'Landmark Merlion, Bugis Street, dan Jewel Changi.' },
+            { flag: 'SINGAPURA', place: 'Pulau Sentosa', desc: 'Photo stop Universal Studios & kawasan rekreasi Sentosa.' },
+            { flag: 'THAILAND', place: 'Hatyai & Songkhla', desc: 'Samila Beach, Masjid Songkhla, floating market & night bazaar.' },
+          ].map((d) => (
+            <div class="flex items-start gap-4 bg-jaga-bg border border-gray-100 rounded-2xl p-5">
+              <span class="text-2xl text-jaga-orange shrink-0">📍</span>
+              <div>
+                <p class="text-xs font-black uppercase tracking-wider text-jaga-orange mb-1">{d.flag}</p>
+                <h4 class="text-base font-black text-gray-900 mb-1">{d.place}</h4>
+                <p class="text-sm text-gray-600 leading-relaxed">{d.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AGENDA EDUKASI ===================== -->
+    <section id="edukasi" class="py-24 bg-gray-900 text-white" data-reveal="section">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span class="inline-block py-2 px-5 rounded-full bg-jaga-orange text-white font-bold text-xs uppercase tracking-[0.25em] mb-5">Inti Program</span>
+          <h2 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Agenda Benchmarking Pendidikan</h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" data-reveal-group>
+          {[
+            { k: '01', title: 'Seminar Internasional', body: 'Bersama praktisi pendidikan di Kuala Lumpur.' },
+            { k: '02', title: 'Kunjungan Sekolah', body: 'Empat sekolah tujuan di Malaysia & Thailand.' },
+            { k: '03', title: 'Kunjungan Kampus', body: 'Universitas untuk perspektif akademik.' },
+            { k: '04', title: 'Kelembagaan', body: 'Kunjungan KJRI untuk networking (tentatif).' },
+          ].map((e) => (
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-6">
+              <p class="text-5xl font-black text-jaga-orange mb-3">{e.k}</p>
+              <h4 class="text-lg font-black mb-2">{e.title}</h4>
+              <p class="text-sm text-gray-300 leading-relaxed">{e.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ITINERARY ===================== -->
+    <section id="itinerary" class="py-24 bg-jaga-bg border-t border-gray-200" data-reveal="section">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span class="inline-block py-2 px-5 rounded-full bg-jaga-orange/10 text-jaga-orange font-bold text-xs uppercase tracking-[0.25em] mb-5">Itinerary</span>
+          <h2 class="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mb-4">7 Hari 6 Malam</h2>
+          <p class="text-lg text-gray-600 font-medium max-w-2xl mx-auto">Gambaran perjalanan lintas tiga negara. Detail dapat menyesuaikan kondisi lapangan.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-5" data-reveal-group>
+          {[
+            { day: 'DAY 1', route: 'KLIA → Johor Bahru', items: ['Penjemputan di KLIA', 'Perjalanan menuju Johor Bahru', 'Check-in & waktu bebas'] },
+            { day: 'DAY 2', route: 'Singapura → Kuala Lumpur', items: ['Jewel Changi & Merlion', 'Masjid & landmark Singapura', 'Pulau Sentosa (Universal Studios)', 'Perjalanan menuju Kuala Lumpur'] },
+            { day: 'DAY 3', route: 'Kuala Lumpur', items: ['Seminar internasional (Pudu Plaza)', 'Kunjungan sekolah 1', 'KLCC & Masjid Jamek'] },
+            { day: 'DAY 4', route: 'KL → Thailand', items: ['Batu Caves & Genting Highland', 'Kunjungan kampus / sekolah 2', 'Perjalanan menuju Thailand'] },
+            { day: 'DAY 5', route: 'Hatyai & Songkhla', items: ['Kunjungan sekolah 3 & 4', 'Floating market & ASEAN night bazaar', 'Menginap di Songkhla'] },
+            { day: 'DAY 6', route: 'Songkhla → KLIA', items: ['Samila Beach & Masjid Songkhla', 'KJRI Thailand (tentatif) & night bazaar', 'Perjalanan menuju KLIA'] },
+            { day: 'DAY 7', route: 'KLIA → Kota Asal', items: ['Aktivitas di ruang tunggu bandara', 'Kepulangan ke kota asal masing-masing peserta'] },
+          ].map((d) => (
+            <div class="bg-white border border-gray-100 rounded-3xl p-6 hover:shadow-md transition-shadow">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="bg-jaga-orange text-white font-black text-sm px-3 py-2 rounded-xl shrink-0">{d.day}</span>
+                <span class="text-jaga-orange font-bold text-sm">{d.route}</span>
+              </div>
+              <ul class="space-y-2">
+                {d.items.map((it) => (
+                  <li class="flex items-start gap-2 text-sm text-gray-700">
+                    <span class="text-jaga-orange mt-1 shrink-0">●</span>
+                    <span>{it}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div class="mt-8 bg-jaga-orange/5 border border-dashed border-jaga-orange/40 rounded-2xl p-5 text-sm text-gray-700 text-center">
+          <strong class="text-jaga-orange">ℹ️ Catatan:</strong> Itinerary dapat berubah sewaktu-waktu menyesuaikan kondisi lapangan. Hubungi admin via WhatsApp untuk update berkala.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAKET ===================== -->
+    <section id="paket" class="py-24 bg-white border-t border-gray-200" data-reveal="section">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span class="inline-block py-2 px-5 rounded-full bg-jaga-orange/10 text-jaga-orange font-bold text-xs uppercase tracking-[0.25em] mb-5">Investasi Program</span>
+          <h2 class="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mb-4">Pilihan Paket Keikutsertaan</h2>
+          <p class="text-lg text-gray-600 font-medium max-w-2xl mx-auto">Pilih paket, formulir pendaftaran akan otomatis terisi pilihan Anda.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 items-start" data-reveal-group>
+          <!-- Land Tour -->
+          <div class="bg-jaga-bg border border-gray-200 rounded-4xl p-8">
+            <h3 class="text-2xl font-black text-gray-900 mb-2">Paket Land Tour</h3>
+            <p class="text-sm text-gray-500 mb-6">Belum termasuk tiket pesawat. Peserta menuju KLIA secara mandiri.</p>
+            <p class="text-4xl md:text-5xl font-black text-gray-900 mb-1">Rp 8.900.000<span class="text-base font-bold text-gray-500"> / peserta</span></p>
+            <ul class="space-y-3 my-6">
+              {['Hotel 6 malam & sarapan', 'Transport & tour guide profesional', 'Agenda edukasi & seminar internasional', '4 edu-visit sekolah & kampus', 'Program city tour tiga negara'].map((f) => (
+                <li class="flex items-start gap-3 text-sm text-gray-800">
+                  <span class="text-jaga-orange font-black shrink-0">✓</span><span>{f}</span>
+                </li>
+              ))}
+              <li class="flex items-start gap-3 text-sm text-gray-400">
+                <span class="text-red-500 font-black shrink-0">×</span><span class="line-through">Tiket pesawat PP</span>
+              </li>
+            </ul>
+            <a href="#form" data-paket="Land Tour" class="paket-pick block text-center w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-6 py-4 rounded-full font-bold transition-all duration-300">
+              Pilih Land Tour
+            </a>
+          </div>
+
+          <!-- All-In (featured) -->
+          <div class="relative bg-white border-2 border-jaga-orange rounded-4xl p-8 shadow-[0_25px_60px_rgba(232,97,31,0.18)] md:scale-[1.02]">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-jaga-orange text-white font-black text-xs uppercase tracking-widest px-5 py-1.5 rounded-full shadow-md">🔥 Paling Praktis</span>
+            <h3 class="text-2xl font-black text-gray-900 mb-2">Paket All-In</h3>
+            <p class="text-sm text-gray-500 mb-6">Termasuk tiket pesawat PP ex-CGK (Jakarta). Tinggal berangkat.</p>
+            <p class="text-4xl md:text-5xl font-black text-jaga-orange mb-1">Rp 12.900.000<span class="text-base font-bold text-gray-500"> / peserta</span></p>
+            <ul class="space-y-3 my-6">
+              {['Seluruh fasilitas Land Tour', 'Tiket pesawat PP ex-CGK (Jakarta)', 'Handling bandara terpusat', 'Koordinasi keberangkatan terpusat', 'Penerbangan grup terjadwal'].map((f) => (
+                <li class="flex items-start gap-3 text-sm text-gray-800">
+                  <span class="text-jaga-orange font-black shrink-0">✓</span><span>{f}</span>
+                </li>
+              ))}
+            </ul>
+            <a href="#form" data-paket="All-In" class="paket-pick block text-center w-full bg-jaga-orange hover:bg-jaga-orange-600 text-white px-6 py-4 rounded-full font-bold shadow-lg hover:shadow-xl transition-all duration-300">
+              Pilih All-In
+            </a>
+          </div>
+        </div>
+
+        <p class="text-center text-xs text-gray-500 mt-8">*Harga dapat berubah sewaktu-waktu. Hubungi admin untuk konfirmasi ketersediaan slot.</p>
+      </div>
+    </section>
+
+    <!-- ===================== FORM PENDAFTARAN ===================== -->
+    <section id="form" class="py-20 md:py-28 bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden" data-reveal="section">
+      <div class="absolute top-10 right-10 w-64 h-64 bg-jaga-orange/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-10 left-10 w-80 h-80 bg-jaga-orange/10 rounded-full blur-3xl"></div>
+
+      <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-start" data-reveal-group>
+
+          <div class="lg:sticky lg:top-32">
+            <span class="inline-block bg-jaga-orange text-white font-black text-xs md:text-sm uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-6 shadow-lg">📝 Form Pendaftaran</span>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight mb-6">
+              Amankan Kursi Anda di <span class="text-jaga-orange">JAGATRIP #3</span>
+            </h2>
+            <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+              Kuota terbatas hanya 30 peserta. Isi formulir singkat berikut, data tersimpan otomatis lalu Anda diarahkan ke WhatsApp admin untuk konfirmasi.
+            </p>
+            <ul class="space-y-4 text-base text-gray-300">
+              <li class="flex items-start gap-3">
+                <span class="shrink-0 w-8 h-8 rounded-full bg-jaga-orange/20 flex items-center justify-center text-jaga-orange font-black text-sm mt-0.5">1</span>
+                <div><p class="font-bold text-white">Pilih paket &amp; isi formulir</p><p class="text-sm text-gray-400">Data tersimpan otomatis ke sistem kami</p></div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="shrink-0 w-8 h-8 rounded-full bg-jaga-orange/20 flex items-center justify-center text-jaga-orange font-black text-sm mt-0.5">2</span>
+                <div><p class="font-bold text-white">Konfirmasi via WhatsApp</p><p class="text-sm text-gray-400">Otomatis redirect ke WhatsApp admin</p></div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="shrink-0 w-8 h-8 rounded-full bg-jaga-orange/20 flex items-center justify-center text-jaga-orange font-black text-sm mt-0.5">3</span>
+                <div><p class="font-bold text-white">Admin follow-up</p><p class="text-sm text-gray-400">Diskusi detail program &amp; pembayaran</p></div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-white text-gray-900 rounded-4xl p-6 md:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.4)]">
+            <p class="text-xl md:text-2xl font-black text-gray-900 mb-1">Formulir Pendaftaran</p>
+            <p class="text-sm text-gray-500 mb-6">Lengkapi data berikut untuk mendaftar JAGATRIP #3.</p>
+
+            <form id="batch3-form" novalidate class="space-y-3">
+              <div>
+                <label for="b3-nama" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1">Nama Lengkap *</label>
+                <input id="b3-nama" name="nama" type="text" required placeholder="Nama sesuai paspor" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-jaga-orange focus:outline-none text-gray-900 placeholder:text-gray-400 text-sm font-medium transition-colors bg-white" />
+              </div>
+              <div>
+                <label for="b3-instansi" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1">Instansi / Lembaga *</label>
+                <input id="b3-instansi" name="instansi" type="text" required placeholder="Sekolah / yayasan / instansi" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-jaga-orange focus:outline-none text-gray-900 placeholder:text-gray-400 text-sm font-medium transition-colors bg-white" />
+              </div>
+              <div>
+                <label for="b3-domisili" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1">Domisili *</label>
+                <input id="b3-domisili" name="domisili" type="text" required placeholder="Kota / kabupaten" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-jaga-orange focus:outline-none text-gray-900 placeholder:text-gray-400 text-sm font-medium transition-colors bg-white" />
+              </div>
+              <div>
+                <label for="b3-wa" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1">No. WhatsApp *</label>
+                <input id="b3-wa" name="wa" type="tel" required inputmode="numeric" placeholder="0812 3456 7890" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-jaga-orange focus:outline-none text-gray-900 placeholder:text-gray-400 text-sm font-medium transition-colors bg-white" />
+              </div>
+              <div>
+                <label for="b3-paket" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1">Paket Terpilih</label>
+                <select id="b3-paket" name="paket" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-jaga-orange focus:outline-none text-gray-900 text-sm font-medium transition-colors bg-white">
+                  <option value="Land Tour">Land Tour — Rp 8.900.000</option>
+                  <option value="All-In">All-In — Rp 12.900.000</option>
+                </select>
+              </div>
+
+              <button type="submit" class="w-full bg-jaga-orange hover:bg-jaga-orange-600 text-white font-black text-base md:text-lg py-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 mt-4">
+                Kirim &amp; Lanjut ke WhatsApp →
+              </button>
+              <div id="batch3-status" class="hidden text-center text-sm font-bold"></div>
+              <p class="text-xs text-gray-400 text-center mt-3 leading-relaxed">🔒 Data aman &amp; tersimpan otomatis. Setelah submit, Anda diarahkan ke WhatsApp admin.</p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section id="faq" class="py-24 bg-jaga-bg border-t border-gray-200" data-reveal="section">
+      <div class="max-w-3xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <span class="inline-block py-2 px-5 rounded-full bg-jaga-orange/10 text-jaga-orange font-bold text-xs uppercase tracking-[0.25em] mb-5">FAQ</span>
+          <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">Pertanyaan Umum</h2>
+        </div>
+        <div class="space-y-3">
+          {[
+            { q: 'Apakah tiket pesawat termasuk?', a: 'Tergantung paket. Land Tour belum termasuk (menuju KLIA mandiri), All-In sudah termasuk tiket pesawat PP ex-CGK Jakarta.' },
+            { q: 'Bisakah berangkat dari luar Jakarta?', a: 'Bisa. Paket All-In titik keberangkatan grup dari CGK. Peserta luar Jakarta dapat menyesuaikan penerbangan menuju titik kumpul.' },
+            { q: 'Dokumen apa yang diperlukan?', a: 'Paspor aktif minimal berlaku 6 bulan. Tim kami memandu kelengkapan dokumen wisata setelah pendaftaran.' },
+            { q: 'Bagaimana skema pembayarannya?', a: 'Pendaftaran diawali pengisian formulir ini. Tim kami menghubungi Anda untuk skema pembayaran & konfirmasi slot.' },
+            { q: 'Apakah kunjungan sekolah dijamin?', a: 'Agenda kunjungan disusun bersama mitra setempat. Detail dapat menyesuaikan ketersediaan dan kondisi lapangan.' },
+          ].map((f) => (
+            <details class="group bg-white border border-gray-200 rounded-2xl overflow-hidden">
+              <summary class="flex items-center justify-between gap-4 cursor-pointer list-none px-5 py-4 font-bold text-gray-900">
+                <span>{f.q}</span>
+                <span class="text-jaga-orange text-2xl font-black transition-transform group-open:rotate-45 shrink-0">+</span>
+              </summary>
+              <p class="px-5 pb-5 text-gray-600 leading-relaxed text-sm">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CTA BANNER ===================== -->
+    <section class="py-16 md:py-20 bg-white" data-reveal="section">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="bg-jaga-orange rounded-4xl p-10 md:p-14 shadow-xl text-center text-white">
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-4">Siap melangkah lintas negara?</h2>
+          <p class="text-base md:text-lg opacity-95 mb-8 max-w-2xl mx-auto">Amankan kursi Anda di JAGATRIP #3 sebelum kuota habis.</p>
+          <a href="#form" class="inline-block bg-white text-jaga-orange px-10 py-4 rounded-full font-black text-base md:text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            Daftar Sekarang →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+
+  <script>
+    import { SITE } from '../data/site';
+    import { getUtm } from '../lib/utm';
+    import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
+
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+
+    // Pilihan paket dari kartu -> preselect form
+    const select = document.getElementById('b3-paket') as HTMLSelectElement | null;
+    document.querySelectorAll<HTMLAnchorElement>('[data-paket]').forEach((el) => {
+      el.addEventListener('click', () => {
+        const paket = el.dataset.paket;
+        if (select && paket) select.value = paket;
+      });
+    });
+
+    const form = document.getElementById('batch3-form') as HTMLFormElement | null;
+    if (form) {
+      // Inisialisasi pengaman: kunci form jika browser ini sudah pernah submit
+      initFormGuard(form, 'batch3-form', '✓ Anda sudah mengirim pendaftaran JAGATRIP #3 pada perangkat ini. Tim kami akan segera menghubungi Anda.');
+
+      const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      const status = document.getElementById('batch3-status')!;
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+
+        const data = new FormData(form);
+        const payload: Record<string, string> = {};
+        data.forEach((v, k) => { payload[k] = v.toString().trim(); });
+
+        if (!payload.nama || !payload.wa) {
+          status.textContent = '⚠️ Lengkapi nama & nomor WhatsApp.';
+          status.style.color = '#DC2626';
+          status.classList.remove('hidden');
+          return;
+        }
+
+        const isDuplicate = isPhoneSubmitted('batch3-form', payload.wa);
+
+        btn.disabled = true;
+        btn.textContent = '⏳ Mengirim...';
+
+        fetch(APPS_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          body: JSON.stringify({ _sheet: 'Batch3', ...payload, ...getUtm(), timestamp: new Date().toISOString(), source: window.location.href }),
+        }).catch(() => {});
+
+        if ((window as any).fbq) { (window as any).fbq('track', 'Lead'); }
+        if ((window as any).ttq) { (window as any).ttq.track('CompleteRegistration'); }
+
+        // Kunci form dan catat nomor WA
+        lockForm(form, 'batch3-form', isDuplicate ? '✓ Anda sudah terdaftar sebelumnya. Mengalihkan ke WhatsApp...' : '✓ Pendaftaran berhasil! Mengalihkan ke WhatsApp...', payload.wa);
+
+        const msg = isDuplicate
+          ? `Halo Admin JAGATRIP! 👋\n\nSaya ${payload.nama} dari ${payload.instansi} (${payload.domisili}).\nSebelumnya saya sudah mendaftar JAGATRIP #3 dengan nomor ini, ingin konfirmasi kelanjutan pendaftaran. Terima kasih!`
+          : `Halo Admin JAGATRIP! 👋\n\nSaya ${payload.nama} dari ${payload.instansi} (${payload.domisili}).\nSaya ingin mendaftar JAGATRIP #3 (Malaysia–Thailand–Singapura).\nPaket: ${payload.paket}\nNo. WhatsApp: ${payload.wa}\n\nMohon info langkah selanjutnya. Terima kasih!`;
+
+        setTimeout(() => {
+          window.location.href = `https://wa.me/${SITE.waNumber}?text=${encodeURIComponent(msg)}`;
+        }, 400);
+      });
+    }
+  </script>
+</BaseLayout>

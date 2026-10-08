@@ -1,0 +1,1012 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// ── Data itinerary Benchmarking Sekolah ASEAN (19–23 Okt 2026) ──
+const days = [
+  { n: '01', d: 'Day 1', h: 'Jakarta → Kuala Lumpur', p: 'Tiba, orientasi kota, lalu Sesi Pembukaan malam hari: kerangka enam dimensi, kartu observasi, target pribadi tiap peserta.', tags: ['Pembekalan 90 Menit'] },
+  { n: '02', d: 'Day 2', h: 'Dua sekolah Malaysia', p: 'Pagi: sekolah dengan keunggulan tata kelola. Sore: sekolah dengan keunggulan kurikulum dan PPDB.', tags: ['Institusi 01', 'Institusi 02'], k: true },
+  { n: '03', d: 'Day 3', h: 'Perjalanan ke Hat Yai', p: 'Rombongan bergerak lintas negara menuju Hat Yai.', tags: ['Lintas Perbatasan'], k: true },
+  { n: '04', d: 'Day 4', h: 'Sekolah Hatyai & Penutupan', p: 'Kunjungan institusi keempat di Hat Yai, dilanjutkan eksplorasi kawasan. Penutupan resmi: sertifikat dan foto delegasi.', tags: ['Institusi 04', 'Penutupan & Sertifikat'], k: true },
+  { n: '05', d: 'Day 5', h: 'Hat Yai → Jakarta', p: 'Perjalanan kepulangan ke Jakarta.', tags: ['Kepulangan Jakarta'] },
+];
+
+const dims = [
+  { n: '01', h: 'Tata Kelola', p: 'Siapa memutuskan apa. Penjaminan mutu yang berjalan mingguan, bukan tahunan.' },
+  { n: '02', h: 'Kurikulum', p: 'Dari kerangka ke ruang kelas. Asesmen, dan cara menangani siswa yang tidak seragam.' },
+  { n: '03', h: 'Guru', p: 'Rekrutmen, induksi, supervisi, jenjang karier. Dan alasan mereka bertahan.' },
+  { n: '04', h: 'Kultur', p: 'Disiplin yang ditegakkan tanpa drama. Peran siswa. Kemitraan orang tua.' },
+  { n: '05', h: 'Sarana', p: 'Bukan seberapa mewah. Seberapa sering dipakai — dan untuk apa.' },
+  { n: '06', h: 'PPDB', p: 'Cara mereka menjaga keterisian tanpa perang harga. Jarang dibahas, paling dibutuhkan.' },
+];
+
+const problems = [
+  { b: '01', p: 'Kurikulum berubah lagi.', s: 'Tenaga habis mengejar format. Sistem internal tak pernah sempat dibangun.' },
+  { b: '02', p: 'Mutu jadi berkas, bukan kebiasaan.', s: 'Disiapkan menjelang visitasi, lalu kembali ke laci.' },
+  { b: '03', p: 'Guru dilatih, lalu pindah.', s: 'Sekolah lain menahan gurunya. Caranya bisa ditiru.' },
+  { b: '04', p: 'PPDB dimenangkan diskon.', s: 'Karena pembeda mutu tak pernah dibuktikan ke orang tua.' },
+  { b: '05', p: 'Standar “baik” berhenti di sekolah sebelah.', s: 'Tanpa pembanding lintas negara, jaraknya tak pernah terukur.' },
+  { b: '06', p: 'Studi banding pulang bawa foto.', s: 'Tanpa instrumen, kunjungan berhenti jadi kekaguman.' },
+];
+
+const outs = [
+  { b: 'I', h: 'Laporan Studi Lapangan', p: 'Temuan terstruktur per dimensi. Siap dilampirkan ke pertanggungjawaban yayasan atau dinas.' },
+  { b: 'II', h: 'Rencana Aksi 90 Hari', p: 'Sasaran, indikator, penanggung jawab, tenggat. Disusun sebelum pulang, bukan dijanjikan.' },
+  { b: 'III', h: 'Sertifikat', p: 'Ditandatangani Jagatrip bersama institusi tuan rumah.' },
+  { b: 'IV', h: 'Dokumentasi Profesional', p: 'Foto dan video resmi, satu folder per peserta. Siap jadi materi komunikasi sekolah.' },
+  { b: 'V', h: 'Fasilitas Kerjasama Lanjutan', p: 'Pertemuan 1 hari pasca kunjungan melalui media online. 1 institusi per 1x pertemuan.' },
+  { b: 'VI', h: 'Jalur Kerja Sama', p: 'Fasilitas akses kerjasama dengan sekolah kunjungan.' },
+  { b: 'VII', h: 'Jejaring Alumni', p: 'Grup lintas provinsi berisi pemimpin sekolah yang mengerjakan masalah yang sama.' },
+];
+
+const who = [
+  'Guru & pendidik yang diutus sekolah',
+  'Kepala & wakil kepala sekolah',
+  'Ketua & pengurus yayasan',
+  'Kabid kurikulum & kesiswaan',
+  'Tim penjaminan mutu sekolah',
+  'Pengawas & pembina satuan pendidikan',
+];
+
+const proto = [
+  'Penyambutan, foto delegasi, presentasi profil tuan rumah',
+  'Presentasi profil delegasi Indonesia oleh juru bicara',
+  'Observasi kelas dalam kelompok kecil',
+  'Tur fasilitas — dengan pertanyaan soal tingkat pemanfaatannya',
+  'Dialog terarah, cinderamata, penandatanganan LoI',
+];
+
+const pkgCommon = [
+  'Bus pariwisata VIP selama seluruh program',
+  'Hotel 4 malam, setara bintang 3',
+  'Makan sesuai program, seluruhnya halal',
+  'Perizinan & koordinasi 4 institusi',
+  'Tour leader & pemandu lokal',
+  'Instrumen observasi & pembekalan daring',
+  'Sertifikat & laporan studi lapangan resmi',
+  'Dokumentasi foto & video',
+  'Asuransi perjalanan',
+];
+
+const faqs = [
+  ['Sekolah mana saja yang dikunjungi?', 'Tiga sekolah di Malaysia dan satu di Hatyai. Nama dan profil lengkapnya diumumkan ke seluruh pendaftar pada 8 September 2026, setelah semua konfirmasi tertulis masuk. Kalau daftarnya dinilai tidak sesuai, uang muka kembali penuh.'],
+  ['Bagaimana cara mengamankan kursi?', 'Uang muka Rp 2.500.000 per peserta. Dapat dikembalikan penuh hingga 18 September 2026. Pelunasan paling lambat 5 Oktober 2026.'],
+  ['Perlu bisa bahasa Melayu atau Thai?', 'Tidak. Di Malaysia bahasa pengantarnya bisa dipahami langsung. Di Hat Yai komunikasi berlangsung dalam bahasa Inggris, materi kedua pihak disiapkan dua bahasa, dan tim Jagatrip mendampingi sepanjang sesi.'],
+  ['Saya guru, bukan pemegang keputusan. Apakah tetap sesuai?', 'Sesuai — dan justru banyak sekolah memilih jalur ini. Peserta pulang membawa laporan dan Rencana Aksi 90 Hari yang siap dipresentasikan kepada kepala sekolah atau yayasan, lengkap dengan paket diseminasi untuk sesi berbagi ke rekan guru lainnya.'],
+  ['Apakah laporannya bisa dipakai untuk pertanggungjawaban?', 'Ya — itu justru rancangannya. Peserta pulang membawa Laporan Studi Lapangan berkop resmi, Rencana Aksi 90 Hari, sertifikat, dan dokumentasi. Kami juga meminta surat tugas dari sekolah asal agar status perjalanannya jelas sejak awal.'],
+  ['Bagaimana ketersediaan makanan halal?', 'Seluruh rumah makan dipastikan halal, termasuk di leg Hatyai. Alergi dan pantangan didata sebelum keberangkatan dan diteruskan ke penyedia konsumsi.'],
+  ['Bisakah sekolah mengirim lebih dari satu orang?', 'Sangat disarankan. Perubahan lebih mudah dijalankan bila yang melihat langsung lebih dari satu kepala. Skema keberangkatan kolektif dibahas bersama tim program.'],
+  ['Bagaimana jika kuota penuh?', 'Pendaftar berikutnya masuk daftar tunggu dan mendapat prioritas untuk angkatan berikutnya. Formulir minat tidak mengikat kewajiban pembayaran.'],
+];
+---
+
+<BaseLayout
+  title="Benchmarking Sekolah ASEAN — Malaysia & Thailand | JAGATRIP"
+  description="Benchmarking & Sinergi dengan Sekolah Malaysia Thailand: dari Ruang Kelas Malaysia ke Hatyai. Program studi lapangan terstruktur bagi pimpinan satuan pendidikan Indonesia."
+  canonical="https://jagatrip.com/batch2"
+  ogType="website"
+>
+  <div class="b2" id="main">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="wrap tb">
+        <a href="#top" class="brand" aria-label="JAGATRIP">
+          <img src="/images/batch2/logo-logogram.png" alt="" width="702" height="764" class="bm-img" aria-hidden="true" />
+          <img src="/images/batch2/logo-logotype.png" alt="JAGATRIP" width="2094" height="570" class="bn-img" />
+        </a>
+        <nav class="tb-nav" aria-label="Navigasi utama">
+          <a href="#metode">Metode</a>
+          <a href="#hari">Itinerary</a>
+          <a href="#pemandu">Pemandu</a>
+          <a href="#harga">Harga</a>
+          <a href="#daftar" class="tb-cta">Daftar Minat</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <header class="hero grid-bg" id="top">
+      <div class="wrap hero-in">
+        <div>
+          <div class="kick"><i></i> Education Mission · Oktober 2026</div>
+          <h1>Benchmarking &amp; Sinergi<br />dengan <span class="hl">Sekolah Malaysia Thailand</span><span class="kick2">dari Ruang Kelas Malaysia ke Hatyai.</span></h1>
+          <div class="theme-strip">
+            <span class="a">Benchmarking Sekolah ASEAN</span>
+            <span class="b">Dari ruang kelas Malaysia ke Hatyai</span>
+          </div>
+          <div class="route">
+            <div class="r">Kuala Lumpur <i>→</i> Hat Yai</div>
+            <div class="dt">19–23 OKTOBER 2026</div>
+          </div>
+          <p class="hero-p">Program studi lapangan terstruktur bagi pimpinan satuan pendidikan Indonesia. <b>Lima hari, empat institusi, dua negara</b> — dengan instrumen observasi baku, laporan resmi yang dapat dipertanggungjawabkan, serta akses untuk kerjasama dengan sekolah kunjungan.</p>
+          <div class="proof">
+            <div><b>04</b><span>Institusi</span></div>
+            <div><b>02</b><span>Negara</span></div>
+            <div><b>05</b><span>Hari</span></div>
+            <div><b>06</b><span>Dimensi Observasi</span></div>
+          </div>
+          <div class="hero-btns">
+            <a href="#daftar" class="btn b-o">Amankan Kursi</a>
+            <a href="#metode" class="btn b-n">Lihat Metode ↘</a>
+          </div>
+        </div>
+        <div>
+          <div class="flyer">
+            <img src="/images/batch2/flyer-hero.avif" alt="Flyer Program Benchmarking Sekolah ASEAN — Malaysia &amp; Thailand" class="flyer-img" width="1080" height="1440" />
+          </div>
+        </div>
+      </div>
+
+      <div class="mbar">
+        <div class="wrap"><div class="mbar-in">
+          <div class="mb"><div class="k">Perjalanan</div><div class="v">19–23 Okt 2026</div></div>
+          <div class="mb"><div class="k">Format</div><div class="v">2 negara · <span>4 institusi</span></div></div>
+          <div class="mb"><div class="k">Rute</div><div class="v">KL · Hatyai</div></div>
+          <div class="mb"><div class="k">Kuota</div><div class="v">Terbatas</div></div>
+        </div></div>
+      </div>
+    </header>
+
+    <!-- 00 OPENING NOTE -->
+    <section class="dark grid-bg-d">
+      <div class="wrap">
+        <div class="idx dk rv">00 / Opening Note</div>
+        <p class="quote rv">“Sekolah Anda tidak kekurangan pelatihan.<br />Yang kurang <em>pembanding</em>.”</p>
+        <div class="plist rv">
+          {problems.map((x) => <div class="pl"><b>{x.b}</b><p>{x.p}</p><small>{x.s}</small></div>)}
+        </div>
+        <div class="verdict rv">
+          <p>Enam-enamnya tidak selesai di ruang seminar.<br />Selesainya di ruang kelas orang lain.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 METODE -->
+    <section class="grid-bg" id="metode">
+      <div class="wrap">
+        <div class="m-head">
+          <div class="rv">
+            <div class="idx">01 / Method</div>
+            <h2 class="sec-t">Enam dimensi.<br />Empat institusi.<br />Satu kerangka.</h2>
+          </div>
+          <p class="m-note rv">Semua peserta mengamati dimensi yang sama di setiap sekolah. Karena itu hasilnya bisa dibandingkan — bukan sekadar dikumpulkan.</p>
+        </div>
+        <div class="dims rv">
+          {dims.map((x) => <div class="dim"><div class="n">{x.n}</div><h4>{x.h}</h4><p>{x.p}</p></div>)}
+        </div>
+        <div class="card4 rv">
+          <div class="c4-l"><b>Kartu Observasi</b><span>Diisi di lokasi</span></div>
+          <div class="c4"><i>Kolom 1</i>Apa yang saya lihat</div>
+          <div class="c4"><i>Kolom 2</i>Bagaimana mereka melakukannya</div>
+          <div class="c4"><i>Kolom 3</i>Kondisi di sekolah saya</div>
+          <div class="c4"><i>Kolom 4</i>Bisa diadopsi? Ya / Ubah / Tidak — sebutkan alasannya</div>
+        </div>
+        <p class="rv c4-note">Kolom keempat adalah inti programnya. Tanpa itu, kunjungan berhenti jadi kekaguman.</p>
+      </div>
+    </section>
+
+    <!-- 02 SCHOOL ACCESS -->
+    <section class="dark grid-bg-d">
+      <div class="wrap">
+        <div class="idx dk rv">02 / School Access</div>
+        <div class="sa">
+          <div class="rv">
+            <h2 class="sec-t">Masuk ke<br />sekolahnya.</h2>
+            <p class="sa-p rv">Tiga sekolah di Malaysia, satu di Hatyai. Duduk bersama pengelolanya, masuk kelasnya, lalu bertanya soal keputusan di balik praktik mereka.</p>
+            <div class="sa-stats">
+              <div class="sst"><b>04</b><span>institusi</span></div>
+              <div class="sst"><b>02</b><span>negara</span></div>
+              <div class="sst"><b>05</b><span>hari</span></div>
+            </div>
+            <p class="pull">Anda datang sebagai <em>delegasi</em> — bukan rombongan yang kebetulan lewat.</p>
+          </div>
+          <div class="proto rv">
+            <div class="ph">Protokol kunjungan · berlaku di setiap institusi</div>
+            {proto.map((x, i) => <div class="pr"><div class="t">0{i + 1}</div><div class="x">{x}</div></div>)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 LIMA HARI -->
+    <section class="cream" id="hari">
+      <div class="wrap">
+        <div class="idx rv">03 / Five Days</div>
+        <h2 class="sec-t rv">Catatan perjalanan.</h2>
+        <p class="rv sec-p">Empat malam hotel. Satu bus pariwisata untuk seluruh rombongan, dari hari pertama sampai terakhir.</p>
+        <div class="rv">
+          {days.map((day) => (
+            <div class="day">
+              <div class="n">{day.n}</div>
+              <div class="d">{day.d}</div>
+              <div class="db">
+                <h4>{day.h}</h4>
+                <p>{day.p}</p>
+                <div class="tags">{day.tags.map((t) => <span class:list={['tg', { k: day.k }]}>{t}</span>)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 TRIP LEADER -->
+    <section class="dark grid-bg-d" id="pemandu">
+      <div class="wrap">
+        <div class="idx dk rv">04 / Trip Leader</div>
+        <h2 class="sec-t rv">Dipandu orang yang<br />sudah melakukannya.</h2>
+        <p class="rv lead-p">Bukan sekadar perjalanan bersama — belajar langsung dari yang sudah menempuh jalannya.</p>
+        <div class="lead-in rv">
+          <div class="lead-card">
+            <div class="ph-img lead-photo-wrap">
+              <img src="/Dedi Gunawan.jpeg" alt="Mr. Dedi Gunawan — CEO &amp; Founder JAGATRIP" class="lead-photo" width="1000" height="1250" />
+            </div>
+            <div class="lead-id">
+              <b>Mr. Dedi Gunawan</b>
+              <span>CEO &amp; Founder JAGATRIP · Pemandu Perjalanan</span>
+            </div>
+            <div class="lead-badges">
+              <span>30+ Negara</span>
+              <span>Edutrip Terstruktur</span>
+              <span>Riset Lapangan</span>
+            </div>
+          </div>
+          <div class="lead-pts">
+            <div class="lp">
+              <b>01</b>
+              <p>Telah menjejakkan kaki di 30+ negara di Asia, Afrika &amp; Eropa — bukan sekadar jalan-jalan, tapi membawa pulang ilmu nyata tentang sistem pendidikan dunia.</p>
+            </div>
+            <div class="lp">
+              <b>02</b>
+              <p>Menggagas program backpacker edukatif lintas negara — dari 2 negara hingga 30 negara dalam satu perjalanan. Belajar sambil menjelajah, bukan pilih salah satu.</p>
+            </div>
+            <div class="lp">
+              <b>03</b>
+              <p>Berpengalaman mendampingi kepala sekolah, guru &amp; praktisi pendidikan dalam study visit ke institusi pendidikan mancanegara di Jepang, China, Korea, Taiwan, hingga Timur Tengah.</p>
+            </div>
+            <div class="lp">
+              <b>04</b>
+              <p>Aktif melakukan benchmarking langsung ke sekolah &amp; kampus internasional di Asia Timur &amp; Timur Tengah — riset lapangan yang jadi pondasi setiap program JAGATRIP.</p>
+            </div>
+            <div class="lp">
+              <b>05</b>
+              <p>Memiliki rekam jejak pendampingan program studi Islam internasional di Malaysia, Madinah &amp; Cairo — menggabungkan wawasan global dengan nilai-nilai pendidikan Islam.</p>
+            </div>
+            <div class="lp">
+              <b>06</b>
+              <p>Telah mengkoordinasikan puluhan peserta per program — pelajar, guru, hingga pengelola sekolah — dengan manajemen perjalanan yang terstruktur &amp; tujuan pembelajaran yang jelas.</p>
+            </div>
+            <div class="lp full">
+              <b>07</b>
+              <p>Setiap destinasi dipilih berdasarkan observasi &amp; riset mendalam, bukan tren — sehingga setiap edutrip punya dampak nyata bagi pengembangan institusi pendidikan di Indonesia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 TAKE HOME -->
+    <section class="grid-bg">
+      <div class="wrap">
+        <div class="idx rv">05 / Take Home</div>
+        <h2 class="sec-t rv">Pulang bawa dokumen,<br />bukan oleh-oleh.</h2>
+        <p class="rv sec-p wide">Hambatan terbesar biasanya bukan “mau atau tidak”, tapi “bagaimana melaporkannya”. Semua di bawah ini menjawab itu.</p>
+        <div class="outs rv">
+          {outs.map((x) => <div class="ou"><b>{x.b}</b><h4>{x.h}</h4><p>{x.p}</p></div>)}
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 HARGA / INVESTMENT -->
+    <section class="dark grid-bg-d" id="harga">
+      <div class="wrap">
+        <div class="inv-head rv">
+          <div class="idx dk">06 / Investment</div>
+          <h2 class="sec-t">Investasi Program</h2>
+          <p class="sec-p-sub">Satu harga transparan untuk seluruh rangkaian studi lapangan 5 hari 2 negara, mencakup perizinan, akomodasi, hingga pendampingan resmi.</p>
+        </div>
+        <div class="inv-grid rv">
+          <div class="inv-info">
+            <div class="inv-highlights">
+              <div class="ih-item">
+                <span class="ih-icon">✦</span>
+                <div>
+                  <b>Fasilitas Terjamin</b>
+                  <p>Hotel 4 malam, bus VIP, konsumsi halal, perizinan 4 institusi, serta pendampingan langsung CEO Jagatrip.</p>
+                </div>
+              </div>
+              <div class="ih-item">
+                <span class="ih-icon">✦</span>
+                <div>
+                  <b>Fleksibilitas Uang Muka</b>
+                  <p>Uang muka Rp 2.500.000 per peserta dapat dikembalikan penuh (<em>100% refund</em>) hingga 18 September 2026.</p>
+                </div>
+              </div>
+            </div>
+            <div class="warn">
+              <b>Ketentuan Tambahan:</b>
+              <ul>
+                <li><b>Kamar:</b> Harga berlaku untuk kamar berdua (twin sharing). Permintaan kamar sendiri dikenakan single supplement.</li>
+                <li><b>Paspor:</b> Wajib berlaku minimal 6 bulan. Malaysia &amp; Thailand bebas visa untuk paspor Indonesia.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="opts">
+            <div class="opt single-opt">
+              <div class="lbl">Land Tour Package</div>
+              <h3>Paket Land Tour</h3>
+              <div class="pr2">Rp 7.500.000</div>
+              <div class="sub">Belum termasuk tiket pesawat Jakarta PP. Seluruh fasilitas program di lokasi 100% lengkap.</div>
+              <ul>
+                {pkgCommon.map((x) => <li>{x}</li>)}
+                <li class="no">Tiket pesawat Jakarta PP</li>
+                <li class="no">Single supplement kamar</li>
+                <li class="no">Kartu kedatangan digital &amp; pengeluaran pribadi</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM PENDAFTARAN (dipindah ke atas FAQ sesuai revisi) -->
+    <section class="reg" id="daftar">
+      <div class="wrap reg-in">
+        <div class="rv">
+          <div class="idx dk">Final Note / Your Move</div>
+          <h2>Berangkat sebagai delegasi.<br />Pulang dengan <em>rencana</em>.</h2>
+          <p class="rp">Isi data minat. Tim program mengirimkan susunan acara lengkap, profil institusi, dan tata cara pengamanan kursi.</p>
+        </div>
+        <div class="fcard rv">
+          <div id="formArea">
+            <form id="regForm" novalidate>
+              <div class="fld" id="f1">
+                <label for="nama"><i>01</i> Nama Lengkap</label>
+                <input type="text" id="nama" placeholder="Sesuai dokumen resmi" autocomplete="name" />
+                <div class="err">Mohon lengkapi nama.</div>
+              </div>
+              <div class="fld" id="f2">
+                <label for="institusi"><i>02</i> Institusi</label>
+                <input type="text" id="institusi" placeholder="Nama sekolah atau yayasan" autocomplete="organization" />
+                <div class="err">Mohon lengkapi nama institusi.</div>
+              </div>
+              <div class="fld" id="f3">
+                <label for="whatsapp"><i>03</i> Nomor WhatsApp</label>
+                <input type="tel" id="whatsapp" placeholder="0812-3456-7890" autocomplete="tel" inputmode="tel" />
+                <div class="err">Mohon isi nomor yang benar (diawali 08 / 628).</div>
+              </div>
+              <button type="submit" class="btn b-o">Kirim Minat</button>
+            </form>
+            <div class="fnote">↗ Tidak mengikat kewajiban pembayaran. Data hanya digunakan untuk penyelenggaraan program ini.</div>
+            <div class="fnote-lock">⚠️ <b>Catatan:</b> Form ini hanya dapat diisi <b>1 kali</b> per perangkat untuk menjaga validitas data calon peserta.</div>
+          </div>
+          <div class="ok" id="okArea">
+            <div class="ic">✓</div>
+            <h4>Minat Terkirim</h4>
+            <p>Mengalihkan ke WhatsApp Admin…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ (dipindah ke bawah form sesuai revisi) -->
+    <section id="faq" class="faq-sec">
+      <div class="wrap faq-wrap">
+        <div class="idx rv">08 / Questions</div>
+        <h2 class="sec-t rv">Sebelum<br />berangkat.</h2>
+        <div class="rv">
+          {faqs.map(([q, a]) => <details><summary>{q}</summary><div class="a">{a}</div></details>)}
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="wrap ft">
+        <div>
+          <img src="/images/batch2/logo-logotype.png" alt="JAGATRIP" width="2094" height="570" class="ft-logo" />
+          <div class="ft-sub">Education Field Study</div>
+        </div>
+        <p>Benchmarking Sekolah ASEAN — Dari Ruang Kelas Malaysia ke Hatyai. Angkatan Oktober 2026. Susunan agenda dapat menyesuaikan konfirmasi akhir institusi tujuan.</p>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getUtm } from '../lib/utm';
+  import { lockForm, isFormSubmitted, isPhoneSubmitted } from '../lib/form-guard';
+  import { parseIndonesianPhone, formatPhoneInputRealtime } from '../lib/phone-formatter';
+
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+  const WA_ADMIN = '628139190363'; // Admin Kamariya
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Reveal on scroll
+    const els = document.querySelectorAll('.rv');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach((e) => e.classList.add('in'));
+    } else {
+      const io = new IntersectionObserver(
+        (en) => en.forEach((x) => {
+          if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); }
+        }),
+        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      );
+      els.forEach((e) => io.observe(e));
+    }
+
+    const form = document.getElementById('regForm') as HTMLFormElement | null;
+    if (!form) return;
+
+    // Jika form sudah pernah di-submit di browser ini, tampilkan notifikasi okArea langsung
+    if (isFormSubmitted('batch2-form')) {
+      const formArea = document.getElementById('formArea');
+      const okArea = document.getElementById('okArea');
+      if (formArea) formArea.style.display = 'none';
+      if (okArea) {
+        okArea.style.display = 'block';
+        const h4 = okArea.querySelector('h4');
+        const p = okArea.querySelector('p');
+        if (h4) h4.textContent = 'Minat Sudah Terdaftar';
+        if (p) {
+          p.innerHTML = 'Terima kasih! Anda sudah mendaftarkan minat pada program ini.<br/><a href="https://wa.me/' + WA_ADMIN + '?text=' + encodeURIComponent('Halo Admin, saya sebelumnya sudah mendaftar Jagatrip Oktober Malay - Thailand, ingin konfirmasi status pendaftaran saya.') + '" target="_blank" style="display:inline-block; margin-top:14px; background:#E1651B; color:#fff; padding:10px 18px; border-radius:6px; font-weight:700; text-decoration:none;">Chat WhatsApp Admin ↗</a>';
+        }
+      }
+    }
+
+    // Auto-format nomor WA saat diketik (misal 081234567890 -> 0812-3456-7890)
+    const waInput = form.querySelector<HTMLInputElement>('#whatsapp');
+    waInput?.addEventListener('input', () => {
+      waInput.value = formatPhoneInputRealtime(waInput.value);
+    });
+
+    const bad = (id: string, v: boolean, msg?: string) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.toggle('bad', v);
+      if (v && msg) {
+        const errEl = el.querySelector('.err');
+        if (errEl) errEl.textContent = msg;
+      }
+    };
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+
+      const nama = (form.querySelector('#nama') as HTMLInputElement)?.value.trim() ?? '';
+      const institusi = (form.querySelector('#institusi') as HTMLInputElement)?.value.trim() ?? '';
+      const rawWa = (form.querySelector('#whatsapp') as HTMLInputElement)?.value.trim() ?? '';
+
+      const parsed = parseIndonesianPhone(rawWa);
+      const e1 = nama.length < 3;
+      const e2 = institusi.length < 3;
+      const e3 = !parsed.isValid;
+
+      bad('f1', e1, 'Mohon lengkapi nama (minimal 3 karakter).');
+      bad('f2', e2, 'Mohon lengkapi nama institusi (minimal 3 karakter).');
+      bad('f3', e3, parsed.error || 'Mohon isi nomor WhatsApp yang benar (diawali 08/628, 10-13 digit).');
+
+      if (e1 || e2 || e3) {
+        form.querySelector<HTMLInputElement>('.fld.bad input')?.focus();
+        return;
+      }
+
+      const wa = parsed.e164;
+      const isDuplicate = isPhoneSubmitted('batch2-form', wa);
+
+      const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Mengirim...'; }
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            _sheet: 'Batch2',
+            nama,
+            institusi,
+            instansi: institusi,
+            domisili: institusi,
+            asal: institusi,
+            wa,
+            whatsapp: wa,
+            ...getUtm(),
+            source: 'LP /batch2',
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch (err) { console.error('Log lead error:', err); }
+
+      const win = window as any;
+      if (win.fbq) { try { win.fbq('track', 'Lead', { content_name: 'Batch2 Oktober' }); } catch (e) { console.error(e); } }
+
+      lockForm(form, 'batch2-form', undefined, wa);
+
+      const greeting = isDuplicate
+        ? `Halo Admin, saya ${nama} sebelumnya sudah mendaftar Jagatrip Oktober Malay - Thailand dengan nomor ini, ingin konfirmasi kelanjutan pendaftaran.`
+        : `Halo Admin, saya ${nama} tertarik ikut Jagatrip Oktober Malay - Thailand, dan sudah mengisi form. Bagaimana selanjutnya?`;
+      const waUrl = `https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(greeting)}`;
+
+      const formArea = document.getElementById('formArea');
+      const okArea = document.getElementById('okArea');
+      if (formArea) formArea.style.display = 'none';
+      if (okArea) {
+        okArea.style.display = 'block';
+        const h4 = okArea.querySelector('h4');
+        const p = okArea.querySelector('p');
+        if (h4) h4.textContent = isDuplicate ? 'Konfirmasi Terkirim' : 'Minat Terkirim';
+        if (p) p.textContent = 'Mengalihkan ke WhatsApp Admin…';
+      }
+
+      setTimeout(() => { window.location.href = waUrl; }, 600);
+    });
+
+    ['nama', 'institusi', 'whatsapp'].forEach((id) => {
+      form.querySelector<HTMLInputElement>('#' + id)?.addEventListener('input', function (this: HTMLInputElement) {
+        this.closest('.fld')?.classList.remove('bad');
+      });
+    });
+  });
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :global(body) { margin: 0; }
+  .b2 {
+    --navy:#0E2340; --navy-2:#16304F; --navy-3:#1E3E63;
+    --cream:#F6F0E4; --cream-2:#EFE6D4; --linen:#FCF9F3;
+    --orange:#E1651B; --orange-2:#F0894A; --orange-soft:#FBE4D2;
+    --gold:#C69B4A; --ink:#14140F; --muted:#3D3B33;
+    --line:rgba(14,35,64,.15); --line-l:rgba(246,240,228,.16);
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+    font-family:var(--sans);background:var(--linen);color:var(--ink);line-height:1.55;
+    -webkit-font-smoothing:antialiased;display:block;overflow-x:hidden;
+  }
+  .b2 * { box-sizing: border-box; }
+  .b2 h1, .b2 h2, .b2 h3, .b2 h4 { font-family:var(--serif); font-weight:600; line-height:1.08; letter-spacing:-.02em; margin:0; }
+  .b2 p { margin:0; }
+  .b2 a { text-decoration:none; color:inherit; }
+  .b2 ul { margin:0; padding:0; list-style:none; }
+  .wrap { width:100%; max-width:1160px; margin:0 auto; padding:0 30px; }
+  .idx { font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--orange); display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+  .idx::after { content:""; height:1px; flex:1; background:var(--line); max-width:120px; }
+  .idx.dk { color:var(--gold); }
+  .idx.dk::after { background:var(--line-l); }
+  .sec-t { font-size:clamp(26px,3.8vw,42px); margin-bottom:10px; }
+  .grid-bg { 
+    background-color: var(--linen);
+    background-image: 
+      radial-gradient(circle at 85% 10%, rgba(225,101,27,.08) 0%, transparent 55%),
+      radial-gradient(circle at 15% 90%, rgba(198,155,74,.1) 0%, transparent 60%),
+      radial-gradient(rgba(14,35,64,.09) 1.2px, transparent 1.2px),
+      linear-gradient(rgba(14,35,64,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,35,64,.035) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 24px 24px, 48px 48px, 48px 48px;
+  }
+  .grid-bg-d { 
+    background-color: var(--navy);
+    background-image: 
+      radial-gradient(circle at 85% 15%, rgba(240,137,74,.14) 0%, transparent 50%),
+      radial-gradient(circle at 15% 85%, rgba(198,155,74,.12) 0%, transparent 50%),
+      radial-gradient(rgba(246,240,228,.08) 1.2px, transparent 1.2px),
+      linear-gradient(rgba(246,240,228,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(246,240,228,.04) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 24px 24px, 48px 48px, 48px 48px;
+  }
+  .b2 section { padding:64px 0; }
+  .dark { background:linear-gradient(135deg, #09172B 0%, #0E2340 50%, #132A4C 100%); color:var(--cream); padding:72px 0 64px; }
+  .dark h2, .dark h3, .dark h4 { color:var(--cream); }
+  .cream { 
+    background: 
+      radial-gradient(circle at 75% 20%, rgba(225,101,27,.06) 0%, transparent 50%),
+      linear-gradient(180deg, #F6F0E4 0%, #EFE6D4 100%); 
+  }
+  .sec-p { font-size:15px; color:var(--muted); margin-bottom:36px; line-height:1.6; }
+  .sec-p.wide { max-width:640px; }
+  .it-note { font-size:12.5px; color:var(--muted); margin-top:14px; font-style:italic; }
+
+  /* TOPBAR */
+  .topbar { position:fixed; inset:0 0 auto 0; z-index:100; background:rgba(252,249,243,.93); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+  .tb { display:flex; align-items:center; justify-content:space-between; height:58px; }
+  .brand { display:flex; align-items:center; gap:9px; }
+  .bm-img { width:27px; height:auto; display:block; }
+  .bn-img { width:118px; height:auto; display:block; }
+  .tb-nav { display:flex; gap:24px; align-items:center; }
+  .tb-nav a { font-size:11.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:#3D3B33; }
+  .tb-nav a:hover { color:var(--orange); }
+  .tb-cta { background:var(--navy); color:var(--cream) !important; padding:9px 18px; font-size:11px !important; }
+  .tb-cta:hover { background:var(--orange); color:#fff !important; }
+
+  /* HERO */
+  .hero { 
+    background: 
+      radial-gradient(circle at 82% 15%, rgba(225,101,27,.14) 0%, transparent 45%),
+      radial-gradient(circle at 18% 85%, rgba(198,155,74,.15) 0%, transparent 50%),
+      linear-gradient(180deg, #FAF6EE 0%, #F3EBDD 100%); 
+    padding:96px 0 0; 
+    position:relative; 
+    overflow:hidden; 
+  }
+  .hero::before { content:""; position:absolute; top:-140px; left:-120px; width:460px; height:460px; border-radius:50%; background:radial-gradient(circle,rgba(225,101,27,.18),transparent 68%); pointer-events:none; }
+  .hero-in { position:relative; z-index:2; display:grid; grid-template-columns:1.15fr 1fr; gap:40px; align-items:center; padding-bottom:56px; }
+  .kick { display:inline-flex; align-items:center; gap:9px; font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--navy); border:1px solid var(--line); padding:6px 13px; margin-bottom:20px; background:rgba(255,255,255,.5); backdrop-filter:blur(4px); }
+  .kick i { width:5px; height:5px; background:var(--orange); border-radius:50%; display:block; }
+  .hero h1 { font-size:clamp(30px,4.5vw,52px); color:var(--navy); letter-spacing:-.03em; line-height:1.18; }
+  .hero h1 .hl { 
+    position:relative; 
+    display:inline; 
+    background:linear-gradient(180deg, transparent 66%, rgba(225,101,27,.22) 66%); 
+    padding-bottom:2px;
+  }
+  .hero h1 .kick2 { 
+    display:block; 
+    font-style:italic; 
+    font-weight:500; 
+    color:var(--orange); 
+    font-size:.65em; 
+    margin-top:14px; 
+    letter-spacing:-.01em; 
+    line-height:1.25; 
+  }
+  .theme-strip { display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; border-left:3px solid var(--orange); padding:4px 0 4px 12px; margin-top:18px; }
+  .theme-strip .a { font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--navy); }
+  .theme-strip .b { font-size:13px; color:var(--muted); font-style:italic; font-weight:500; }
+  .route { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-top:16px; padding-top:14px; border-top:1px solid var(--line); }
+  .route .r { font-family:var(--serif); font-size:clamp(21px,2.8vw,30px); color:var(--navy); letter-spacing:-.02em; line-height:1.1; }
+  .route .r i { font-style:normal; color:var(--orange); margin:0 6px; }
+  .route .dt { font-size:12px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:#2D2B24; border:1px solid var(--line); padding:5px 11px; background:rgba(255,255,255,.4); }
+  .hero-p { font-size:16px; color:#2B2A24; max-width:470px; margin-top:16px; line-height:1.6; font-weight:450; }
+  .hero-p b { color:var(--navy); font-weight:700; }
+  .proof { display:flex; flex-wrap:wrap; gap:0; margin-top:20px; margin-bottom:6px; }
+  .proof div { padding-right:18px; margin-right:18px; border-right:1px solid var(--line); }
+  .proof div:last-child { border-right:none; margin-right:0; padding-right:0; }
+  .proof b { font-family:var(--serif); font-size:20px; color:var(--orange); display:block; line-height:1; }
+  .proof span { font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:#3D3B33; font-weight:600; }
+  .hero-btns { display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+  .btn { display:inline-block; padding:14px 28px; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; border:1px solid transparent; cursor:pointer; font-family:var(--sans); transition:.25s ease; border-radius:4px; }
+  .b-o { background:var(--orange); color:#FFFFFF; box-shadow:0 4px 16px rgba(225,101,27,.3); }
+  .b-o:hover { background:#c5540e; color:#FFFFFF !important; transform:translateY(-2px); box-shadow:0 6px 20px rgba(225,101,27,.4); }
+  .b-n { border-color:var(--navy); color:var(--navy); background:rgba(255,255,255,.3); }
+  .b-n:hover { background:var(--navy); color:#FFFFFF !important; transform:translateY(-2px); }
+
+  /* FLYER HERO */
+  .flyer { 
+    background:linear-gradient(145deg, #09172B, #16304F); 
+    border:1px solid rgba(198,155,74,.35); 
+    position:relative; 
+    border-radius:12px; 
+    overflow:hidden; 
+    box-shadow:0 18px 48px rgba(14,35,64,.35), 0 0 35px rgba(225,101,27,.14); 
+    transition:transform .35s ease, box-shadow .35s ease; 
+  }
+  .flyer:hover { 
+    transform:translateY(-4px); 
+    box-shadow:0 24px 56px rgba(14,35,64,.45), 0 0 40px rgba(225,101,27,.22); 
+  }
+  .flyer-img { 
+    width:100%; 
+    height:auto; 
+    display:block; 
+  }
+  .f-cap { font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:14px; text-align:center; font-weight:500; }
+
+  /* META BAR */
+  .mbar { padding:0 0 52px; margin-top:8px; position:relative; z-index:10; }
+  .mbar-in { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(246,240,228,.18); border-radius:10px; overflow:hidden; box-shadow:0 16px 40px rgba(14,35,64,.24); border:1px solid rgba(246,240,228,.2); }
+  .mb { background:linear-gradient(145deg, #09172B, #16304F); backdrop-filter:blur(12px); padding:18px 24px; }
+  .mb .k { font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(246,240,228,.82); margin-bottom:4px; font-weight:600; }
+  .mb .v { font-family:var(--serif); font-size:18.5px; color:var(--cream); line-height:1.2; }
+  .mb .v span { color:var(--orange-2); }
+
+  /* OPENING NOTE */
+  .quote { font-family:var(--serif); font-size:clamp(22px,3.2vw,36px); line-height:1.28; color:var(--cream); max-width:880px; }
+  .quote em { font-style:italic; color:var(--orange-2); }
+  .plist { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; background:transparent; border:none; margin-top:26px; }
+  .pl { 
+    background:rgba(22,48,79,.75); 
+    backdrop-filter:blur(10px); 
+    border:1px solid rgba(246,240,228,.14); 
+    border-left:3px solid var(--gold); 
+    padding:20px 20px; 
+    border-radius:6px; 
+    box-shadow:0 6px 20px rgba(0,0,0,.2); 
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .pl:hover {
+    transform:translateY(-4px);
+    border-left-color:var(--orange-2);
+    box-shadow:0 12px 30px rgba(0,0,0,.3);
+  }
+  .pl b { font-family:var(--serif); font-size:12px; color:var(--gold); letter-spacing:.12em; display:block; margin-bottom:8px; }
+  .pl p { font-size:15px; color:var(--cream); line-height:1.45; font-weight:600; }
+  .pl small { display:block; font-size:13px; color:rgba(246,240,228,.88); margin-top:6px; line-height:1.55; }
+  .verdict { margin-top:28px; border-left:3px solid var(--orange); padding-left:22px; }
+  .verdict p { font-family:var(--serif); font-size:clamp(18px,2.3vw,25px); line-height:1.35; color:var(--cream); }
+
+  /* METODE */
+  .m-head { display:grid; grid-template-columns:1fr .9fr; gap:36px; align-items:end; margin-bottom:22px; }
+  .m-note { font-size:15px; color:var(--muted); line-height:1.6; }
+  .dims { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; background:transparent; border:none; }
+  .dim { 
+    background:#FFFFFF; 
+    border:1px solid rgba(14,35,64,.1); 
+    border-top:3px solid var(--orange); 
+    padding:20px 18px; 
+    border-radius:6px; 
+    box-shadow:0 4px 16px rgba(14,35,64,.04); 
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .dim:hover {
+    transform:translateY(-4px);
+    box-shadow:0 12px 28px rgba(14,35,64,.09);
+  }
+  .dim .n { font-family:var(--serif); font-size:23px; color:var(--orange); line-height:1; margin-bottom:8px; }
+  .dim h4 { font-size:16.5px; margin-bottom:5px; }
+  .dim p { font-size:13px; color:var(--muted); line-height:1.5; }
+  .card4 { 
+    margin-top:22px; 
+    border:1px solid rgba(246,240,228,.18); 
+    background:linear-gradient(135deg, #09172B 0%, #16304F 100%); 
+    border-radius:6px; 
+    box-shadow:0 8px 30px rgba(14,35,64,.18); 
+    overflow:hidden; 
+    color:var(--cream); 
+    display:grid; 
+    grid-template-columns:auto repeat(4,1fr); 
+    align-items:stretch; 
+  }
+  .c4-l { padding:18px 20px; border-right:1px solid var(--line-l); display:flex; flex-direction:column; justify-content:center; min-width:180px; background:rgba(255,255,255,.04); }
+  .c4-l b { font-family:var(--serif); font-size:16px; display:block; }
+  .c4-l span { font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-top:3px; }
+  .c4 { padding:18px 16px; border-right:1px solid var(--line-l); font-size:13px; color:rgba(246,240,228,.82); line-height:1.5; }
+  .c4:last-child { border-right:none; background:rgba(225,101,27,.2); color:var(--cream); font-weight:500; }
+  .c4 i { display:block; font-style:normal; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--orange-2); margin-bottom:6px; font-weight:600; }
+  .c4-note { font-size:13.5px; color:var(--muted); margin-top:14px; font-style:italic; }
+
+  /* SCHOOL ACCESS */
+  .sa { display:grid; grid-template-columns:1.05fr 1fr; gap:34px; align-items:start; }
+  .sa-p { font-size:15.5px; color:rgba(246,240,228,.7); margin-top:12px; margin-bottom:36px; line-height:1.6; max-width:460px; }
+  .sa-stats { display:flex; gap:1px; background:var(--line-l); border:1px solid var(--line-l); margin-top:24px; }
+  .sst { background:var(--navy); padding:13px 18px; flex:1; }
+  .sst b { font-family:var(--serif); font-size:29px; color:var(--orange-2); display:block; line-height:1; }
+  .sst span { font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:rgba(246,240,228,.55); }
+  .proto { border:1px solid rgba(246,240,228,.16); border-radius:8px; overflow:hidden; background:rgba(22,48,79,.4); backdrop-filter:blur(8px); box-shadow:0 8px 24px rgba(0,0,0,.2); }
+  .proto .ph { padding:14px 20px; border-bottom:1px solid rgba(246,240,228,.14); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:600; background:rgba(255,255,255,.03); }
+  .pr { display:grid; grid-template-columns:32px 1fr; gap:14px; padding:15px 20px; border-bottom:1px solid rgba(246,240,228,.12); align-items:baseline; }
+  .pr:last-child { border-bottom:none; }
+  .pr .t { font-family:var(--serif); font-size:15px; color:var(--orange-2); font-weight:600; }
+  .pr .x { font-size:14.5px; color:rgba(246,240,228,.88); line-height:1.5; }
+  .pull { font-family:var(--serif); font-size:clamp(19px,2.5vw,26px); line-height:1.3; color:var(--cream); margin-top:22px; border-top:1px solid var(--line-l); padding-top:18px; }
+  .pull em { font-style:italic; color:var(--orange-2); }
+
+  /* DAYS */
+  .day { display:grid; grid-template-columns:52px 128px 1fr; gap:20px; padding:14px 0; border-bottom:1px solid var(--line); align-items:baseline; }
+  .day:first-of-type { border-top:1px solid var(--line); }
+  .day .n { font-family:var(--serif); font-size:25px; color:var(--orange); line-height:1; }
+  .day .d { font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); padding-top:5px; }
+  .day h4 { font-size:19px; margin-bottom:4px; }
+  .day p { font-size:14.5px; color:var(--muted); line-height:1.55; }
+  .tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .tg { font-size:10px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; padding:4px 9px; border:1px solid var(--line); color:var(--navy); }
+  .tg.k { background:var(--navy); color:var(--cream); border-color:var(--navy); }
+
+  /* TRIP LEADER */
+  .lead-p { font-size:15.5px; color:rgba(246,240,228,.85); max-width:580px; margin-bottom:36px; line-height:1.6; }
+  .lead-in { display:grid; grid-template-columns:320px 1fr; gap:28px; align-items:start; margin-top:36px; }
+  .lead-card { background:rgba(22,48,79,.65); backdrop-filter:blur(10px); border:1px solid rgba(246,240,228,.16); border-radius:10px; padding:20px; display:flex; flex-direction:column; box-shadow:0 12px 32px rgba(0,0,0,.25); position:sticky; top:80px; }
+  .ph-img { background:linear-gradient(145deg, #09172B, #16304F); border:1px solid rgba(198,155,74,.4); aspect-ratio:4/5; border-radius:8px; overflow:hidden; position:relative; box-shadow:0 8px 24px rgba(0,0,0,.3); }
+  .lead-photo { width:100%; height:100%; object-fit:cover; object-position:center 15%; display:block; transition:transform .35s ease; }
+  .ph-img:hover .lead-photo { transform:scale(1.04); }
+  .lead-id { border-left:3px solid var(--orange); padding:10px 0 4px 14px; margin-top:16px; }
+  .lead-id b { font-family:var(--serif); font-size:20px; color:var(--cream); display:block; line-height:1.2; }
+  .lead-id span { font-size:11.5px; letter-spacing:.06em; color:var(--gold); display:block; margin-top:4px; line-height:1.4; }
+  .lead-badges { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; padding-top:14px; border-top:1px solid rgba(246,240,228,.12); }
+  .lead-badges span { font-size:11px; font-weight:600; color:var(--gold); background:rgba(198,155,74,.12); border:1px solid rgba(198,155,74,.3); padding:4px 10px; border-radius:4px; letter-spacing:.05em; }
+  .lead-pts { display:grid; grid-template-columns:1fr 1fr; gap:14px; background:transparent; border:none; }
+  .lp { background:rgba(22,48,79,.65); backdrop-filter:blur(10px); border:1px solid rgba(246,240,228,.14); border-left:4px solid var(--orange-2); border-radius:8px; padding:16px 18px; display:flex; gap:14px; align-items:flex-start; box-shadow:0 6px 20px rgba(0,0,0,.2); transition:transform .25s ease, border-color .25s ease; }
+  .lp:hover { transform:translateY(-2px); border-left-color:var(--gold); box-shadow:0 10px 26px rgba(0,0,0,.3); }
+  .lp.full { grid-column:1/-1; background:linear-gradient(135deg, rgba(225,101,27,.18), rgba(22,48,79,.85)); border-left-color:var(--gold); padding:18px 22px; }
+  .lp b { font-family:var(--serif); font-size:15px; color:var(--gold); letter-spacing:.08em; flex-shrink:0; padding-top:2px; }
+  .lp p { font-size:13.5px; color:rgba(246,240,228,.9); line-height:1.55; margin:0; }
+
+  /* TAKE HOME */
+  .outs { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; background:transparent; border:none; }
+  .ou { 
+    background:#FFFFFF; 
+    padding:20px 18px; 
+    border:1px solid rgba(14,35,64,.1); 
+    border-radius:6px; 
+    box-shadow:0 4px 16px rgba(14,35,64,.04); 
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .ou:last-child {
+    grid-column:1 / -1;
+    background:linear-gradient(135deg, #FFFFFF, #FFF9F2);
+    border-color:rgba(225,101,27,.25);
+  }
+  .ou:hover {
+    transform:translateY(-4px);
+    box-shadow:0 12px 28px rgba(14,35,64,.09);
+  }
+  .ou b { font-family:var(--serif); font-size:12px; color:var(--orange); letter-spacing:.1em; display:block; margin-bottom:7px; }
+  .ou h4 { font-size:16.5px; margin-bottom:4px; }
+  .ou p { font-size:13px; color:var(--muted); line-height:1.5; }
+  .gar { 
+    margin-top:22px; 
+    border:2px solid var(--orange); 
+    background:#fff; 
+    padding:22px 26px; 
+    border-radius:8px; 
+    box-shadow:0 8px 24px rgba(225,101,27,.08); 
+    display:grid; 
+    grid-template-columns:auto 1fr; 
+    gap:22px; 
+    align-items:center; 
+  }
+  .seal { width:74px; height:74px; border:2px solid var(--orange); border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--orange); flex-shrink:0; }
+  .seal b { font-family:var(--serif); font-size:25px; line-height:1; }
+  .seal span { font-size:8px; letter-spacing:.14em; text-transform:uppercase; margin-top:2px; }
+  .gar h4 { font-size:20px; margin-bottom:5px; }
+  .gar p { font-size:14.5px; color:var(--muted); line-height:1.55; }
+
+  /* WHO */
+  .who-sec { padding:48px 0; }
+  .who { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; background:transparent; border:none; }
+  .wh { 
+    background:#FFFFFF; 
+    border:1px solid rgba(14,35,64,.1); 
+    border-radius:6px; 
+    padding:16px 18px; 
+    display:flex; 
+    gap:12px; 
+    align-items:baseline; 
+    box-shadow:0 2px 10px rgba(14,35,64,.03); 
+    transition:transform .2s ease;
+  }
+  .wh:hover { transform:translateY(-2px); }
+  .wh b { font-family:var(--serif); font-size:13px; color:var(--orange); }
+  .wh span { font-size:14.5px; color:var(--navy); line-height:1.4; font-weight:500; }
+  .wnote { margin-top:16px; border-left:3px solid var(--navy); padding-left:20px; font-size:14.5px; color:var(--muted); line-height:1.6; max-width:720px; }
+  .wnote b { color:var(--navy); }
+
+  /* HARGA / INVESTMENT */
+  .inv-head { margin-bottom:36px; }
+  .inv-head .sec-t { margin-bottom:12px; }
+  .sec-p-sub { font-size:15.5px; color:rgba(246,240,228,.85); max-width:620px; line-height:1.6; margin-top:8px; }
+  .inv-grid { display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:start; }
+  .inv-highlights { display:flex; flex-direction:column; gap:16px; margin-bottom:28px; }
+  .ih-item { display:flex; gap:14px; align-items:flex-start; background:rgba(22,48,79,.65); backdrop-filter:blur(10px); border:1px solid rgba(246,240,228,.14); border-left:3px solid var(--orange-2); border-radius:8px; padding:18px 20px; }
+  .ih-icon { font-size:16px; color:var(--gold); flex-shrink:0; padding-top:2px; }
+  .ih-item b { font-size:15px; color:var(--cream); display:block; margin-bottom:3px; }
+  .ih-item p { font-size:13px; color:rgba(246,240,228,.8); line-height:1.5; margin:0; }
+  .warn { background:rgba(9,23,43,.6); border-left:3px solid var(--orange); padding:18px 20px; border-radius:6px; font-size:13px; color:rgba(246,240,228,.8); line-height:1.6; }
+  .warn b { color:var(--gold); }
+  .warn ul { margin-top:6px; padding-left:16px; display:flex; flex-direction:column; gap:4px; }
+  .opts { display:flex; width:100%; }
+  .opt { background:rgba(22,48,79,.65); backdrop-filter:blur(10px); border:1px solid rgba(246,240,228,.16); border-radius:10px; padding:28px 28px; display:flex; flex-direction:column; box-shadow:0 12px 36px rgba(0,0,0,.3); width:100%; }
+  .opt.single-opt { border-top:4px solid var(--orange); border-color:rgba(198,155,74,.35); }
+  .opt .lbl { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
+  .opt.hi .lbl { color:var(--orange-2); }
+  .opt h3 { font-size:23px; margin-bottom:7px; }
+  .opt .pr2 { font-family:var(--serif); font-size:36px; color:var(--cream); line-height:1; margin-bottom:6px; }
+  .opt .sub { font-size:13.5px; color:rgba(246,240,228,.85); line-height:1.5; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--line-l); }
+  .opt li { font-size:13.5px; color:rgba(246,240,228,.88); padding:4px 0 4px 22px; position:relative; line-height:1.45; }
+  .opt li::before { content:"✓"; position:absolute; left:0; color:var(--orange-2); font-size:12px; }
+  .opt li.bold-li { font-weight:600; color:var(--cream); }
+  .opt li.no { color:rgba(246,240,228,.42); }
+  .opt li.no::before { content:"✕"; color:rgba(246,240,228,.35); }
+  .opt .foot { margin-top:auto; font-size:12.5px; color:rgba(246,240,228,.82); line-height:1.55; border-top:1px solid var(--line-l); padding-top:12px; }
+  .warn { margin-top:18px; border:1px solid rgba(198,155,74,.4); padding:14px 18px; font-size:13.5px; color:rgba(246,240,228,.88); line-height:1.6; border-radius:6px; background:rgba(198,155,74,.08); }
+  .warn b { color:var(--cream); }
+
+  /* FORM */
+  .reg { background:linear-gradient(135deg, #09172B 0%, #0E2340 50%, #16304F 100%); position:relative; overflow:hidden; }
+  .reg::before { content:""; position:absolute; bottom:-200px; right:-140px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle,rgba(225,101,27,.22),transparent 68%); }
+  .reg-in { position:relative; z-index:2; display:grid; grid-template-columns:1fr .95fr; gap:40px; align-items:center; }
+  .reg h2 { font-size:clamp(30px,4.6vw,52px); color:var(--cream); letter-spacing:-.03em; }
+  .reg h2 em { font-style:italic; color:var(--orange-2); }
+  .reg .rp { font-size:15.5px; color:rgba(246,240,228,.85); margin-top:12px; max-width:420px; line-height:1.6; }
+  .fcard { background:#FFFFFF; padding:28px 26px; border-radius:8px; box-shadow:0 12px 36px rgba(0,0,0,.25); }
+  .fld { margin-bottom:15px; }
+  .fld label { display:block; font-size:10.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--navy); margin-bottom:6px; }
+  .fld label i { font-style:normal; color:var(--orange); margin-right:6px; }
+  .fld input { width:100%; padding:12px 14px; border:1px solid rgba(14,35,64,.24); background:#fff; font-family:var(--sans); font-size:15px; color:var(--ink); border-radius:0; }
+  .fld input:focus { outline:none; border-color:var(--orange); box-shadow:0 0 0 3px rgba(225,101,27,.12); }
+  .fld input:disabled { background:#EFE6D4; color:var(--muted); }
+  .err { color:#B23A15; font-size:12px; margin-top:5px; display:none; }
+  .fld.bad input { border-color:#B23A15; }
+  .fld.bad .err { display:block; }
+  .fcard .btn { width:100%; text-align:center; border:none; }
+  .fcard .btn:disabled { opacity:.7; cursor:not-allowed; }
+  .fnote { font-size:12px; color:var(--muted); margin-top:12px; text-align:center; line-height:1.55; }
+  .fnote-lock { font-size:11.5px; color:#C5540E; background:rgba(225,101,27,.08); border:1px solid rgba(225,101,27,.22); border-radius:6px; padding:8px 12px; margin-top:10px; text-align:center; line-height:1.45; }
+  .fnote-lock b { color:#9A3A05; }
+  .ok { display:none; text-align:center; padding:22px 6px; }
+  .ok .ic { width:52px; height:52px; border:2px solid var(--orange); border-radius:50%; color:var(--orange); display:flex; align-items:center; justify-content:center; font-size:23px; margin:0 auto 16px; }
+  .ok h4 { font-size:21px; margin-bottom:8px; }
+  .ok p { font-size:14px; color:var(--muted); line-height:1.6; }
+
+  /* FAQ */
+  .faq-sec { padding:46px 0; }
+  .faq-wrap { max-width:840px; }
+  .b2 details { border-bottom:1px solid var(--line); }
+  .b2 details summary { list-style:none; cursor:pointer; padding:14px 34px 14px 0; font-family:var(--serif); font-size:18px; color:var(--navy); position:relative; }
+  .b2 details summary::-webkit-details-marker { display:none; }
+  .b2 details summary::after { content:"+"; position:absolute; right:4px; top:12px; font-size:21px; color:var(--orange); font-family:var(--sans); font-weight:300; }
+  .b2 details[open] summary::after { content:"–"; }
+  .b2 details .a { padding:0 40px 16px 0; font-size:14.5px; color:var(--muted); line-height:1.65; }
+
+  /* FOOTER */
+  .b2 footer { background:#081729; color:rgba(246,240,228,.5); padding:24px 0; font-size:12.5px; }
+  .ft { display:flex; justify-content:space-between; gap:22px; flex-wrap:wrap; align-items:center; }
+  .ft-logo { width:132px; height:auto; display:block; filter:brightness(0) invert(1); opacity:.92; }
+  .ft-sub { font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(246,240,228,.35); margin-top:6px; }
+  .ft p { max-width:520px; line-height:1.6; font-size:12px; }
+
+  /* REVEAL */
+  .rv { opacity:0; transform:translateY(16px); transition:.6s ease; }
+  .rv.in { opacity:1; transform:none; }
+
+  @media (max-width:960px) {
+    .hero-in, .m-head, .sa, .reg-in, .lead-in, .inv-grid { grid-template-columns:1fr; gap:32px; }
+    .ph-img { max-width:320px; margin:0 auto; }
+    .lead-card { position:relative; top:auto; width:100%; max-width:440px; margin:0 auto; }
+    .hero-in { align-items:start; }
+    .mbar-in, .dims, .outs, .who { grid-template-columns:repeat(2,1fr); }
+    .plist { grid-template-columns:1fr; }
+    .card4 { grid-template-columns:1fr 1fr; }
+    .c4-l { grid-column:1/-1; border-right:none; border-bottom:1px solid var(--line-l); }
+    .opts { grid-template-columns:1fr; }
+    .flyer { max-width:420px; margin:0 auto; }
+  }
+  @media (max-width:620px) {
+    .wrap { padding:0 18px; }
+    .b2 section { padding:38px 0; }
+    .hero { padding-top:72px; }
+    .proof { 
+      display:grid; 
+      grid-template-columns:repeat(2,1fr); 
+      gap:10px; 
+      margin-top:22px; 
+    }
+    .proof div { 
+      padding:10px 12px; 
+      margin:0; 
+      border:1px solid var(--line); 
+      background:rgba(255,255,255,.45); 
+      border-radius:6px; 
+    }
+    .proof b { font-size:19px; }
+    .proof span { font-size:9.5px; }
+    .hero-btns { flex-direction:column; gap:10px; width:100%; }
+    .hero-btns .btn { width:100%; text-align:center; padding:15px 20px; }
+    .theme-strip { gap:4px; }
+    .theme-strip .a, .theme-strip .b { display:block; }
+    .tb-nav a:not(.tb-cta) { display:none; }
+    .mbar-in, .dims, .outs, .who, .card4, .lead-pts { grid-template-columns:1fr; }
+    .inv-grid { gap:24px; }
+    .opt { padding:22px 18px; }
+    .opt .pr2 { font-size:clamp(26px, 7.5vw, 36px); }
+    .sa-stats { flex-direction:column; }
+    .day { grid-template-columns:40px 1fr; gap:12px; }
+    .day .d { grid-column:2; padding-top:0; margin-bottom:4px; }
+    .day .db { grid-column:2; }
+    .gar { grid-template-columns:1fr; text-align:center; padding:20px 18px; }
+    .seal { margin:0 auto; }
+    .pr { grid-template-columns:1fr; gap:5px; }
+    .bm-img { width:24px; }
+    .bn-img { width:104px; }
+    .flyer { max-width:100%; }
+    .lead-card { padding:18px 16px; }
+    .lead-id b { font-size:19px; }
+    .lead-id span { font-size:11.5px; line-height:1.45; }
+    .lead-badges { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-top:14px; padding-top:12px; }
+    .lead-badges span { width:100%; text-align:center; padding:5px 2px; font-size:9.5px; letter-spacing:0; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .b2 * { transition:none !important; }
+    .rv { opacity:1; transform:none; }
+  }
+</style>

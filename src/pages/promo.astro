@@ -1,0 +1,287 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/layout/Footer.astro';
+import { SITE } from '../data/site';
+
+const waPromo = `https://wa.me/${SITE.waNumber}?text=${encodeURIComponent('Halo JAGATRIP! 👋\n\nSaya tertarik dengan program Edutrip Malaysia-Thailand Juni 2026.\n(Dari halaman: LP Promo)\n\nMohon info lebih lanjut. Terima kasih!')}`;
+---
+
+<BaseLayout
+  title="EDUTRIP MALAYSIA-THAILAND 2026 — Rp 6.500.000 (Slot Terbatas)"
+  description="Promo Rp6.500.000 untuk 10 pendaftar pertama. 5 Hari ke Malaysia & Thailand. Daftar via WhatsApp sekarang."
+>
+  <main id="main" class="lp2">
+
+    <!-- HERO -->
+    <section class="lp2-hero" data-reveal="hero">
+      <div class="lp2-hero-inner">
+        <div class="lp2-pill"><span class="lp2-pulse"></span> EDUTRIP MALAYSIA – THAILAND · 24–28 JUNI 2026</div>
+        <p class="lp2-bench">Ekspedisi Benchmarking Internasional</p>
+
+        <h1>Pulang Bawa <mark>Sertifikat Internasional</mark>, Network Baru, & Perspektif Yang Beda — Cuma <span class="lp2-hl">Rp 6,5 Juta</span>.</h1>
+
+        <p class="lp2-sub">Program 5 hari ke <strong>5 sekolah & 1 universitas</strong> di Malaysia & Thailand. Untuk pelajar, guru, kepala sekolah & yayasan yang siap upgrade. <strong>Sudah termasuk hotel, makan, transport, seminar & sertifikat.</strong></p>
+
+        <div class="lp2-meta">
+          <span>📅 5 Hari 4 Malam</span>
+          <span>🌏 2 Negara</span>
+          <span>🏫 5 Sekolah Visit</span>
+          <span>🥘 100% Halal</span>
+        </div>
+
+        <!-- CTA Block -->
+        <div class="lp2-cta-box">
+          <div class="lp2-cta-corner">🔥 PROMO TERBATAS</div>
+          <div class="lp2-price-row">
+            <span class="lp2-old">Rp 7.000.000</span>
+            <span class="lp2-new">Rp 6.500.000</span>
+          </div>
+          <span class="lp2-save">HEMAT RP 500.000 · 10 SLOT PERTAMA</span>
+          <a href="#lp2-form" class="lp2-btn-primary">📝 DAFTAR SEKARANG →</a>
+          <a href={waPromo} target="_blank" rel="noopener noreferrer" class="lp2-btn-wa" style="margin-top:10px;">💬 Konsultasi via WhatsApp</a>
+          <p class="lp2-btn-sub">Konsultasi langsung ke <strong>Admin: {SITE.waDisplay}</strong></p>
+          <div class="lp2-trust">
+            <span>✓ Sertifikat resmi</span>
+            <span>✓ Halal-friendly</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAIN -->
+    <section class="lp2-section lp2-pain" data-reveal="section">
+      <div class="lp2-inner">
+        <h2>Kalau ini lagi dirasain sekarang... program ini buat Anda.</h2>
+        <div class="lp2-pain-grid" data-reveal-group>
+          <div class="lp2-pc"><div class="lp2-x">×</div><h3>Stuck di Zona Nyaman</h3><p>Pengen lihat dunia pendidikan luar negeri, tapi nggak tahu mulai dari mana.</p></div>
+          <div class="lp2-pc"><div class="lp2-x">×</div><h3>Trip Biasa Boring</h3><p>Pulangnya cuma bawa oleh-oleh & feed Instagram. Zero impact ke sekolah/diri.</p></div>
+          <div class="lp2-pc"><div class="lp2-x">×</div><h3>Network Stuck</h3><p>Pengen kenal kepala sekolah dari luar negeri — tapi nggak ada akses.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUE STACK -->
+    <section class="lp2-section" data-reveal="section">
+      <div class="lp2-inner">
+        <h2>Daftar 1x, dapat 8 value langsung.</h2>
+        <p class="lp2-lead">Setiap item sudah disusun dari pengalaman puluhan kali ekspedisi pendidikan.</p>
+        <div class="lp2-stack">
+          <div class="lp2-si"><span class="lp2-sn">1</span><div><strong>Hotel 5 Hari 4 Malam di 4 Kota</strong><br><small>KL, Hatyai, KL Perlis, Penang.</small></div></div>
+          <div class="lp2-si"><span class="lp2-sn">2</span><div><strong>12x Makan Halal + Welcome Drink</strong></div></div>
+          <div class="lp2-si"><span class="lp2-sn">3</span><div><strong>Akses 5 Sekolah + 1 Universitas</strong><br><small>Dialog langsung sama manajemen sekolah.</small></div></div>
+          <div class="lp2-si"><span class="lp2-sn">4</span><div><strong>Seminar Internasional + Workshop</strong><br><small>Sharing session dengan praktisi pendidikan.</small></div></div>
+          <div class="lp2-si"><span class="lp2-sn">5</span><div><strong>Transport Lengkap + Tour Guide</strong><br><small>Van/bus pariwisata + tour guide profesional.</small></div></div>
+          <div class="lp2-si"><span class="lp2-sn">6</span><div><strong>City Tour Edukatif</strong><br><small>Petronas, Putrajaya, Hatyai Market, Penang.</small></div></div>
+          <div class="lp2-si"><span class="lp2-sn">7</span><div><strong>Merchandise Lengkap</strong><br><small>Kaos, ID card, notebook, totebag, pen.</small></div></div>
+          <div class="lp2-si"><span class="lp2-sn">8</span><div><strong>Sertifikat Resmi + Dokumentasi</strong><br><small>Untuk portofolio + foto/video profesional.</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARISON -->
+    <section class="lp2-section" style="background:#F9FAFB;" data-reveal="section">
+      <div class="lp2-inner">
+        <h2>Tour Travel Biasa vs JAGATRIP Edutrip</h2>
+        <div class="lp2-compare">
+          <div class="lp2-cr lp2-cr-head"><div>Fitur</div><div>Tour Biasa</div><div>JAGATRIP</div></div>
+          <div class="lp2-cr"><div>Tujuan utama</div><div>Foto & belanja</div><div>✓ Belajar & networking</div></div>
+          <div class="lp2-cr"><div>Akses sekolah</div><div>❌ Tidak ada</div><div>✓ 5 sekolah + 1 univ</div></div>
+          <div class="lp2-cr"><div>Seminar</div><div>❌ Tidak ada</div><div>✓ Include</div></div>
+          <div class="lp2-cr"><div>Sertifikat</div><div>❌ Tidak ada</div><div>✓ Sertifikat resmi</div></div>
+          <div class="lp2-cr"><div>Tour Leader</div><div>Guide umum</div><div>✓ CEO 30+ negara</div></div>
+          <div class="lp2-cr"><div>Halal-friendly</div><div>Tergantung</div><div>✓ 100% halal</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="lp2-section" data-reveal="section">
+      <div class="lp2-inner" style="max-width:720px;">
+        <h2 style="text-align:center;">Pertanyaan yang sering ditanyakan.</h2>
+        <div class="lp2-faq-list">
+          <details class="lp2-faq"><summary>Apakah harga sudah termasuk tiket pesawat?</summary><p>Belum. Harga Rp 6.500.000 untuk paket darat. Tiket pesawat PP bisa Anda book sendiri atau kami bantu rekomendasikan.</p></details>
+          <details class="lp2-faq"><summary>Bagaimana sistem pembayaran?</summary><p>Transfer ke rekening resmi PT Jagatrip Mitra Edukasi. Admin kirim nomor rekening setelah konsultasi.</p></details>
+          <details class="lp2-faq"><summary>Bisa booking DP dulu?</summary><p>Bisa. DP minimal diinformasikan admin saat konsultasi.</p></details>
+          <details class="lp2-faq"><summary>Saya tidak punya kenalan, takut tidak nyambung?</summary><p>Justru ini momen networking. Mayoritas peserta praktisi pendidikan dari seluruh Indonesia.</p></details>
+          <details class="lp2-faq"><summary>Apa langkah setelah daftar via WhatsApp?</summary><p>1) Admin balas max 1 jam. 2) Konsultasi. 3) Transfer. 4) Bukti transfer. 5) Grup WA peserta. 6) Technical Meeting Zoom. 7) Berangkat.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL OFFER + FORM -->
+    <section class="lp2-section lp2-final" id="lp2-form" data-reveal="section">
+      <div class="lp2-inner" style="text-align:center;max-width:720px;">
+        <h2>Ini Momen Anda Untuk Mulai.</h2>
+        <p class="lp2-lead" style="color:rgba(255,255,255,0.92);">Isi form → data Anda tersimpan → konfirmasi admin via WhatsApp dalam 1×24 jam.</p>
+
+        <div class="lp2-form-card">
+          <form id="lp2-promo-form" novalidate>
+            <div class="lp2-fg"><label>Nama Lengkap *</label><input name="nama" type="text" required placeholder="Nama lengkap Anda"></div>
+            <div class="lp2-fg"><label>No. WhatsApp *</label><input name="wa" type="tel" required inputmode="numeric" placeholder="081234567890"></div>
+
+            <button type="submit">Kirim & Lanjut ke WhatsApp →</button>
+            <div id="lp2-promo-status" class="lp2-form-status hidden"></div>
+            <p class="lp2-form-note">🔒 Data Anda aman. Setelah submit, Anda akan diarahkan ke WhatsApp admin.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .lp2 { --lp-primary:#E8611F; --lp-navy:#0A1F44; --lp-cream:#FFF8F0; --lp-yellow:#FFD23F; --lp-gray:#6B7280; --lp-green:#10B981; --lp-red:#DC2626; }
+
+  .lp2-hero { background:linear-gradient(135deg,#FFF8F0,#FFE4CC); padding:48px 20px 60px; text-align:center; }
+  .lp2-hero-inner { max-width:900px; margin:0 auto; }
+  .lp2-pill { display:inline-flex; align-items:center; gap:8px; background:var(--lp-navy); color:var(--lp-yellow); padding:8px 18px; border-radius:999px; font-size:13px; font-weight:800; margin-bottom:20px; }
+  .lp2-pulse { width:8px; height:8px; background:var(--lp-yellow); border-radius:50%; animation:lp2pulse 1.5s infinite; }
+  @keyframes lp2pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
+
+  .lp2-hero h1 { font-size:clamp(28px,5vw,52px); font-weight:900; line-height:1.08; color:var(--lp-navy); letter-spacing:-1.5px; margin-bottom:20px; max-width:800px; margin-inline:auto; }
+  .lp2-hero h1 mark { background:linear-gradient(180deg,transparent 60%,var(--lp-yellow) 60%); color:var(--lp-navy); padding:0 4px; }
+  .lp2-hl { color:var(--lp-primary); }
+  .lp2-sub { font-size:clamp(15px,2vw,18px); color:#2D3748; max-width:680px; margin:0 auto 28px; }
+
+  .lp2-meta { display:inline-flex; gap:20px; margin-bottom:32px; padding:12px 24px; background:white; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.06); flex-wrap:wrap; justify-content:center; font-size:14px; font-weight:700; }
+
+  .lp2-cta-box { background:white; border-radius:24px; padding:32px 28px; box-shadow:0 20px 60px rgba(0,0,0,0.1); max-width:560px; margin:0 auto; border:3px solid var(--lp-primary); position:relative; }
+  .lp2-cta-corner { position:absolute; top:-16px; left:50%; transform:translateX(-50%); background:var(--lp-yellow); color:var(--lp-navy); padding:8px 20px; border-radius:999px; font-weight:900; font-size:12px; letter-spacing:1px; }
+  .lp2-price-row { display:flex; align-items:baseline; justify-content:center; gap:14px; margin-bottom:8px; }
+  .lp2-old { font-size:22px; color:var(--lp-gray); text-decoration:line-through; font-weight:700; }
+  .lp2-new { font-size:clamp(36px,6vw,52px); font-weight:900; color:var(--lp-primary); letter-spacing:-2px; line-height:1; }
+  .lp2-save { display:block; width:fit-content; margin:0 auto 18px; background:#FEE2E2; color:var(--lp-red); padding:6px 16px; border-radius:999px; font-size:13px; font-weight:800; }
+  .lp2-bench { font-size:clamp(14px,2vw,17px); font-weight:700; color:var(--lp-primary); letter-spacing:1px; margin-bottom:12px; }
+  .lp2-btn-primary { display:block; background:var(--lp-primary); color:white; padding:18px 24px; border-radius:14px; text-decoration:none; font-weight:900; font-size:clamp(15px,2.5vw,18px); box-shadow:0 12px 32px rgba(232,97,31,0.35); transition:all 0.2s; text-align:center; }
+  .lp2-btn-primary:hover { transform:translateY(-2px); }
+  .lp2-btn-wa { display:block; background:linear-gradient(135deg,#25D366,#128C7E); color:white; padding:18px 24px; border-radius:14px; text-decoration:none; font-weight:900; font-size:clamp(15px,2.5vw,18px); box-shadow:0 12px 32px rgba(37,211,102,0.45); transition:all 0.2s; text-align:center; }
+  .lp2-btn-wa:hover { transform:translateY(-2px); }
+  .lp2-btn-sub { text-align:center; margin-top:10px; font-size:13px; color:var(--lp-gray); }
+  .lp2-trust { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:18px; font-size:13px; color:var(--lp-gray); }
+  .lp2-trust span { color:var(--lp-green); font-weight:700; }
+
+  .lp2-section { padding:60px 20px; }
+  .lp2-inner { max-width:900px; margin:0 auto; }
+  .lp2-section h2 { font-size:clamp(24px,4vw,38px); font-weight:900; color:var(--lp-navy); line-height:1.1; margin-bottom:16px; letter-spacing:-1px; text-align:center; }
+  .lp2-lead { font-size:17px; color:var(--lp-gray); max-width:620px; margin:0 auto 32px; text-align:center; }
+
+  .lp2-pain { background:var(--lp-navy); color:white; }
+  .lp2-pain h2 { color:white; }
+  .lp2-pain-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
+  .lp2-pc { background:rgba(255,255,255,0.08); padding:22px; border-radius:16px; border:1px solid rgba(255,255,255,0.1); }
+  .lp2-x { font-size:28px; color:var(--lp-red); background:rgba(220,38,38,0.15); width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-weight:900; }
+  .lp2-pc h3 { font-size:16px; font-weight:800; margin-bottom:6px; }
+  .lp2-pc p { font-size:14px; opacity:0.85; }
+
+  .lp2-stack { background:white; border-radius:20px; padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.06); border:2px solid #F3F4F6; }
+  .lp2-si { display:flex; gap:16px; padding:16px 0; border-bottom:1px dashed #E5E7EB; align-items:flex-start; font-size:15px; }
+  .lp2-si:last-child { border-bottom:none; }
+  .lp2-sn { flex-shrink:0; width:40px; height:40px; background:linear-gradient(135deg,var(--lp-primary),#c44e10); color:white; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:16px; }
+  .lp2-si strong { color:var(--lp-navy); }
+  .lp2-si small { color:var(--lp-gray); font-size:13px; }
+
+  .lp2-compare { background:white; border-radius:16px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.05); border:1px solid #F3F4F6; margin-top:24px; }
+  .lp2-cr { display:grid; grid-template-columns:1.4fr 1fr 1fr; border-bottom:1px solid #F3F4F6; }
+  .lp2-cr:last-child { border-bottom:none; }
+  .lp2-cr > div { padding:14px 12px; font-size:14px; }
+  .lp2-cr > div:first-child { font-weight:700; color:var(--lp-navy); }
+  .lp2-cr > div:nth-child(2) { background:#FEF2F2; text-align:center; }
+  .lp2-cr > div:nth-child(3) { background:#F0FDF4; text-align:center; font-weight:700; color:var(--lp-green); }
+  .lp2-cr-head { background:var(--lp-navy); color:white; font-weight:900; text-align:center; }
+  .lp2-cr-head > div { padding:16px 12px; font-size:15px; letter-spacing:0.5px; text-transform:uppercase; background:var(--lp-navy) !important; color:white !important; }
+
+  .lp2-faq-list { margin-top:24px; }
+  .lp2-faq { background:#F9FAFB; border-radius:12px; margin-bottom:10px; overflow:hidden; }
+  .lp2-faq summary { padding:16px 20px; font-weight:700; cursor:pointer; color:var(--lp-navy); list-style:none; font-size:15px; }
+  .lp2-faq summary::-webkit-details-marker { display:none; }
+  .lp2-faq p { padding:0 20px 16px; font-size:14px; color:var(--lp-gray); }
+
+  .lp2-final { background:linear-gradient(135deg,var(--lp-primary),#c44e10); color:white; padding:80px 20px; }
+  .lp2-final h2 { color:white; }
+  .lp2-final-box { background:white; border-radius:24px; padding:32px; color:#1A1A1A; box-shadow:0 20px 60px rgba(0,0,0,0.25); max-width:560px; margin:0 auto; }
+  .lp2-final-price { display:flex; justify-content:center; align-items:baseline; gap:14px; margin-bottom:6px; }
+  .lp2-final-price del { font-size:22px; color:var(--lp-gray); font-weight:700; }
+  .lp2-fnow { font-size:clamp(40px,6vw,52px); font-weight:900; color:var(--lp-primary); letter-spacing:-2px; line-height:1; }
+  .lp2-final-save { color:var(--lp-red); font-weight:800; font-size:14px; margin-bottom:16px; text-align:center; }
+
+  .lp2-form-bg { background:var(--lp-navy); color:white; }
+  .lp2-form-eyebrow { color:var(--lp-yellow); font-weight:800; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+  .lp2-form-lead { font-size:17px; color:rgba(255,255,255,0.75); max-width:600px; margin:0 auto; }
+  .lp2-form-card { background:white; border-radius:20px; padding:28px; color:#1A1A1A; }
+  .lp2-fg { margin-bottom:12px; }
+  .lp2-fg label { display:block; font-size:12px; font-weight:700; color:#374151; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; text-align:left; }
+  .lp2-fg input { width:100%; padding:12px 14px; border:2px solid #E5E7EB; border-radius:10px; font-size:15px; transition:border-color 0.2s; background:white; }
+  .lp2-fg input:focus { outline:none; border-color:var(--lp-primary); }
+  .lp2-form-card button { width:100%; padding:16px; background:var(--lp-primary); color:white; border:none; border-radius:999px; font-weight:900; font-size:16px; cursor:pointer; margin-top:8px; transition:all 0.2s; }
+  .lp2-form-card button:hover { background:#c44e10; }
+  .lp2-form-card button:disabled { opacity:0.6; cursor:wait; }
+  .lp2-form-status { margin-top:10px; font-size:14px; text-align:center; font-weight:600; }
+  .lp2-form-note { text-align:center; margin-top:12px; font-size:12px; color:var(--lp-gray); }
+  .hidden { display:none; }
+
+  @media (max-width:768px) {
+    .lp2-pain-grid { grid-template-columns:1fr; }
+    .lp2-cr { grid-template-columns:1.2fr 0.9fr 0.9fr; }
+    .lp2-cr > div { font-size:12px; padding:10px 8px; }
+    .lp2-meta { gap:10px; padding:10px 16px; font-size:13px; }
+    .lp2-hero { padding:100px 16px 48px; }
+  }
+  @media (max-width:480px) {
+    .lp2-cr { grid-template-columns:1fr 0.85fr 0.85fr; }
+    .lp2-cr > div { font-size:11px; padding:8px 6px; line-height:1.35; word-break:break-word; }
+  }
+</style>
+
+<script>
+  import { SITE } from '../data/site';
+  import { getUtm } from '../lib/utm';
+  import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
+
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+
+  const form = document.getElementById('lp2-promo-form') as HTMLFormElement | null;
+  if (form) {
+    initFormGuard(form, 'lp2-promo-form', '✓ Anda sudah mengirim pendaftaran promo ini pada perangkat ini.');
+
+    const btn = form.querySelector('button')!;
+    const status = document.getElementById('lp2-promo-status')!;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const payload: Record<string, string> = {};
+      data.forEach((v, k) => { payload[k] = v.toString().trim(); });
+
+      if (!payload.nama || !payload.wa) {
+        status.textContent = '⚠️ Lengkapi semua field wajib (*)';
+        status.style.color = '#DC2626';
+        status.classList.remove('hidden');
+        return;
+      }
+
+      const isDuplicate = isPhoneSubmitted('lp2-promo-form', payload.wa);
+
+      btn.disabled = true; btn.textContent = '⏳ Mengirim...';
+
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST', mode: 'no-cors',
+        body: JSON.stringify({ _sheet: 'LP2_Promo', ...payload, ...getUtm(), timestamp: new Date().toISOString(), source: window.location.href }),
+      }).catch(() => {});
+
+      if ((window as any).fbq) { (window as any).fbq('track', 'Lead'); }
+
+      lockForm(form, 'lp2-promo-form', isDuplicate ? '✓ Anda sudah terdaftar sebelumnya. Mengalihkan ke WhatsApp...' : '✓ Terkirim! Mengalihkan ke WhatsApp...', payload.wa);
+
+      const msg = isDuplicate
+        ? `Halo JAGATRIP! 👋\n\nSaya ${payload.nama}, sebelumnya sudah mendaftar Edutrip Malaysia-Thailand dengan nomor ini, ingin konfirmasi status pendaftaran saya. Terima kasih!`
+        : `Halo JAGATRIP! 👋\n\nSaya ${payload.nama}, tertarik daftar Edutrip Malaysia-Thailand Juni 2026.\n(Dari halaman: LP Promo)\n\nMohon konfirmasi pendaftaran saya. Terima kasih!`;
+
+      setTimeout(() => {
+        window.location.href = `https://wa.me/${SITE.waNumber}?text=${encodeURIComponent(msg)}`;
+      }, 400);
+    });
+  }
+</script>

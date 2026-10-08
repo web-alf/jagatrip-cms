@@ -1,0 +1,616 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/layout/Footer.astro';
+---
+
+<BaseLayout
+  title="JAGATALK by JAGATRIP — Webinar Gratis Kuliah Luar Negeri"
+  description="Series webinar gratis dari JAGATRIP. Dengar langsung pengalaman kuliah di luar negeri dari mahasiswa & alumni IDN yang sedang menjalani. Dunia Lebih Dekat."
+  canonical="https://jagatrip.com/webinar"
+  gtmId="GTM-NR8XFKP9"
+>
+  <main id="main" class="jt">
+
+    <!-- SVG DEFS -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <symbol id="jagatalk-logo" viewBox="0 0 100 100">
+          <path d="M50 5 C30 5, 15 10, 12 25 L12 55 C12 78, 30 92, 50 95 C70 92, 88 78, 88 55 L88 25 C85 10, 70 5, 50 5 Z" fill="none" stroke="#0E7C86" stroke-width="6" stroke-linejoin="round"/>
+          <rect x="30" y="34" width="40" height="26" rx="7" fill="#FF6B1A"/>
+          <path d="M36 60 L32 70 L46 60 Z" fill="#FF6B1A"/>
+          <circle cx="42" cy="47" r="2.5" fill="white"/><circle cx="50" cy="47" r="2.5" fill="white"/><circle cx="58" cy="47" r="2.5" fill="white"/>
+        </symbol>
+        <symbol id="jagatrip-logo" viewBox="0 0 100 100">
+          <path d="M50 5 C30 5, 15 10, 12 25 L12 55 C12 78, 30 92, 50 95 C70 92, 88 78, 88 55 L88 25 C85 10, 70 5, 50 5 Z" fill="none" stroke="#FF6B1A" stroke-width="6" stroke-linejoin="round"/>
+          <circle cx="50" cy="48" r="11" fill="#FF6B1A"/>
+          <path d="M76 14 l4 -3 l2 4 l4 -2 l-2 5 l3 3 l-5 1 l-2 4 l-2 -4 l-5 -1 l3 -3 z" fill="#FF6B1A"/>
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- NAV -->
+    <nav class="jt-nav">
+      <div class="jt-nav-inner">
+        <a href="/webinar" class="jt-logo-wrap">
+          <svg class="jt-logo-svg"><use href="#jagatalk-logo"></use></svg>
+          <div>
+            <div class="jt-logo-text"><span class="jaga">jaga</span><span class="talk">talk</span></div>
+            <span class="jt-logo-sub">by JAGATRIP</span>
+          </div>
+        </a>
+        <div class="jt-nav-actions">
+          <a class="jt-nav-link-jadwal" href="#jadwal">Jadwal Webinar</a>
+          <a class="jt-nav-cta" href="#final-cta">Daftar Webinar <svg class="jt-arrow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="jt-hero" data-reveal="hero">
+      <div class="jt-hero-inner">
+        <div>
+          <div class="jt-hero-tag"><span class="jt-dot"></span> WEBINAR GRATIS · SETIAP MINGGU</div>
+          <h1>Mau Kuliah di Luar Negeri Tapi <span class="accent-teal">Bingung Mulai dari Mana?</span></h1>
+          <p class="jt-hero-sub2"><span class="accent-orange">Dapatkan Cerita Jujur & Strategi Riil Langsung dari Mereka yang Sudah di Sana.</span></p>
+          <p class="jt-sub">Saatnya dengar cerita jujur, angka riil, dan pengalaman nyata langsung dari mahasiswa Indonesia yang sedang berjuang di sana. Tanpa sensor, tanpa clickbait.</p>
+          <div class="jt-hero-ctas">
+            <a class="jt-btn-primary" href="#final-cta">🎯 Amankan Kursi Anda Sekarang!</a>
+          </div>
+          <p style="margin-top:20px; font-size:13px; color:var(--jt-gray);"><strong style="color:var(--jt-charcoal);">100% Gratis</strong> · Online via Zoom · Rekaman webinar untuk peserta hadir</p>
+        </div>
+
+        <div style="position:relative;">
+          <div class="jt-hero-card">
+            <div class="jt-hero-card-bg">
+              <img src="/jagatalk-general.webp" alt="JAGATALK — Info & Jadwal Webinar Kuliah Luar Negeri" class="jt-hero-card-img" />
+            </div>
+            <div class="jt-hero-card-body">
+              <h3 style="font-size:18px;font-weight:900;color:var(--jt-charcoal);line-height:1.2;">MENGUPAS REALITA &amp; RAHASIA KULIAH DI LUAR NEGERI</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="jt-stats" data-reveal="section">
+      <div class="jt-stats-inner">
+        <div><span class="sn">10+</span><span class="sl">Negara Tujuan Pembahasan</span></div>
+        <div><span class="sn">30+</span><span class="sl">Narasumber</span></div>
+        <div><span class="sn">100%</span><span class="sl">Gratis & Online</span></div>
+        <div><span class="sn">1x</span><span class="sl">Webinar Setiap Minggu</span></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="jt-section" id="about" data-reveal="section">
+      <div class="jt-inner">
+        <span class="jt-eyebrow">APA ITU JAGATALK</span>
+        <h2>Bukan webinar generic.<br>Ini ngobrol nyata sama yang sudah di sana.</h2>
+        <p class="jt-lead">Lupain webinar dengan slide PPT 100 halaman dan motivator yang belum pernah ke luar negeri. JAGATALK menghadirkan suara nyata — dari mahasiswa, alumni, dan praktisi yang sedang atau pernah hidup di negeri tujuan.</p>
+        <div class="jt-about-grid" data-reveal-group>
+          <div class="jt-about-card"><div class="jt-about-icon">🎙️</div><h3>Real Voices</h3><p>Narasumber utama adalah mahasiswa & alumni Indonesia yang sedang menjalani kuliah di luar negeri. Cerita yang kamu dengar = pengalaman langsung, bukan teori.</p></div>
+          <div class="jt-about-card"><div class="jt-about-icon jt-ai-orange">🌏</div><h3>10+ Negara Tujuan</h3><p>Setiap minggu bahas 1 negara/topik berbeda: Malaysia, Taiwan, China, Arab Saudi, Turki, boarding school internasional, dan lainnya.</p></div>
+          <div class="jt-about-card"><div class="jt-about-icon jt-ai-yellow">🎫</div><h3>Gratis, Konsisten, Bernilai</h3><p>Setiap Jumat malam, free, online via Zoom. Konten berkualitas tanpa biaya — karena tujuan kami memperluas akses informasi pendidikan.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JADWAL TERDEKAT -->
+    <section class="jt-section jt-featured" id="daftar" data-reveal="section">
+      <div class="jt-inner">
+        <span class="jt-eyebrow" style="text-align:center;display:block;">JADWAL TERDEKAT</span>
+        <h2 style="text-align:center;">Webinar minggu ini.</h2>
+        <div class="jt-terdekat-grid" data-reveal-group>
+          <img src="/jagatalk-webinar-6.webp" alt="Poster JAGATALK Webinar #6 — Dari Networking ke AI, Muhammad Nibras Salsabil, Guilin University of Electronic Technology (China)" class="jt-terdekat-flyer" />
+          <div class="jt-terdekat-info">
+            <div class="jt-terdekat-row"><span class="ico">🎯</span><div><span class="lbl">Topik</span><span class="val">Dari Networking ke AI: Menyiapkan Talenta Digital Masa Depan</span></div></div>
+            <div class="jt-terdekat-row"><span class="ico">🎙️</span><div><span class="lbl">Narasumber</span><span class="val">Muhammad Nibras Salsabil · Mahasiswa AI, Guilin University of Electronic Technology, China</span></div></div>
+            <div class="jt-terdekat-row"><span class="ico">📅</span><div><span class="lbl">Tanggal</span><span class="val">Jumat, 24 Juli 2026</span></div></div>
+            <div class="jt-terdekat-row"><span class="ico">🕢</span><div><span class="lbl">Waktu</span><span class="val">19.30 – 21.30 WIB</span></div></div>
+            <div class="jt-terdekat-row"><span class="ico">💻</span><div><span class="lbl">Platform</span><span class="val">via Zoom Meeting</span></div></div>
+            <a class="jt-btn-primary" href="#final-cta" style="margin-top:8px;">🎯 Amankan Kursi Anda Sekarang!</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JADWAL WEBINAR JAGATALK -->
+    <section class="jt-section jt-speakers" id="jadwal" data-reveal="section">
+      <div class="jt-inner">
+        <span class="jt-eyebrow">JADWAL WEBINAR JAGATALK</span>
+        <h2>Ngobrol langsung dengan yang udah ngalamin.</h2>
+        <p class="jt-lead">Mereka bukan motivator. Mereka mahasiswa Indonesia yang sedang menjalani kuliah di luar negeri — dan siap cerita jujur. Catat tanggalnya, amankan kursimu.</p>
+        <div class="jt-jadwal-grid" data-reveal-group>
+          <div class="jt-jadwal-box">
+            <div class="jt-jadwal-icon">👨‍🎓</div>
+            <h3>Kak Rafie</h3>
+            <p class="jt-jadwal-univ">Universiti Utara Malaysia (UUM), Malaysia</p>
+            <div class="jt-jadwal-date">28 Mei 2026</div>
+          </div>
+          <div class="jt-jadwal-box">
+            <div class="jt-jadwal-icon">👨‍🏫</div>
+            <h3>Pak Dedi</h3>
+            <p class="jt-jadwal-univ">Founder IDN Boarding School (Program Sekolah Internasional)</p>
+            <div class="jt-jadwal-date">5 Juni 2026</div>
+          </div>
+          <div class="jt-jadwal-box">
+            <div class="jt-jadwal-icon">🧑‍🎓</div>
+            <h3>Kak Ismail</h3>
+            <p class="jt-jadwal-univ">National Dong Hwa University, Taiwan</p>
+            <div class="jt-jadwal-date">12 Juni 2026</div>
+          </div>
+          <div class="jt-jadwal-box">
+            <div class="jt-jadwal-icon">👨‍🎓</div>
+            <h3>Kak Kegan</h3>
+            <p class="jt-jadwal-univ">Harbin Institute of Technology, China</p>
+            <div class="jt-jadwal-date">19 Juni 2026</div>
+          </div>
+          <div class="jt-jadwal-box">
+            <div class="jt-jadwal-icon">🧑‍🎓</div>
+            <h3>Kak Najwan</h3>
+            <p class="jt-jadwal-univ">Universitas Islam Madinah, Arab Saudi</p>
+            <div class="jt-jadwal-date">3 Juli 2026</div>
+          </div>
+          <div class="jt-jadwal-box">
+            <div class="jt-jadwal-icon">🧑‍🎓</div>
+            <h3>Kak Yasin</h3>
+            <p class="jt-jadwal-univ">Guilin University of Electronic Technology, China</p>
+            <div class="jt-jadwal-date">10 Juli 2026</div>
+          </div>
+          <div class="jt-jadwal-box">
+            <div class="jt-jadwal-icon">👨‍🎓</div>
+            <h3>Kak Syafiq</h3>
+            <p class="jt-jadwal-univ">Cheng Shiu University, Taiwan</p>
+            <div class="jt-jadwal-date">17 Juli 2026</div>
+          </div>
+          <div class="jt-jadwal-box jt-jadwal-next">
+            <div class="jt-jadwal-icon">👨‍🎓</div>
+            <h3>Kak Nibras</h3>
+            <p class="jt-jadwal-univ">Guilin University of Electronic Technology, China</p>
+            <div class="jt-jadwal-date">24 Juli 2026</div>
+          </div>
+          <div class="jt-jadwal-box">
+            <div class="jt-jadwal-icon">🧑‍🎓</div>
+            <h3>Kak Abdullah</h3>
+            <p class="jt-jadwal-univ">Universitas Islam Madinah, Arab Saudi</p>
+            <div class="jt-jadwal-date">31 Juli 2026</div>
+          </div>
+          <div class="jt-jadwal-box">
+            <div class="jt-jadwal-icon">👨‍🎓</div>
+            <h3>Kak Abdul Hadi</h3>
+            <p class="jt-jadwal-univ">Istanbul Sabahattin Zaim University, Turki</p>
+            <div class="jt-jadwal-date">7 Agustus 2026</div>
+          </div>
+        </div>
+        <p class="jt-jadwal-note">Jadwal dapat berubah menyesuaikan kesiapan pemateri. Pantau IG <a href="https://instagram.com/jagatrip.id" target="_blank">@jagatrip.id</a> untuk update terbaru.</p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="jt-section jt-how" data-reveal="section">
+      <div class="jt-inner">
+        <span class="jt-eyebrow">CARA DAFTAR</span>
+        <h2>5 langkah simple. Beneran gratis.</h2>
+        <p class="jt-lead">Webinar ini gratis, tapi ada syarat kecil: bantu sebarkan info ke grup/komunitas/sosmed kamu. Karena pendidikan internasional bukan milik segelintir orang saja.</p>
+        <div class="jt-how-grid" data-reveal-group>
+          <div class="jt-how-step"><div class="jt-how-num">1</div><h4>Hubungi WA Admin</h4><p>Klik tombol daftar, lalu chat admin via WhatsApp untuk memulai pendaftaran.</p></div>
+          <div class="jt-how-step"><div class="jt-how-num n2">2</div><h4>Share Info Webinar</h4><p>Sebarkan info webinar ke grup, komunitas, atau sosial media kamu untuk bantu menyebarkan akses pendidikan.</p></div>
+          <div class="jt-how-step"><div class="jt-how-num n3">3</div><h4>Isi Google Form</h4><p>Lengkapi data dasar (nama, WA, status) di Google Form pendaftaran.</p></div>
+          <div class="jt-how-step"><div class="jt-how-num n4">4</div><h4>Gabung Grup Webinar</h4><p>Masuk ke grup peserta untuk info, reminder, dan materi webinar.</p></div>
+          <div class="jt-how-step"><div class="jt-how-num n5">5</div><h4>Terima Link Zoom</h4><p>Link Zoom dikirim ke grup/WhatsApp paling lambat H-1 sebelum acara.</p></div>
+        </div>
+        <div class="jt-viral-note">
+          <div class="jt-icon-big">💡</div>
+          <div>
+            <h4>Mengapa Kami Meminta Kamu Berbagi ke 3 Grup?</h4>
+            <p>Ini bukan untuk tindakan spam. Kami percaya bahwa informasi pendidikan internasional yang berkualitas berhak didapatkan oleh siapa saja, bukan cuma segelintir orang. Dengan menyebarkan info ini, kamu sedang bergotong royong bersama kami membantu teman, saudara, atau tetanggamu yang mungkin sedang mencari jalan untuk mengubah nasib lewat pendidikan dunia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="jt-section jt-why" data-reveal="section">
+      <div class="jt-inner">
+        <span class="jt-eyebrow">KENAPA HARUS IKUT</span>
+        <h2>Bukan Sesi Dengar Pasif. Ini yang Akan Kamu Bawa Pulang Setelah 120 Menit:</h2>
+        <div class="jt-why-grid" data-reveal-group>
+          <div class="jt-why-card"><div class="jt-num-big">01</div><h4>Angka Jujur & Data Riil</h4><p>Bocoran biaya hidup asli, skema beasiswa tersembunyi, timeline pendaftaran, hingga kelengkapan dokumen tanpa ada yang ditutup-tutupi.</p></div>
+          <div class="jt-why-card"><div class="jt-num-big">02</div><h4>Koneksi Circle Internasional</h4><p>Jangan cuma nonton. Kamu bisa berjejaring dengan pembicara dan sesama peserta yang punya mimpi besar yang sama. Banyak yang berlanjut konsultasi via DM!</p></div>
+          <div class="jt-why-card"><div class="jt-num-big">03</div><h4>Mimbar Tanya Jawab Bebas</h4><p>Alokasi waktu 20-30 menit khusus untuk bertanya apa saja. Dari hal teknis perkuliahan sampai masalah personal/kegalauanmu.</p></div>
+          <div class="jt-why-card"><div class="jt-num-big">04</div><h4>Rekaman Webinar</h4><p>Dapatkan rekaman penuh webinar — khusus untuk peserta yang mengikuti webinar full sesi dan mengisi form kehadiran.</p></div>
+          <div class="jt-why-card"><div class="jt-num-big">05</div><h4>Akses Arsip & Resources Eksklusif</h4><p>Slide presentasi beserta tautan penting (resource links) akan dibagikan gratis hanya untuk kamu yang berkomitmen hadir sampai akhir sesi.</p></div>
+          <div class="jt-why-card"><div class="jt-num-big">06</div><h4>Jalur Prioritas Edutrip</h4><p>Akses eksklusif dan info tercepat untuk bergabung dalam program study visit internasional premium bersama JAGATRIP ke negara tujuan.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section class="jt-section jt-trust" data-reveal="section">
+      <div class="jt-trust-inner">
+        <div class="jt-trust-logo"><svg><use href="#jagatrip-logo"></use></svg></div>
+        <span class="jt-eyebrow" style="color:var(--jt-yellow);">BACKED BY JAGATRIP</span>
+        <p>JAGATALK adalah inisiatif dari PT Jagatrip Mitra Edukasi yang melakukan perjalanan edukasi dan program benchmarking internasional ke sekolah-sekolah mancanegara.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="jt-section jt-faq" data-reveal="section">
+      <div class="jt-inner">
+        <span class="jt-eyebrow" style="text-align:center;display:block;">PERTANYAAN UMUM</span>
+        <h2 style="text-align:center;">Yang sering ditanyakan.</h2>
+        <p class="jt-lead" style="text-align:center;margin:0 auto 48px;">Kalau jawaban di sini belum cukup, langsung WhatsApp admin di bawah.</p>
+        <div class="jt-faq-list">
+          <details class="jt-faq-item"><summary>Apakah webinar ini beneran gratis?</summary><p>100% gratis. Nggak ada biaya pendaftaran, nggak ada upselling tersembunyi. Satu-satunya "syarat" adalah membantu menyebarkan info webinar ke 3 grup WhatsApp.</p></details>
+          <details class="jt-faq-item"><summary>Saya bukan siswa SMA / mahasiswa, masih boleh ikut?</summary><p>Sangat boleh. Audiens JAGATALK terbuka untuk siswa SMA, mahasiswa, orangtua, guru/pendidik, dan siapapun yang tertarik mempelajari sistem pendidikan internasional.</p></details>
+          <details class="jt-faq-item"><summary>Bagaimana sistem share ke 3 grup-nya?</summary><p>Setelah isi Google Form, kamu akan diberikan flyer + template caption. Share ke minimal 3 grup WhatsApp, screenshot bukti share-nya, lalu upload kembali di Google Form.</p></details>
+          <details class="jt-faq-item"><summary>Topik webinar berikutnya apa saja?</summary><p>Setiap minggu membahas negara/topik berbeda: Malaysia, Taiwan, China, Arab Saudi, Turki, sekolah internasional, dan lainnya. Cek jadwal lengkap di section "Jadwal Webinar JAGATALK" di atas, atau pantau IG @jagatrip.id untuk update.</p></details>
+          <details class="jt-faq-item"><summary>Apa hubungannya JAGATALK dengan edutrip JAGATRIP?</summary><p>JAGATALK adalah inisiatif edukasi (gratis) dari JAGATRIP. Peserta JAGATALK yang tertarik program edutrip akan mendapatkan priority info & special offer.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="jt-section jt-final-cta" id="final-cta" data-reveal="section">
+      <div class="jt-inner" style="position:relative;z-index:1;text-align:center;">
+        <h2 style="color:white;">Webinar berikutnya<br>tinggal hitung hari.</h2>
+        <p class="jt-lead" style="color:rgba(255,255,255,0.92);margin:0 auto 32px;">Slot Zoom terbatas tiap minggu. Daftar sekarang, dapet link H-1, dengar langsung dari mahasiswa Indonesia yang sedang kuliah di luar negeri.</p>
+
+        <div class="jt-reg-card">
+          <h3>Formulir Pendaftaran</h3>
+          <p class="jt-reg-sub">Lengkapi data di bawah ini. Pendaftaran tercatat otomatis dan kamu langsung diarahkan ke WhatsApp Admin.</p>
+          <form id="reg-form-jagatalk">
+            <div class="jt-form-group">
+              <label for="nama">Nama Lengkap *</label>
+              <input type="text" id="nama" name="nama" required placeholder="Contoh: Budi Santoso" />
+            </div>
+            <div class="jt-form-group">
+              <label for="instansi">Asal Instansi *</label>
+              <input type="text" id="instansi" name="instansi" required placeholder="Contoh: SMA Negeri 1 Jakarta / Universitas Indonesia" />
+            </div>
+            <div class="jt-form-group">
+              <label for="wa">Nomor WhatsApp Aktif *</label>
+              <input type="tel" id="wa" name="wa" required placeholder="Contoh: 08123456789" />
+            </div>
+            <button type="submit" class="jt-btn-submit">Daftar Sekarang <svg class="jt-arrow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></button>
+            <div id="reg-status-jagatalk" class="jt-reg-status hidden"></div>
+          </form>
+        </div>
+
+        <p style="margin-top:24px;opacity:0.85;font-size:14px;color:white;">Sudah tergabung? Bagikan info ini ke teman yang juga lagi nyari info kuliah LN 🌏</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <Footer />
+
+  </main>
+</BaseLayout>
+
+<style>
+  .jt { --jt-primary:#0E7C86; --jt-primary-dark:#086A73; --jt-primary-light:#5EBDC4; --jt-orange:#FF6B1A; --jt-orange-dark:#E55100; --jt-yellow:#FFD23F; --jt-cream:#FFF8F0; --jt-charcoal:#1A1A1A; --jt-gray:#6B7280; --jt-green:#10B981; }
+
+  /* NAV */
+  .jt-nav { position:fixed; top:0; left:0; right:0; background:rgba(255,248,240,0.95); backdrop-filter:blur(10px); padding:14px 24px; z-index:1000; box-shadow:0 2px 12px rgba(0,0,0,0.04); }
+  .jt-nav-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+  .jt-logo-wrap { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .jt-logo-svg { width:44px; height:44px; }
+  .jt-logo-text { font-weight:900; font-size:24px; letter-spacing:-0.5px; }
+  .jt-logo-text .jaga { color:var(--jt-primary); }
+  .jt-logo-text .talk { color:var(--jt-orange); }
+  .jt-logo-sub { font-size:10px; color:var(--jt-gray); font-weight:600; letter-spacing:2px; text-transform:uppercase; display:block; line-height:1; }
+  .jt-nav-actions { display:flex; align-items:center; gap:6px; }
+  .jt-nav-link-jadwal { color:var(--jt-charcoal); font-weight:700; font-size:14px; text-decoration:none; margin-right:8px; transition:color 0.2s; }
+  .jt-nav-link-jadwal:hover { color:var(--jt-primary); }
+  .jt-nav-cta { background:var(--jt-primary); color:white; padding:10px 20px; border-radius:999px; text-decoration:none; font-weight:700; font-size:14px; transition:all 0.2s; display:inline-flex; align-items:center; gap:6px; }
+  .jt-nav-cta:hover { background:var(--jt-primary-dark); }
+  .jt-arrow { width:20px; height:20px; transition:transform 0.2s; }
+  a:hover .jt-arrow { transform:translateX(3px); }
+
+  /* HERO */
+  .jt-hero { padding:120px 24px 80px; background:linear-gradient(135deg,var(--jt-cream),#E0F2F4); position:relative; overflow:hidden; }
+  .jt-hero::before { content:''; position:absolute; top:10%; right:-150px; width:500px; height:500px; background:radial-gradient(circle,var(--jt-primary-light),transparent 70%); opacity:0.3; border-radius:50%; }
+  .jt-hero-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center; position:relative; z-index:1; }
+  .jt-hero-tag { display:inline-flex; align-items:center; gap:8px; background:var(--jt-charcoal); color:var(--jt-yellow); padding:8px 16px; border-radius:999px; font-size:12px; font-weight:800; letter-spacing:1px; margin-bottom:22px; }
+  .jt-dot { width:8px; height:8px; background:var(--jt-yellow); border-radius:50%; animation:jtpulse 1.5s infinite; }
+  @keyframes jtpulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+  .jt-hero h1 { font-size:clamp(36px,5.5vw,60px); font-weight:900; line-height:1.02; margin-bottom:22px; color:var(--jt-charcoal); letter-spacing:-2px; }
+  .accent-teal { color:var(--jt-primary); }
+  .accent-orange { color:var(--jt-orange); }
+  .jt-hero-sub2 { font-size:clamp(18px,3vw,24px); font-weight:700; margin-bottom:16px; max-width:520px; line-height:1.3; }
+  .jt-sub { font-size:17px; color:var(--jt-gray); margin-bottom:32px; max-width:520px; }
+  .jt-hero-ctas { display:flex; gap:12px; flex-wrap:wrap; }
+  .jt-btn-primary { background:var(--jt-primary); color:white; padding:16px 28px; border-radius:16px; text-decoration:none; font-weight:800; font-size:clamp(14px,2vw,16px); display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 8px 24px rgba(14,124,134,0.35); transition:all 0.25s; text-align:center; line-height:1.3; }
+  .jt-btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(14,124,134,0.45); }
+  .jt-btn-secondary { background:white; color:var(--jt-charcoal); padding:16px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:16px; border:2px solid var(--jt-charcoal); transition:all 0.2s; }
+  .jt-btn-secondary:hover { background:var(--jt-charcoal); color:white; }
+
+  /* HERO CARD */
+  .jt-hero-card { background:white; border-radius:28px; box-shadow:0 20px 60px rgba(10,31,68,0.15); overflow:hidden; }
+  .jt-hero-card-bg { position:relative; overflow:hidden; border-radius:16px 16px 0 0; }
+  .jt-hero-card-img { width:100%; height:auto; display:block; }
+  .jt-hero-card-tag-inline { display:inline-block; background:var(--jt-yellow); color:var(--jt-charcoal); padding:6px 14px; border-radius:999px; font-size:11px; font-weight:900; letter-spacing:1px; margin-bottom:10px; }
+  .jt-hero-card-title { position:absolute; bottom:20px; left:24px; right:24px; color:white; }
+  .jt-hero-card-title .ep { font-size:12px; font-weight:800; letter-spacing:2px; opacity:0.85; }
+  .jt-hero-card-title h3 { font-size:24px; font-weight:900; line-height:1.05; margin-top:4px; }
+  .jt-hero-card-body { padding:22px 24px; }
+  .jt-hero-card-meta { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+  .jt-meta-row { display:flex; align-items:center; gap:10px; }
+  .jt-meta-row .ico { width:36px; height:36px; border-radius:10px; background:var(--jt-cream); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .jt-meta-row .lbl { font-size:11px; color:var(--jt-gray); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+  .jt-meta-row .val { font-size:14px; font-weight:800; color:var(--jt-charcoal); }
+  .jt-hero-card-cta { background:var(--jt-orange); color:white; padding:14px; border-radius:12px; text-decoration:none; font-weight:800; text-align:center; display:flex; align-items:center; justify-content:center; gap:8px; transition:all 0.2s; }
+  .jt-hero-card-cta:hover { background:var(--jt-orange-dark); }
+  .jt-float-badge { position:absolute; top:-14px; right:-14px; background:var(--jt-orange); color:white; padding:10px 16px; border-radius:12px; font-weight:900; font-size:12px; transform:rotate(-6deg); box-shadow:0 8px 20px rgba(255,107,26,0.4); }
+
+  /* STATS */
+  .jt-stats { background:var(--jt-charcoal); padding:32px 24px; color:white; }
+  .jt-stats-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center; }
+  .jt-stats .sn { font-size:36px; font-weight:900; color:var(--jt-yellow); display:block; line-height:1; }
+  .jt-stats .sl { font-size:13px; opacity:0.85; margin-top:6px; }
+
+  /* SECTION COMMON */
+  .jt-section { padding:80px 24px; }
+  .jt-inner { max-width:1100px; margin:0 auto; }
+  .jt-eyebrow { color:var(--jt-primary); font-weight:800; font-size:13px; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+  .jt-section h2 { font-size:clamp(28px,4vw,44px); font-weight:900; color:var(--jt-charcoal); line-height:1.05; margin-bottom:16px; letter-spacing:-1.5px; }
+  .jt-lead { font-size:17px; color:var(--jt-gray); max-width:620px; margin-bottom:48px; }
+
+  /* ABOUT */
+  .jt-about-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .jt-about-card { background:white; padding:32px; border-radius:20px; border:2px solid transparent; transition:all 0.25s; }
+  .jt-about-card:hover { border-color:var(--jt-primary); transform:translateY(-4px); }
+  .jt-about-icon { width:56px; height:56px; border-radius:14px; background:var(--jt-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:18px; }
+  .jt-ai-orange { background:var(--jt-orange) !important; }
+  .jt-ai-yellow { background:var(--jt-yellow) !important; color:var(--jt-charcoal) !important; }
+  .jt-about-card h3 { font-size:20px; font-weight:800; color:var(--jt-charcoal); margin-bottom:10px; }
+  .jt-about-card p { color:var(--jt-gray); font-size:15px; }
+
+  /* FEATURED / JADWAL TERDEKAT */
+  .jt-featured { background:white; }
+  .jt-featured-img { width:100%; max-width:900px; height:auto; border-radius:32px; box-shadow:0 20px 60px rgba(0,0,0,0.12); margin:0 auto; display:block; }
+  .jt-terdekat-grid { display:grid; grid-template-columns:0.85fr 1fr; gap:40px; align-items:center; margin-top:8px; }
+  .jt-terdekat-flyer { width:100%; max-width:420px; height:auto; border-radius:24px; box-shadow:0 20px 60px rgba(0,0,0,0.12); display:block; margin:0 auto; }
+  .jt-terdekat-info { display:flex; flex-direction:column; gap:16px; }
+  .jt-terdekat-row { display:flex; align-items:center; gap:14px; }
+  .jt-terdekat-row .ico { width:48px; height:48px; border-radius:12px; background:var(--jt-cream); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+  .jt-terdekat-row .lbl { font-size:12px; color:var(--jt-gray); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; display:block; }
+  .jt-terdekat-row .val { font-size:18px; font-weight:800; color:var(--jt-charcoal); display:block; }
+  .jt-featured-card { background:linear-gradient(135deg,var(--jt-primary),var(--jt-primary-dark)); color:white; border-radius:32px; padding:56px 48px; position:relative; overflow:hidden; }
+  .jt-featured-card::before { content:''; position:absolute; top:-100px; right:-100px; width:400px; height:400px; background:radial-gradient(circle,rgba(255,210,63,0.15),transparent 70%); border-radius:50%; }
+  .jt-featured-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:40px; align-items:center; position:relative; z-index:1; margin-top:20px; }
+  .jt-featured-info p { font-size:16px; opacity:0.92; margin-bottom:24px; }
+  .jt-feat-meta-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; }
+  .jt-feat-meta { background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); padding:14px; border-radius:12px; display:flex; align-items:center; gap:12px; }
+  .jt-feat-meta .ico { font-size:22px; }
+  .jt-feat-meta .lbl { font-size:11px; opacity:0.75; text-transform:uppercase; letter-spacing:1px; }
+  .jt-feat-meta .val { font-size:14px; font-weight:800; }
+  .jt-feat-benefits { margin-bottom:28px; list-style:none; }
+  .jt-feat-benefits li { padding:8px 0 8px 26px; position:relative; font-size:15px; }
+  .jt-feat-benefits li::before { content:'✓'; position:absolute; left:0; top:50%; transform:translateY(-50%); width:20px; height:20px; border-radius:50%; background:var(--jt-yellow); color:var(--jt-charcoal); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; }
+  .jt-feat-cta-wrap { display:flex; gap:12px; flex-wrap:wrap; }
+  .jt-feat-cta { background:var(--jt-orange); color:white; padding:16px 28px; border-radius:999px; text-decoration:none; font-weight:800; font-size:15px; box-shadow:0 8px 20px rgba(0,0,0,0.2); transition:all 0.25s; }
+  .jt-feat-cta:hover { background:var(--jt-yellow); color:var(--jt-charcoal); transform:translateY(-2px); }
+  .jt-feat-cta.outline { background:transparent; border:2px solid white; box-shadow:none; }
+  .jt-feat-cta.outline:hover { background:white; color:var(--jt-primary); }
+  .jt-featured-visual { background:rgba(0,0,0,0.2); backdrop-filter:blur(10px); border-radius:24px; padding:32px; text-align:center; }
+  .jt-featured-visual .flag { font-size:80px; line-height:1; margin-bottom:14px; }
+  .jt-featured-visual .episode { font-size:12px; opacity:0.7; letter-spacing:3px; font-weight:800; }
+  .jt-featured-visual h4 { font-size:28px; font-weight:900; margin-top:6px; margin-bottom:12px; line-height:1.1; }
+  .jt-date-block { background:var(--jt-yellow); color:var(--jt-charcoal); padding:16px; border-radius:14px; font-weight:900; }
+  .jt-date-block .day { font-size:12px; letter-spacing:2px; }
+  .jt-date-block .num { font-size:38px; line-height:1; margin:4px 0; }
+  .jt-date-block .month { font-size:14px; }
+
+  /* JADWAL — ICON BOX GRID */
+  .jt-speakers { background:var(--jt-cream); }
+  .jt-jadwal-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:20px; }
+  .jt-jadwal-box { background:white; border-radius:18px; padding:28px 20px; text-align:center; box-shadow:0 8px 24px rgba(0,0,0,0.05); border-top:4px solid var(--jt-primary); display:flex; flex-direction:column; transition:all 0.25s; }
+  .jt-jadwal-box:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.1); }
+  .jt-jadwal-icon { font-size:48px; line-height:1; margin-bottom:14px; }
+  .jt-jadwal-box h3 { font-size:18px; font-weight:900; color:var(--jt-charcoal); margin-bottom:8px; line-height:1.15; }
+  .jt-jadwal-univ { color:var(--jt-gray); font-size:13px; line-height:1.4; margin-bottom:14px; flex-grow:1; }
+  .jt-jadwal-date { font-size:13px; font-weight:800; color:var(--jt-primary); background:var(--jt-cream); padding:8px 12px; border-radius:999px; margin-top:auto; }
+  .jt-jadwal-box.jt-jadwal-next { border-top-color:var(--jt-orange); background:linear-gradient(180deg,rgba(255,210,63,0.14),white 60%); }
+  .jt-jadwal-box.jt-jadwal-next .jt-jadwal-date { background:var(--jt-orange); color:white; }
+  .jt-jadwal-note { font-size:13px; color:var(--jt-gray); margin-top:24px; text-align:center; }
+  .jt-jadwal-note a { color:var(--jt-primary); font-weight:700; text-decoration:none; }
+  .jt-jadwal-note a:hover { text-decoration:underline; }
+
+  /* HOW */
+  .jt-how { background:white; }
+  .jt-how-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:20px; margin-top:32px; }
+  .jt-how-step { background:var(--jt-cream); padding:28px 20px; border-radius:18px; text-align:center; }
+  .jt-how-num { width:48px; height:48px; border-radius:50%; background:var(--jt-primary); color:white; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:18px; margin:0 auto 16px; }
+  .jt-how-num.n2 { background:var(--jt-orange); }
+  .jt-how-num.n3 { background:var(--jt-yellow); color:var(--jt-charcoal); }
+  .jt-how-num.n4 { background:var(--jt-green); }
+  .jt-how-num.n5 { background:var(--jt-primary-dark); }
+  .jt-how-step h4 { font-size:16px; font-weight:800; color:var(--jt-charcoal); margin-bottom:8px; }
+  .jt-how-step p { color:var(--jt-gray); font-size:13px; }
+  .jt-viral-note { background:var(--jt-yellow); color:var(--jt-charcoal); padding:24px 28px; border-radius:18px; margin-top:32px; display:flex; gap:20px; align-items:center; }
+  .jt-icon-big { font-size:40px; line-height:1; flex-shrink:0; }
+  .jt-viral-note h4 { font-size:18px; font-weight:900; margin-bottom:4px; }
+  .jt-viral-note p { font-size:14px; line-height:1.5; }
+
+  /* WHY */
+  .jt-why { background:var(--jt-cream); }
+  .jt-why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .jt-why-card { background:white; padding:28px; border-radius:20px; border-top:4px solid var(--jt-primary); }
+  .jt-why-card:nth-child(2) { border-top-color:var(--jt-orange); }
+  .jt-why-card:nth-child(3) { border-top-color:var(--jt-yellow); }
+  .jt-why-card:nth-child(4) { border-top-color:var(--jt-green); }
+  .jt-why-card:nth-child(5) { border-top-color:var(--jt-primary); }
+  .jt-why-card:nth-child(6) { border-top-color:var(--jt-orange); }
+  .jt-num-big { font-size:32px; font-weight:900; color:var(--jt-primary); line-height:1; margin-bottom:12px; }
+  .jt-why-card h4 { font-size:18px; font-weight:800; margin-bottom:8px; color:var(--jt-charcoal); }
+  .jt-why-card p { color:var(--jt-gray); font-size:14px; }
+
+  /* TRUST */
+  .jt-trust { background:linear-gradient(135deg,var(--jt-orange),var(--jt-orange-dark)); color:white; }
+  .jt-trust-inner { max-width:640px; margin:0 auto; text-align:center; }
+  .jt-trust-logo { width:80px; height:80px; margin:0 auto 20px; background:white; border-radius:20px; display:flex; align-items:center; justify-content:center; }
+  .jt-trust-logo svg { width:60px; height:60px; }
+  .jt-trust-inner p { font-size:17px; opacity:0.92; max-width:560px; margin:16px auto 0; }
+
+  /* FAQ */
+  .jt-faq { background:white; }
+  .jt-faq-list { max-width:800px; margin:0 auto; }
+  .jt-faq-item { background:var(--jt-cream); border-radius:14px; margin-bottom:12px; overflow:hidden; }
+  .jt-faq-item summary { padding:18px 24px; font-weight:700; cursor:pointer; color:var(--jt-charcoal); font-size:15px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .jt-faq-item summary::-webkit-details-marker { display:none; }
+  .jt-faq-item summary::after { content:'+'; flex-shrink:0; width:36px; height:36px; border-radius:50%; background:#FFF0E6; color:var(--jt-orange); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px; transition:all 0.3s; }
+  .jt-faq-item[open] summary::after { content:'×'; background:var(--jt-orange); color:white; box-shadow:0 4px 12px rgba(255,107,26,0.3); }
+  .jt-faq-item p { padding:0 24px 18px; font-size:14px; color:var(--jt-gray); line-height:1.55; }
+
+  /* FINAL CTA */
+  .jt-final-cta { background:linear-gradient(135deg,var(--jt-primary),var(--jt-primary-dark)); color:white; position:relative; overflow:hidden; }
+  .jt-final-cta::before { content:''; position:absolute; top:-50%; left:10%; width:500px; height:500px; background:radial-gradient(circle,rgba(255,210,63,0.15),transparent 70%); border-radius:50%; }
+  .jt-final-cta-row { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .jt-btn-final { background:var(--jt-yellow); color:var(--jt-charcoal); padding:18px 40px; border-radius:999px; text-decoration:none; font-weight:900; font-size:18px; display:inline-flex; align-items:center; gap:10px; box-shadow:0 12px 32px rgba(0,0,0,0.2); transition:all 0.25s; }
+  .jt-btn-final:hover { transform:translateY(-3px); background:white; }
+  .jt-btn-wa { background:#25D366; color:white; padding:18px 32px; border-radius:999px; text-decoration:none; font-weight:800; font-size:15px; display:inline-flex; align-items:center; gap:8px; box-shadow:0 8px 24px rgba(37,211,102,0.4); transition:all 0.25s; }
+  .jt-btn-wa:hover { transform:translateY(-2px); }
+
+  /* REGISTRATION FORM (final CTA) */
+  .jt-reg-card { background:white; border-radius:24px; padding:40px; max-width:520px; margin:0 auto; box-shadow:0 20px 50px rgba(0,0,0,0.2); text-align:left; }
+  .jt-reg-card h3 { font-size:26px; font-weight:900; color:var(--jt-charcoal); text-align:center; margin-bottom:8px; letter-spacing:-0.5px; }
+  .jt-reg-sub { font-size:14px; color:var(--jt-gray); text-align:center; margin-bottom:28px; line-height:1.5; }
+  .jt-form-group { margin-bottom:18px; }
+  .jt-form-group label { display:block; font-size:12px; font-weight:800; color:var(--jt-charcoal); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:7px; }
+  .jt-form-group input { width:100%; padding:14px 18px; font-family:inherit; font-size:15px; color:var(--jt-charcoal); background:var(--jt-cream); border:2px solid transparent; border-radius:12px; transition:border-color 0.2s, box-shadow 0.2s; }
+  .jt-form-group input:focus { outline:none; border-color:var(--jt-primary); box-shadow:0 0 0 4px rgba(14,124,134,0.12); background:white; }
+  .jt-btn-submit { width:100%; background:var(--jt-orange); color:white; padding:16px; border:none; border-radius:999px; font-family:inherit; font-size:16px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 8px 24px rgba(255,107,26,0.35); transition:all 0.2s; margin-top:8px; }
+  .jt-btn-submit:hover { background:var(--jt-orange-dark); transform:translateY(-2px); box-shadow:0 12px 32px rgba(255,107,26,0.45); }
+  .jt-btn-submit:disabled { background:var(--jt-gray); cursor:not-allowed; transform:none; box-shadow:none; }
+  .jt-reg-status { margin-top:16px; text-align:center; font-size:14px; font-weight:700; }
+  .jt-reg-status.ok { color:var(--jt-green); }
+  .jt-reg-status.err { color:#DC2626; }
+
+  /* FOOTER */
+  .jt-footer { background:var(--jt-charcoal); color:white; padding:48px 24px 24px; }
+  .jt-foot-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; }
+  .jt-foot-brand .jt-logo-text .jaga { color:var(--jt-primary-light); }
+  .jt-foot-brand .jt-logo-text .talk { color:var(--jt-orange); }
+  .jt-foot-tag { color:var(--jt-yellow); font-style:italic; margin-top:10px; font-size:14px; }
+  .jt-foot-brand p { color:rgba(255,255,255,0.6); font-size:14px; margin-top:14px; max-width:320px; }
+  .jt-foot-col h5 { font-size:13px; font-weight:900; margin-bottom:14px; text-transform:uppercase; letter-spacing:2px; color:var(--jt-yellow); }
+  .jt-foot-col a { color:rgba(255,255,255,0.75); font-size:14px; text-decoration:none; display:block; margin-bottom:8px; }
+  .jt-foot-col a:hover { color:var(--jt-yellow); }
+  .jt-foot-bot { max-width:1100px; margin:32px auto 0; padding-top:24px; border-top:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center; color:rgba(255,255,255,0.4); font-size:13px; }
+  .jt-foot-social { display:flex; gap:10px; }
+  .jt-foot-social a { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; transition:all 0.2s; color:white; font-size:16px; text-decoration:none; }
+  .jt-foot-social a:hover { background:var(--jt-primary); }
+
+  /* MOBILE */
+  @media (max-width:900px) {
+    .jt-hero-inner { grid-template-columns:1fr; gap:40px; }
+    .jt-stats-inner { grid-template-columns:repeat(2,1fr); gap:20px; }
+    .jt-about-grid, .jt-why-grid { grid-template-columns:1fr; }
+    .jt-featured-grid { grid-template-columns:1fr; }
+    .jt-featured-card { padding:36px 24px; }
+    .jt-terdekat-grid { grid-template-columns:1fr; gap:28px; }
+    .jt-jadwal-grid { grid-template-columns:repeat(3,1fr); }
+    .jt-how-grid { grid-template-columns:1fr 1fr; }
+    .jt-foot-inner { grid-template-columns:1fr 1fr; gap:28px; }
+    .jt-foot-bot { flex-direction:column; gap:14px; }
+    .jt-section { padding:56px 20px; }
+    .jt-hero { padding:100px 20px 56px; }
+    .jt-nav-cta { padding:8px 14px; font-size:12px; }
+    .jt-nav-link-jadwal { display:none; }
+    .jt-feat-meta-grid { grid-template-columns:1fr; }
+    .jt-trust-row { gap:20px; }
+  }
+  @media (max-width:500px) {
+    .jt-how-grid { grid-template-columns:1fr; }
+    .jt-jadwal-grid { grid-template-columns:1fr 1fr; }
+    .jt-foot-inner { grid-template-columns:1fr; }
+    .jt-reg-card { padding:28px 20px; }
+  }
+
+  .hidden { display:none !important; }
+</style>
+
+<script>
+  import { getUtm } from '../lib/utm';
+  import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
+  import { parseIndonesianPhone } from '../lib/phone-formatter';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('reg-form-jagatalk') as HTMLFormElement | null;
+    if (!form) return;
+    initFormGuard(form, 'webinar-form', '✓ Pendaftaran Anda sudah terkirim. Admin JAGATALK akan menghubungi Anda.');
+
+    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    const statusEl = document.getElementById('reg-status-jagatalk');
+    // Admin 1: Dwita, Admin 2: Kamariya
+    const admins = ['6281128506576', '628139190363'];
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+
+    function showStatus(type: 'ok' | 'err', msg: string): void {
+      if (!statusEl) return;
+      statusEl.textContent = msg;
+      statusEl.className = `jt-reg-status ${type}`;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nama = (form.querySelector('#nama') as HTMLInputElement | null)?.value.trim();
+      const instansi = (form.querySelector('#instansi') as HTMLInputElement | null)?.value.trim();
+      const rawWa = (form.querySelector('#wa') as HTMLInputElement | null)?.value.trim();
+
+      if (!nama || !instansi || !rawWa) {
+        showStatus('err', 'Semua field wajib diisi.');
+        return;
+      }
+
+      const parsedPhone = parseIndonesianPhone(rawWa);
+      const wa = parsedPhone.e164 || rawWa;
+
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Memproses...';
+      }
+
+      // Check phone duplicate
+      const isDuplicate = isPhoneSubmitted('webinar-form', wa);
+
+      // Load balance between the two WhatsApp admin numbers
+      const selectedAdmin = admins[Math.floor(Math.random() * admins.length)];
+      const greeting = isDuplicate
+        ? `Halo Admin JAGATALK, saya ${nama} dari ${instansi} sebelumnya sudah mendaftar webinar JAGATALK dengan nomor ini, ingin konfirmasi status pendaftaran saya.`
+        : `Hai admin JAGATALK, saya ${nama} dari ${instansi} telah mengisi form pendaftaran webinar JAGATALK. Bagaimana langkah selanjutnya?`;
+      const waUrl = `https://wa.me/${selectedAdmin}?text=${encodeURIComponent(greeting)}`;
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            _sheet: 'LP_Jagatalk',
+            nama,
+            instansi,
+            wa,
+            ...getUtm(),
+            source: 'JAGATALK Landing Page (/webinar)',
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch (err) {
+        console.error('Error logging lead to Google Sheet:', err);
+      }
+
+      const win = window as any;
+      if (win.fbq) {
+        try { win.fbq('track', 'Lead'); } catch (e) { console.error('FB Pixel error:', e); }
+      }
+
+      showStatus('ok', isDuplicate ? 'Data Anda sudah terdaftar sebelumnya. Mengalihkan ke WhatsApp...' : 'Pendaftaran berhasil! Mengalihkan ke WhatsApp...');
+      lockForm(form, 'webinar-form', undefined, wa);
+      setTimeout(() => { window.location.href = waUrl; }, 500);
+    });
+  });
+</script>
