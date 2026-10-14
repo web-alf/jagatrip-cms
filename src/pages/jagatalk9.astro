@@ -11,6 +11,8 @@ const pageDescription = 'Framework strategis untuk pengelola sekolah yang serius
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{pageTitle}</title>
+<link rel="icon" type="image/png" href="/images/logo-icon.webp">
+<link rel="apple-touch-icon" href="/images/logo-icon.webp">
 <meta name="description" content={pageDescription}>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2354,6 +2356,41 @@ details[open] .faq-q::after {
 }
 
 
+
+/* ==========================================
+   COMPACT HERO / FLYER SPACING
+   Keep badges outside the flyer image.
+========================================== */
+.hero {
+  padding-top: 32px;
+  padding-bottom: 56px;
+}
+
+.flyer-container {
+  padding-top: 52px;
+  padding-bottom: 52px;
+}
+
+.flyer-tag.tag-top { top: 2px; }
+.flyer-tag.tag-bot { bottom: 2px; }
+
+@media (max-width: 900px) {
+  .hero { padding: 26px 0 44px; }
+  .hero-grid { gap: 24px; }
+  .flyer-container { padding-top: 46px; padding-bottom: 46px; }
+}
+
+@media (max-width: 600px) {
+  .hero { padding: 22px 0 38px; }
+  .flyer-container { padding-top: 40px; padding-bottom: 40px; }
+  .flyer-tag.tag-top { top: 2px; }
+  .flyer-tag.tag-bot { bottom: 2px; }
+}
+
+@media (max-width: 380px) {
+  .flyer-container { padding-top: 38px; padding-bottom: 38px; }
+}
+
 </style>
 </head>
 <body>
@@ -2492,7 +2529,7 @@ details[open] .faq-q::after {
 <!-- FOR WHOM & PAIN POINTS -->
 <section class="for-whom" id="untuk-siapa">
   <div class="container">
-        <div class="deco-line" style="display: flex; align-items: center; justify-content: center; width: 100%; text-align: center;">
+        <div class="deco-line" style="display: flex; align-items: left ; justify-content: left; width: 100%; text-align: left;">
           <span class="text">Untuk Siapa Webinar Ini</span>
         </div>
     <h2 class="section-title">Jika salah satu kondisi berikut Anda alami, sesi ini dirancang untuk Anda.</h2>
