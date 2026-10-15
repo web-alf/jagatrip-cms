@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../legacy/layouts/BaseLayout.astro';
 
 // ── Materi S&K (dari dokumen resmi JAGATRIP #2 China) ──
 const snkSections = [
@@ -338,9 +338,9 @@ const snkSections = [
 </BaseLayout>
 
 <script>
-  import { getUtm } from '../lib/utm';
-  import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
-  import { parseIndonesianPhone } from '../lib/phone-formatter';
+  import { getUtm } from '../legacy/lib/utm';
+  import { initFormGuard, lockForm, isPhoneSubmitted } from '../legacy/lib/form-guard';
+  import { parseIndonesianPhone } from '../legacy/lib/phone-formatter';
 
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
   const WA_ADMIN = '628139190363';

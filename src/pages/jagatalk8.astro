@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../legacy/layouts/BaseLayout.astro';
 
 const pageTitle = "JAGATALK #8 — Roadmap Sekolah Membangun Program Internasional";
 const pageDesc = "Sesi eksklusif untuk kepala sekolah, manajemen, founder & yayasan yang siap berhenti bertanya “mulai dari mana” — dan mulai bergerak dengan roadmap yang jelas dan praktis.";
@@ -937,9 +937,9 @@ const FAQS = [
 </style>
 
 <script>
-  import { getUtm } from '../lib/utm';
-  import { lockForm, isFormSubmitted, isPhoneSubmitted } from '../lib/form-guard';
-  import { parseIndonesianPhone, formatPhoneInputRealtime } from '../lib/phone-formatter';
+  import { getUtm } from '../legacy/lib/utm';
+  import { lockForm, isFormSubmitted, isPhoneSubmitted } from '../legacy/lib/form-guard';
+  import { parseIndonesianPhone, formatPhoneInputRealtime } from '../legacy/lib/phone-formatter';
 
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
   const WA_ADMIN = '628139190363'; // Admin Kamariya

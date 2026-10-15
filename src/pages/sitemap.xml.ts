@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { SITE } from "../data/site";
+import { SITE } from "../legacy/data/site";
 import { getArticles } from "../lib/repo";
 
 // SSR: @astrojs/sitemap tidak bisa dipakai (cuma scan output statis saat build,

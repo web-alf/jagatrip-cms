@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Footer from '../components/layout/Footer.astro';
+import BaseLayout from '../legacy/layouts/BaseLayout.astro';
+import Footer from '../legacy/components/layout/Footer.astro';
 ---
 
 <BaseLayout
@@ -533,9 +533,9 @@ import Footer from '../components/layout/Footer.astro';
 </style>
 
 <script>
-  import { getUtm } from '../lib/utm';
-  import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
-  import { parseIndonesianPhone } from '../lib/phone-formatter';
+  import { getUtm } from '../legacy/lib/utm';
+  import { initFormGuard, lockForm, isPhoneSubmitted } from '../legacy/lib/form-guard';
+  import { parseIndonesianPhone } from '../legacy/lib/phone-formatter';
 
   document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('reg-form-jagatalk') as HTMLFormElement | null;

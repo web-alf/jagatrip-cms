@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Footer from '../components/layout/Footer.astro';
-import { SITE } from '../data/site';
+import BaseLayout from '../legacy/layouts/BaseLayout.astro';
+import Footer from '../legacy/components/layout/Footer.astro';
+import { SITE } from '../legacy/data/site';
 
 const waPromo = `https://wa.me/${SITE.waNumber}?text=${encodeURIComponent('Halo JAGATRIP! 👋\n\nSaya tertarik dengan program Edutrip Malaysia-Thailand Juni 2026.\n(Dari halaman: LP Promo)\n\nMohon info lebih lanjut. Terima kasih!')}`;
 ---
@@ -236,9 +236,9 @@ const waPromo = `https://wa.me/${SITE.waNumber}?text=${encodeURIComponent('Halo 
 </style>
 
 <script>
-  import { SITE } from '../data/site';
-  import { getUtm } from '../lib/utm';
-  import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
+  import { SITE } from '../legacy/data/site';
+  import { getUtm } from '../legacy/lib/utm';
+  import { initFormGuard, lockForm, isPhoneSubmitted } from '../legacy/lib/form-guard';
 
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
 

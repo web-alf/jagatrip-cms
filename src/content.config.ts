@@ -1,6 +1,8 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// Harus di src/ root (ketentuan Astro content collections).
+// Dipakai legacy/components/layout/Footer.astro (footer landing page lama).
 const trips = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/trips' }),
   schema: z.object({

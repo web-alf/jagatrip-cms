@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/layout/Nav.astro';
-import Footer from '../components/layout/Footer.astro';
-import { SITE } from '../data/site';
+import BaseLayout from '../legacy/layouts/BaseLayout.astro';
+import Nav from '../legacy/components/layout/Nav.astro';
+import Footer from '../legacy/components/layout/Footer.astro';
+import { SITE } from '../legacy/data/site';
 ---
 
 <BaseLayout
@@ -445,9 +445,9 @@ import { SITE } from '../data/site';
   <Footer />
 
   <script>
-    import { SITE } from '../data/site';
-    import { getUtm } from '../lib/utm';
-    import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
+    import { SITE } from '../legacy/data/site';
+    import { getUtm } from '../legacy/lib/utm';
+    import { initFormGuard, lockForm, isPhoneSubmitted } from '../legacy/lib/form-guard';
 
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
 

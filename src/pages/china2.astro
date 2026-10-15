@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Footer from '../components/layout/Footer.astro';
-import { chinaEventSchema, chinaProgram as p } from '../data/china';
+import BaseLayout from '../legacy/layouts/BaseLayout.astro';
+import Footer from '../legacy/components/layout/Footer.astro';
+import { chinaEventSchema, chinaProgram as p } from '../legacy/data/china';
 ---
 <BaseLayout title={`JAGATRIP #2 — ${p.title}`} description={`Program studi banding pendidikan ke Beijing dan Hangzhou, ${p.date}. Dua expo, kunjungan sekolah, kuota ${p.quota} peserta.`} canonical="https://jagatrip.com/china2" ogType="website" extraSchemas={[chinaEventSchema]} gtmId="GTM-NX2FVX9X" gtmId2="GTM-NR8XFKP9">
   <header class="nav">
@@ -59,9 +59,9 @@ import { chinaEventSchema, chinaProgram as p } from '../data/china';
   <Footer />
 
   <script>
-    import { getUtm } from '../lib/utm';
-    import { initFormGuard, lockForm, isPhoneSubmitted } from '../lib/form-guard';
-    import { parseIndonesianPhone } from '../lib/phone-formatter';
+    import { getUtm } from '../legacy/lib/utm';
+    import { initFormGuard, lockForm, isPhoneSubmitted } from '../legacy/lib/form-guard';
+    import { parseIndonesianPhone } from '../legacy/lib/phone-formatter';
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
     const cform=document.querySelector<HTMLFormElement>('[data-china-form]');
     if(cform){initFormGuard(cform,'china2-form','✓ Data Anda sudah terkirim. Tim JAGATRIP akan menghubungi Anda.');
