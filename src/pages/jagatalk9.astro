@@ -2891,7 +2891,42 @@ details[open] .faq-q::after {
 
     const data = new FormData(registrationForm);
     const nama = String(data.get('nama') ?? '').trim().replace(/\s+/g, ' ');
+    const institusi = String(data.get('institusi') ?? '').trim();
+    const jabatan = String(data.get('jabatan') ?? '').trim();
+    const whatsapp = String(data.get('whatsapp') ?? '').trim();
+    const paket = String(data.get('paket') ?? '').trim();
     if (!nama) return;
+
+    // Kirim ke Google Apps Script -> Google Sheet "Jagatalk9" sebelum redirect WA.
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+    try {
+      const params = new URLSearchParams(window.location.search);
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          _sheet: 'Jagatalk9',
+          nama,
+          sekolah: institusi,
+          jabatan,
+          wa: whatsapp,
+          catatan: `Paket: ${paket}`,
+          source: 'JAGATALK #9 Landing Page (/jagatalk9)',
+          timestamp: new Date().toISOString(),
+          utm_source: params.get('utm_source') || '',
+          utm_medium: params.get('utm_medium') || '',
+          utm_campaign: params.get('utm_campaign') || '',
+          utm_term: params.get('utm_term') || '',
+          utm_content: params.get('utm_content') || '',
+          gclid: params.get('gclid') || '',
+          fbclid: params.get('fbclid') || ''
+        })
+      }).catch((err) => console.error('Webhook error:', err));
+    } catch (err) {
+      console.error('Fetch error:', err);
+    }
 
     const message = `Halo Admin, saya ${nama} ingin mengikuti Webinar Jagatalk Roadmap Sekolah dan sudah mengisi form. Bagaimana selanjutnya?`;
     const url = `https://wa.me/6281128506576?text=${encodeURIComponent(message)}`;
