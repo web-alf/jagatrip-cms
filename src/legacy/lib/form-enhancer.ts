@@ -72,6 +72,8 @@ export function enhanceFormInputs(form: HTMLFormElement): void {
     input.addEventListener('blur', () => {
       if (input instanceof HTMLInputElement && (input.type === 'tel' || input.name === 'wa' || input.name === 'whatsapp')) {
         validatePhoneInput(input);
+      } else if (input.name === 'teman_sekamar') {
+        validateRequiredInput(input, undefined, 1); // boleh isi "0" (1 karakter)
       } else {
         validateRequiredInput(input);
       }
@@ -130,7 +132,9 @@ export function validateRequiredInput(
     setFieldError(input, customMsg || `${getLabelText(input)} wajib diisi`);
     return false;
   }
-  if (val && val.length < minLen) {
+  // Select (dropdown) tidak perlu cek panjang — opsinya sudah dibatasi pilihan tetap.
+  const isSelect = input.tagName === 'SELECT';
+  if (!isSelect && val && val.length < minLen) {
     setFieldError(input, customMsg || `${getLabelText(input)} minimal ${minLen} karakter`);
     return false;
   }
