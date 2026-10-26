@@ -1,0 +1,363 @@
+---
+import BaseLayout from '../legacy/layouts/BaseLayout.astro';
+import Nav from '../legacy/components/layout/Nav.astro';
+import Footer from '../legacy/components/layout/Footer.astro';
+import FloatingWA from '../legacy/components/layout/FloatingWA.astro';
+import { SITE } from '../legacy/data/site';
+import { breadcrumbSchema } from '../legacy/data/schemas/breadcrumb';
+
+const extraSchemas = [
+  breadcrumbSchema([{ name: 'Registrasi Ulang', url: `${SITE.url}/register` }]),
+];
+
+const kotaBerangkat = [
+  'Padang', 'Pekanbaru', 'Aceh (BTJ)', 'Batam', 'Medan', 'Palembang (PLM)',
+  'Jakarta', 'Pontianak', 'Bali (Denpasar)', 'Balikpapan (BPN)',
+  'Semarang (SRG)', 'Surabaya', 'Jogja (YIA)', 'Makassar (UPG)',
+  'Lampung (TKG)', 'Pangkal Pinang (PGK)', 'Tarakan (TRK)', 'Lombok (LOP)',
+  'Banjarmasin (BDJ)', 'Bengkulu (BKS)', 'NTT (Kupang/KOE)', 'Palu (PLW)',
+  'Maluku/Ambon (AMQ)', 'Palangkaraya (PKY)', 'Gorontalo (GTO)', 'Sorong (SOQ)',
+  'Kendari (KDI)', 'Jayapura (DJJ)', 'Merauke (MKQ)', 'Lainnya',
+];
+
+const jabatanOptions = [
+  'Kepala Sekolah', 'Guru / Pendidik', 'Pengawas Pendidikan', 'Owner Yayasan',
+  'Mahasiswa Pendidikan', 'Orang Tua', 'Siswa SMP/SMA', 'Pemerhati Pendidikan', 'Lainnya',
+];
+
+const ic = 'w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-jaga-orange focus:outline-none text-gray-900 placeholder:text-gray-400 text-sm font-medium transition-colors bg-white';
+const lc = 'block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1';
+const fc = 'w-full px-4 py-3 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 text-sm text-gray-600 file:mr-3 file:rounded-full file:border-0 file:bg-jaga-orange file:text-white file:font-bold file:px-4 file:py-1.5 file:text-xs file:cursor-pointer hover:border-jaga-orange transition-colors';
+---
+
+<BaseLayout
+  title="Formulir Registrasi — JAGATRIP #2 China (12–18 September 2026)"
+  description="Form registrasi peserta JAGATRIP #2 China, Beijing & Hangzhou 12-18 September 2026. Lengkapi data identitas, dokumen, dan keberangkatan."
+  extraSchemas={extraSchemas}
+>
+  <Nav />
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="relative pt-32 pb-12 lg:pt-40 lg:pb-16 overflow-hidden bg-jaga-bg" data-reveal="hero">
+      <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+        <span class="inline-block py-2 px-5 rounded-full bg-jaga-orange/10 text-jaga-orange font-bold text-sm mb-6 tracking-widest uppercase shadow-sm">
+          📝 Registrasi Ulang
+        </span>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight leading-tight mb-4">
+          Formulir Registrasi Peserta
+        </h1>
+        <p class="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
+          Konfirmasi keikutsertaan Anda di <strong class="text-gray-900">JAGATRIP #2 China</strong>, 12–18 September 2026 (Beijing & Hangzhou).
+          Lengkapi semua data berikut untuk finalisasi pendaftaran.
+        </p>
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <section class="py-12 md:py-20 bg-white" data-reveal="section">
+      <div class="max-w-3xl mx-auto px-6">
+        <form id="register-form" novalidate class="space-y-10">
+
+          <!-- ═══ IDENTITAS ═══ -->
+          <fieldset>
+            <legend class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 rounded-full bg-jaga-orange text-white flex items-center justify-center text-sm font-black">1</span>
+              Identitas
+            </legend>
+            <div class="space-y-3 bg-jaga-bg rounded-3xl p-5 md:p-6 border border-gray-100">
+              <div>
+                <label for="r-nama" class={lc}>Nama Lengkap (+gelar jika ada) *</label>
+                <input id="r-nama" name="nama_lengkap" type="text" required placeholder="cth: Ahmad Fathullah, S.Pd." class={ic} />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" data-reveal-group>
+                <div>
+                  <label for="r-panggilan" class={lc}>Nama Panggilan *</label>
+                  <input id="r-panggilan" name="nama_panggilan" type="text" required placeholder="cth: Ahmad" class={ic} />
+                </div>
+                <div>
+                  <label for="r-wa" class={lc}>No. WhatsApp Aktif *</label>
+                  <input id="r-wa" name="wa" type="tel" required inputmode="numeric" placeholder="081234567890" class={ic} />
+                </div>
+              </div>
+              <div>
+                <label for="r-alamat" class={lc}>Alamat Domisili *</label>
+                <input id="r-alamat" name="alamat" type="text" required placeholder="Jl. Merdeka No. 1, Semarang" class={ic} />
+              </div>
+              <div>
+                <label for="r-email" class={lc}>Email *</label>
+                <input id="r-email" name="email" type="email" required placeholder="email@sekolah.sch.id" class={ic} />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- ═══ DOKUMEN ═══ -->
+          <fieldset>
+            <legend class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 rounded-full bg-jaga-orange text-white flex items-center justify-center text-sm font-black">2</span>
+              Dokumen
+            </legend>
+            <div class="space-y-3 bg-jaga-bg rounded-3xl p-5 md:p-6 border border-gray-100">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" data-reveal-group>
+                <div>
+                  <label for="r-paspor-no" class={lc}>Nomor Paspor *</label>
+                  <input id="r-paspor-no" name="no_paspor" type="text" required placeholder="A1234567" class={ic} />
+                </div>
+                <div>
+                  <label for="r-paspor-exp" class={lc}>Masa Berlaku Paspor *</label>
+                  <input id="r-paspor-exp" name="expired_paspor" type="date" required class={ic} />
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" data-reveal-group>
+                <div>
+                  <label for="r-file-paspor" class={lc}>Upload Paspor (foto/scan) *</label>
+                  <input id="r-file-paspor" name="file_paspor" type="file" accept="image/*,.pdf" required class={fc} />
+                </div>
+                <div>
+                  <label for="r-file-ktp" class={lc}>Upload KTP (foto/scan) *</label>
+                  <input id="r-file-ktp" name="file_ktp" type="file" accept="image/*,.pdf" required class={fc} />
+                </div>
+              </div>
+              <p class="text-xs text-gray-400">Format: JPG, PNG, atau PDF. Maksimal 5MB per file.</p>
+            </div>
+          </fieldset>
+
+          <!-- ═══ VISA ═══ -->
+          <fieldset>
+            <legend class="text-lg font-black text-gray-900 mb-2 flex items-center gap-2">
+              <span class="w-8 h-8 rounded-full bg-jaga-orange text-white flex items-center justify-center text-sm font-black">3</span>
+              Persyaratan Visa China
+            </legend>
+            <p class="text-sm text-gray-500 mb-4 leading-relaxed">Siapkan & unggah dokumen berikut untuk pengurusan visa Tiongkok. Pengajuan visa minimal H-30 hari sebelum keberangkatan.</p>
+            <div class="space-y-4 bg-jaga-bg rounded-3xl p-5 md:p-6 border border-gray-100">
+              <ol class="space-y-3 text-sm text-gray-600 list-decimal pl-5">
+                <li><strong class="text-gray-900">Pas Foto</strong> — Ukuran 33 mm × 48 mm berlatar belakang putih, tidak pakai baju putih, dahi dan telinga harus terlihat jelas.</li>
+                <li><strong class="text-gray-900">Identitas Diri</strong> — Fotokopi KTP dan Kartu Keluarga (KK).</li>
+                <li><strong class="text-gray-900">Rencana Perjalanan</strong> — Cetak tiket pesawat pulang-pergi, bukti reservasi hotel, serta rincian kegiatan (itinerary) selama di China.</li>
+                <li><strong class="text-gray-900">Dokumen Keuangan</strong> — Bukti saldo rekening tabungan yang mencukupi (umumnya disarankan minimal Rp30–50 juta).</li>
+              </ol>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-gray-200" data-reveal-group>
+                <div>
+                  <label for="r-file-foto" class={lc}>Upload Pas Foto Visa *</label>
+                  <input id="r-file-foto" name="file_pas_foto_visa" type="file" accept="image/*" required class={fc} />
+                </div>
+                <div>
+                  <label for="r-file-kk" class={lc}>Upload KTP & KK *</label>
+                  <input id="r-file-kk" name="file_ktp_kk" type="file" accept="image/*,.pdf" required class={fc} />
+                </div>
+                <div>
+                  <label for="r-file-itinerary" class={lc}>Upload Itinerary / Hotel *</label>
+                  <input id="r-file-itinerary" name="file_itinerary_visa" type="file" accept="image/*,.pdf" required class={fc} />
+                </div>
+                <div>
+                  <label for="r-file-saldo" class={lc}>Upload Bukti Saldo *</label>
+                  <input id="r-file-saldo" name="file_saldo_rekening" type="file" accept="image/*,.pdf" required class={fc} />
+                </div>
+              </div>
+              <p class="text-xs text-gray-400">Format: JPG, PNG, atau PDF. Maksimal 5MB per file.</p>
+            </div>
+          </fieldset>
+
+          <!-- ═══ KEBERANGKATAN ═══ -->
+          <fieldset>
+            <legend class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 rounded-full bg-jaga-orange text-white flex items-center justify-center text-sm font-black">4</span>
+              Keberangkatan
+            </legend>
+            <div class="space-y-3 bg-jaga-bg rounded-3xl p-5 md:p-6 border border-gray-100">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" data-reveal-group>
+                <div>
+                  <label for="r-kota-asal" class={lc}>Kota Asal *</label>
+                  <input id="r-kota-asal" name="kota_asal" type="text" required placeholder="cth: Semarang" class={ic} />
+                </div>
+                <div>
+                  <label for="r-bandara" class={lc}>Bandara Keberangkatan *</label>
+                  <select id="r-bandara" name="bandara" required class={ic}>
+                    <option value="">— Pilih Bandara —</option>
+                    {kotaBerangkat.map(k => <option value={k}>{k}</option>)}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label for="r-tiket" class={lc}>Sudah Punya Tiket? *</label>
+                <select id="r-tiket" name="punya_tiket" required class={ic}>
+                  <option value="">— Pilih —</option>
+                  <option value="Sudah">Sudah punya tiket</option>
+                  <option value="Belum">Belum punya tiket</option>
+                  <option value="Proses">Sedang dalam proses pembelian</option>
+                </select>
+              </div>
+              <!-- Conditional: muncul jika pilih "Belum" -->
+              <div id="tiket-option" class="hidden">
+                <label for="r-tiket-plan" class={lc}>Rencana Tiket *</label>
+                <select id="r-tiket-plan" name="rencana_tiket" class={ic}>
+                  <option value="">— Pilih Rencana —</option>
+                  <option value="Beli sendiri">Saya akan membeli tiket sendiri nanti</option>
+                  <option value="Minta admin">Saya akan minta admin membelikan tiketnya</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- ═══ OPERASIONAL ═══ -->
+          <fieldset>
+            <legend class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 rounded-full bg-jaga-orange text-white flex items-center justify-center text-sm font-black">5</span>
+              Operasional
+            </legend>
+            <div class="space-y-3 bg-jaga-bg rounded-3xl p-5 md:p-6 border border-gray-100">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" data-reveal-group>
+                <div>
+                  <label for="r-kaos" class={lc}>Ukuran Kaos *</label>
+                  <select id="r-kaos" name="ukuran_kaos" required class={ic}>
+                    <option value="">— Pilih Ukuran —</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                    <option value="XXL">XXL</option>
+                    <option value="3XL">3XL</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="r-sekamar" class={lc}>Teman Sekamar * <span class="normal-case font-normal text-gray-400">(tulis 0 jika belum ada)</span></label>
+                  <input id="r-sekamar" name="teman_sekamar" type="text" required placeholder="0 / sudah ada teman sekamar atas nama Budi" class={ic} />
+                </div>
+              </div>
+              <div>
+                <label for="r-alergi" class={lc}>Riwayat Alergi / Penyakit *</label>
+                <input id="r-alergi" name="alergi" type="text" required placeholder="cth: Tidak ada / Alergi seafood" class={ic} />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- ═══ ADMIN ═══ -->
+          <fieldset>
+            <legend class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 rounded-full bg-jaga-orange text-white flex items-center justify-center text-sm font-black">6</span>
+              Admin & Pembayaran
+            </legend>
+            <div class="space-y-3 bg-jaga-bg rounded-3xl p-5 md:p-6 border border-gray-100">
+              <div>
+                <label for="r-bukti" class={lc}>Upload Bukti Transfer *</label>
+                <input id="r-bukti" name="file_bukti_transfer" type="file" accept="image/*,.pdf" required class={fc} />
+                <p class="text-xs text-gray-400 mt-1">Format: JPG, PNG, atau PDF. Maksimal 5MB.</p>
+              </div>
+              <div>
+                <label for="r-bayar" class={lc}>Status Pembayaran *</label>
+                <select id="r-bayar" name="status_bayar" required class={ic}>
+                  <option value="">— Pilih Status —</option>
+                  <option value="DP">DP</option>
+                  <option value="Lunas">Lunas</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- ═══ PROFIL ═══ -->
+          <fieldset>
+            <legend class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 rounded-full bg-jaga-orange text-white flex items-center justify-center text-sm font-black">7</span>
+              Profil
+            </legend>
+            <div class="space-y-3 bg-jaga-bg rounded-3xl p-5 md:p-6 border border-gray-100">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" data-reveal-group>
+                <div>
+                  <label for="r-instansi" class={lc}>Instansi / Sekolah Asal *</label>
+                  <input id="r-instansi" name="instansi" type="text" required placeholder="cth: SMA Negeri 1 Semarang" class={ic} />
+                </div>
+                <div>
+                  <label for="r-jabatan" class={lc}>Jabatan *</label>
+                  <select id="r-jabatan" name="jabatan" required class={ic}>
+                    <option value="">— Pilih Jabatan —</option>
+                    {jabatanOptions.map(j => <option value={j}>{j}</option>)}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label for="r-ig" class={lc}>Instagram <span class="normal-case font-normal text-gray-400">(opsional)</span></label>
+                <input id="r-ig" name="instagram" type="text" placeholder="@username" class={ic} />
+              </div>
+              <div>
+                <label for="r-motivasi" class={lc}>Motivasi Ikut Trip *</label>
+                <textarea id="r-motivasi" name="motivasi" required rows="3" placeholder="Ceritakan motivasi Anda mengikuti program JAGATRIP..." class={`${ic} resize-none`}></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- SUBMIT -->
+          <div class="pt-4">
+            <button
+              type="submit"
+              class="w-full bg-jaga-orange hover:bg-jaga-orange-600 text-white font-black text-lg py-5 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"
+            >
+              Kirim Registrasi & Lanjut ke WhatsApp →
+            </button>
+            <div id="register-status" class="hidden"></div>
+            <p class="text-xs text-gray-400 text-center mt-4 leading-relaxed">
+              🔒 Data Anda aman & tersimpan otomatis. Setelah submit, Anda akan diarahkan ke WhatsApp admin untuk konfirmasi final.
+            </p>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+  <FloatingWA />
+</BaseLayout>
+
+<style>
+  @keyframes reg-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  :global(.reg-spin) {
+    display: inline-block;
+    animation: reg-spin 1s linear infinite;
+  }
+  @keyframes reg-fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  :global(.reg-fade) {
+    animation: reg-fade 0.4s ease-out both;
+  }
+  @keyframes reg-shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+  :global(.reg-shake) {
+    animation: reg-shake 0.5s ease-out;
+  }
+</style>
+
+<script>
+  import { initRegisterForm } from '../legacy/lib/register-handler';
+  import { enhanceFormInputs } from '../legacy/lib/form-enhancer';
+
+  initRegisterForm();
+
+  const form = document.getElementById('register-form') as HTMLFormElement | null;
+  if (form) enhanceFormInputs(form);
+
+  // Conditional: tampilkan "Rencana Tiket" jika pilih "Belum"
+  const tiketSelect = document.getElementById('r-tiket') as HTMLSelectElement | null;
+  const tiketOption = document.getElementById('tiket-option');
+  const tiketPlan = document.getElementById('r-tiket-plan') as HTMLSelectElement | null;
+
+  tiketSelect?.addEventListener('change', () => {
+    const show = tiketSelect.value === 'Belum';
+    tiketOption?.classList.toggle('hidden', !show);
+    if (tiketPlan) {
+      if (show) { tiketPlan.required = true; }
+      else { tiketPlan.required = false; tiketPlan.value = ''; }
+    }
+  });
+</script>
