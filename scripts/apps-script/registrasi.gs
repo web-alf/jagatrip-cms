@@ -5,7 +5,8 @@
  *
  * Alur:
  *  1. Terima POST JSON (field teks + field file berupa base64 polos, lihat fileToBase64 di register-handler.ts).
- *  2. Tiap field file di-decode, disimpan sebagai file di folder Drive tujuan, lalu di-share "anyone with link".
+ *  2. Tiap field file di-decode, disimpan ke subfolder Drive sesuai jenis dokumen (Paspor/, KTP/, dst,
+ *     di bawah FOLDER_ID — dibuat otomatis jika belum ada), lalu di-share "anyone with link".
  *  3. Baris ditulis ke sheet "Registrasi" sesuai HEADER_MAP (header sheet TIDAK berubah urutan/nama;
  *     kolom yang belum ada di sheet — dokumen visa & rencana tiket — otomatis ditambahkan di ujung kanan).
  *
@@ -93,16 +94,25 @@ function jgtRegEnsureHeaders_(sheet) {
   return headers;
 }
 
-// Upload tiap field file (base64 polos) ke Drive, ganti isi field jadi URL file.
+// Ambil subfolder dengan nama tertentu di dalam parent; buat jika belum ada.
+function jgtRegGetOrCreateSubfolder_(parent, name) {
+  const existing = parent.getFoldersByName(name);
+  return existing.hasNext() ? existing.next() : parent.createFolder(name);
+}
+
+// Upload tiap field file (base64 polos) ke subfolder Drive sesuai jenis dokumennya
+// (mis. Paspor/, KTP/, dst di bawah JGT_REG_FOLDER_ID), ganti isi field jadi URL file.
 function jgtRegUploadFiles_(body, folder) {
   Object.keys(JGT_REG_FILE_FIELDS).forEach((field) => {
     const base64 = body[field];
     if (typeof base64 !== 'string' || !base64) return;
 
+    const label = JGT_REG_FILE_FIELDS[field];
+    const subfolder = jgtRegGetOrCreateSubfolder_(folder, label);
     const mime = body[field + '_type'] || 'application/octet-stream';
     const bytes = Utilities.base64Decode(base64);
     const name = body[field + '_name'] || (field + '.' + (mime.split('/')[1] || 'dat'));
-    const file = folder.createFile(Utilities.newBlob(bytes, mime, JGT_REG_FILE_FIELDS[field] + ' - ' + name));
+    const file = subfolder.createFile(Utilities.newBlob(bytes, mime, label + ' - ' + name));
     file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 
     body[field] = file.getUrl(); // base64 dibuang, hanya link yang disimpan

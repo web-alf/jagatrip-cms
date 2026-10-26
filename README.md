@@ -23,6 +23,7 @@ Setiap request baca konten dari Supabase langsung — **tidak ada build/Publish 
 13. [Deploy (Cloudflare)](#13-deploy-cloudflare)
 14. [Troubleshooting](#14-troubleshooting)
 15. [Roadmap / batas desain](#15-roadmap--batas-desain)
+16. [Dokumentasi tambahan (docs/)](#16-dokumentasi-tambahan-docs)
 
 ---
 
@@ -418,3 +419,58 @@ Ditandai `ponytail:` di kode = penyederhanaan sengaja + jalur upgrade.
 | `USERS` array statis | perlu sinkron manual | fetch `/auth/v1/admin/users` lewat endpoint server (butuh service role → butuh server output) |
 | Refresh token hanya saat reload | sesi > 1 jam tanpa reload bisa 401 | timer refresh sebelum `expires_at` |
 | `onNewArticle` set canonical ke `/news/artikel-baru` | canonical tidak ikut slug | kosongkan default; hitung dari slug bila kosong |
+
+---
+
+## 16. Dokumentasi tambahan (docs/)
+
+Dokumentasi operasional yang lebih detail/panjang dari README ini disimpan di
+folder `docs/`, dipisah per topik (subfolder per domain, file per hal
+spesifik). README ini tetap sumber ringkas utama untuk arsitektur & setup;
+`docs/` untuk panduan step-by-step, rule, dan SOP yang lebih operasional.
+
+```
+docs/
+├── README.md                   # STANDAR struktur/penamaan docs + peta isi (baca dulu)
+├── admin/                      # panel /admin (CMS konten situs)
+│   ├── cms-flow.md             # alur panel /admin keseluruhan (login, edit, simpan)
+│   ├── registrasi-flow.md      # alur admin/CS proses peserta registrasi (sheet + WA)
+│   └── update-content-guide.md # referensi update konten per menu/field di /admin
+├── appscript/                  # backend Google Apps Script per LP
+│   ├── rule.md                 # aturan akun, 1 script per LP, prefix, deploy
+│   └── registrasi.md           # setup & alur registrasi.gs
+├── files/                      # penyimpanan file (Drive, Supabase Storage, repo)
+│   ├── supabase-rule.md        # aturan gambar admin di bucket media + auto-update situs
+│   ├── repo-gs-rule.md         # aturan penyimpanan source .gs di repo
+│   └── registrasi.md           # struktur folder Drive dokumen registrasi
+└── dev/                        # untuk developer (kode, infra, DB)
+    ├── architecture.md         # komponen, aliran data, keputusan desain
+    ├── development.md          # setup, perintah, konvensi, alur ubah fitur
+    ├── database.md             # skema Supabase, RLS, migration, seed, backup
+    ├── deployment.md           # Cloudflare, env, checklist rilis, rollback
+    ├── security.md             # model ancaman, key, auth, scan, insiden
+    └── troubleshooting.md      # gejala → sebab → fix → cegah lintas sistem
+```
+
+`docs/dev/*` = versi lengkap dari §1, §3–§5, §8, §12–§14 README ini. Kalau
+isinya beda, `docs/dev/*` yang benar.
+
+### Aturan menambah dokumentasi baru
+
+Standar lengkap (suffix `-rule`/`-flow`/`-guide`, template isi, kapan bikin
+folder baru) ada di `docs/README.md`. Ringkasnya:
+
+- Taruh di subfolder sesuai topik (`admin/`, `appscript/`, `files/`, atau
+  subfolder baru kalau topiknya belum ada — mis. `docs/deploy/`).
+- Satu file = satu topik spesifik. Suffix: `-rule.md` aturan, `-flow.md`
+  alur, `-guide.md` panduan; `<lp>.md` tanpa suffix untuk spesifik per LP.
+- Nama file deskriptif, huruf kecil, pemisah `-`, akhiran `.md`, jangan ulang
+  nama folder (`appscript/rule.md`, bukan `appscript/appscript-rule.md`).
+- Dokumen baru yang terkait dokumen lain **wajib saling tautkan** (link
+  relatif `../folder/nama.md`) supaya tidak tumpang tindih/duplikat info —
+  cek dulu apakah topiknya sudah dibahas sebagian di file lain sebelum
+  menulis dari nol.
+- Kalau menambah LP baru dengan Apps Script, dokumentasi pendamping wajib
+  (lihat `docs/files/repo-gs-rule.md` §5) — bukan opsional.
+- Update daftar folder di atas (README §16) setiap kali ada file/subfolder
+  `docs/` baru, supaya README tetap jadi peta navigasi yang akurat.
