@@ -4,7 +4,7 @@ import { initFormGuard, lockForm, isPhoneSubmitted } from './form-guard';
 import { parseIndonesianPhone } from './phone-formatter';
 import { validatePhoneInput } from './form-enhancer';
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwCUYnuIUCflczefMlYAHdCnOD-5PMqVEL94QTPWy6Hkds6SiOQLfyo7PZpVoqtjiZg/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw42POuqXUNpDk89D05fzHOwrtBo-gJJVzSdNdWsErcyYTtUsa7K0H6_OL6EPE2Di2tzw/exec';
 
 declare global {
   interface Window {
@@ -24,14 +24,18 @@ function fileToBase64(file: File): Promise<string> {
 const FILE_LABELS: Record<string, string> = {
   file_paspor: 'Paspor',
   file_ktp: 'KTP',
+  file_pas_foto_visa: 'Pas Foto Visa',
+  file_ktp_kk: 'KTP & KK',
+  file_itinerary_visa: 'Itinerary/Hotel',
+  file_saldo_rekening: 'Bukti Saldo',
   file_bukti_transfer: 'Bukti Transfer',
 };
 
+const FILE_FIELDS = Object.keys(FILE_LABELS);
+
 const STEPS = [
   { key: 'validate', label: 'Memvalidasi data' },
-  { key: 'file_paspor', label: 'Mengkonversi file Paspor' },
-  { key: 'file_ktp', label: 'Mengkonversi file KTP' },
-  { key: 'file_bukti_transfer', label: 'Mengkonversi file Bukti Transfer' },
+  ...FILE_FIELDS.map((key) => ({ key, label: `Mengkonversi file ${FILE_LABELS[key]}` })),
   { key: 'upload', label: 'Mengupload ke server' },
   { key: 'done', label: 'Selesai! Mengalihkan ke WhatsApp' },
 ];
@@ -76,11 +80,7 @@ export function initRegisterForm(): void {
       ['motivasi', 'Motivasi Ikut Trip'],
     ];
     // File required
-    const requiredFiles: [string, string][] = [
-      ['file_paspor', 'Upload Paspor'],
-      ['file_ktp', 'Upload KTP'],
-      ['file_bukti_transfer', 'Upload Bukti Transfer'],
-    ];
+    const requiredFiles: [string, string][] = FILE_FIELDS.map((field) => [field, `Upload ${FILE_LABELS[field]}`]);
 
     for (const [field, label] of required) {
       if (!payload[field]) {
@@ -120,10 +120,9 @@ export function initRegisterForm(): void {
       showProgress(0);
       await sleep(200);
 
-      // Step 2-4: file uploads → base64
-      const fileFields = ['file_paspor', 'file_ktp', 'file_bukti_transfer'];
-      for (let i = 0; i < fileFields.length; i++) {
-        const field = fileFields[i];
+      // Step 2-N: file uploads → base64
+      for (let i = 0; i < FILE_FIELDS.length; i++) {
+        const field = FILE_FIELDS[i];
         showProgress(i + 1);
         const input = form.querySelector<HTMLInputElement>(`input[name="${field}"]`);
         const file = input?.files?.[0];
@@ -141,8 +140,8 @@ export function initRegisterForm(): void {
         await sleep(100);
       }
 
-      // Step 5: upload
-      showProgress(4);
+      // Step upload (index terakhir sebelum 'done')
+      showProgress(FILE_FIELDS.length + 1);
 
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
