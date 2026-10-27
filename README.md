@@ -449,6 +449,7 @@ docs/
     ├── database.md             # skema Supabase, RLS, migration, seed, backup
     ├── deployment.md           # Cloudflare, env, checklist rilis, rollback
     ├── security.md             # model ancaman, key, auth, scan, insiden
+    ├── api.md                  # kontrak endpoint Supabase / Apps Script / Worker
     └── troubleshooting.md      # gejala → sebab → fix → cegah lintas sistem
 ```
 

@@ -24,6 +24,7 @@ docs/
 │   ├── database.md           # skema Supabase, RLS, migration, seed, backup
 │   ├── deployment.md         # Cloudflare, env, checklist rilis, rollback
 │   ├── security.md           # model ancaman, key, auth, scan, insiden
+│   ├── api.md                # kontrak endpoint Supabase/Apps Script/Worker yang dipakai kode
 │   └── troubleshooting.md    # gejala → sebab → fix → cegah, lintas sistem
 └── <domain-baru>/            # tambah hanya jika ≥2 file dengan topik serumpun
 ```
@@ -104,6 +105,7 @@ temannya. Contoh kandidat: `deploy/` (Cloudflare, env, rollback),
 | `dev/database.md` | dev | tabel `content`/`keepalive`, bucket `media`, RLS, migration, seed, backup |
 | `dev/deployment.md` | dev | Cloudflare Workers Builds, env, checklist rilis, rollback, monitoring |
 | `dev/security.md` | dev | model ancaman, penempatan key, auth admin, scan Trivy/CodeQL, insiden |
+| `dev/api.md` | dev | request/response Supabase REST/Auth/Storage, Apps Script form LP, `/sitemap.xml` |
 | `dev/troubleshooting.md` | dev | gejala → sebab → fix → cegah untuk build, Worker, admin, lokal, Apps Script |
 
 Batas `dev/` vs folder lain: `dev/` untuk orang yang mengubah kode/infra;
