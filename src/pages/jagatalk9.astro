@@ -389,9 +389,11 @@ h1, h2, h3, h4 {
 }
 
 .hero h1 {
-  font-size: 56px;
+  font-size: clamp(22px, 3vw + 8px, 42px);
   font-weight: 800;
-  margin-bottom: 20px;
+  line-height: 1.2;
+  margin-bottom: clamp(12px, 1.6vw, 18px);
+  overflow-wrap: break-word;
 }
 .hero h1 .colon {
   color: var(--orange);
@@ -1965,7 +1967,6 @@ details[open] .faq-q::after {
 @media (max-width: 900px) {
   .hero { padding: 40px 0 70px; }
   .hero-grid { grid-template-columns: 1fr; gap: 50px; }
-  .hero h1 { font-size: 36px; }
   .hero-sub1 { font-size: 16px; }
   .section-title { font-size: 30px; }
   .pain-grid { grid-template-columns: 1fr; }
@@ -1987,7 +1988,6 @@ details[open] .faq-q::after {
 }
 @media (max-width: 500px) {
   .journey-grid { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 30px; }
   .nav-cta { padding: 8px 16px; font-size: 13px; }
   .deco-line::before, .deco-line::after { width: 20px; }
 }
@@ -2428,7 +2428,7 @@ details[open] .faq-q::after {
   <div class="container hero-grid">
     <div class="hero-content">
       <div class="hero-badge">JAGATALK BATCH #9</div>
-      <h1>Reposisi Sekolah<span class="colon">:</span><br>dari Potensi menjadi <span class="highlight">Reputasi</span></h1>
+      <h1>Strategi Menemukan DNA Keunikan Sekolah<span class="colon">:</span> Membangun program <span class="highlight">& manajemen sekolah unggul</span></h1>
 
       <p class="hero-sub1">Framework strategis untuk pengelola sekolah yang serius membangun institusi berdaya saing.</p>
       <p class="hero-sub2">Membedah strategi program dan manajemen yang mengubah sekolah biasa menjadi sekolah berdaya saing.</p>
