@@ -308,6 +308,16 @@ import Footer from "../components/site/Footer.astro";
         <p class="err" id="institusi-err">Isi nama sekolah, kampus, atau yayasan Anda.</p>
       </div>
       <div class="field">
+        <label for="jabatan">Jabatan</label>
+        <input id="jabatan" name="jabatan" type="text" autocomplete="organization-title" placeholder="Kepala sekolah, rektor, ketua yayasan, dll." required>
+        <p class="err" id="jabatan-err">Isi jabatan Anda di institusi.</p>
+      </div>
+      <div class="field">
+        <label for="alamat">Alamat institusi</label>
+        <input id="alamat" name="alamat" type="text" autocomplete="street-address" placeholder="Kota/kabupaten, provinsi" required>
+        <p class="err" id="alamat-err">Isi alamat institusi Anda.</p>
+      </div>
+      <div class="field">
         <label for="wa">Nomor WhatsApp</label>
         <input id="wa" name="wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx" required>
         <p class="err" id="wa-err">Isi nomor WhatsApp yang aktif, contoh 081234567890.</p>
@@ -398,26 +408,25 @@ import Footer from "../components/site/Footer.astro";
     else input.removeAttribute('aria-describedby');
     return bad;
   }
-  ['nama', 'institusi', 'wa'].forEach(function (id) {
+  ['nama', 'institusi', 'jabatan', 'alamat', 'wa'].forEach(function (id) {
     var el = document.getElementById(id);
     el.addEventListener('input', function () { if (el.getAttribute('aria-invalid') === 'true') mark(el, false); });
   });
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var namaEl = form.elements.nama, instEl = form.elements.institusi, waEl = form.elements.wa;
-    var nama = namaEl.value.trim(), institusi = instEl.value.trim(), wa = normalizeWa(waEl.value);
-    var bad = [mark(namaEl, !nama), mark(instEl, !institusi), mark(waEl, !wa)];
-    if (bad[0] || bad[1] || bad[2]) {
-      (bad[0] ? namaEl : bad[1] ? instEl : waEl).focus();
-      return;
-    }
+    var namaEl = form.elements.nama, instEl = form.elements.institusi, jabEl = form.elements.jabatan, almEl = form.elements.alamat, waEl = form.elements.wa;
+    var nama = namaEl.value.trim(), institusi = instEl.value.trim(), jabatan = jabEl.value.trim(), alamat = almEl.value.trim(), wa = normalizeWa(waEl.value);
+    var els = [namaEl, instEl, jabEl, almEl, waEl];
+    var bad = [mark(namaEl, !nama), mark(instEl, !institusi), mark(jabEl, !jabatan), mark(almEl, !alamat), mark(waEl, !wa)];
+    var firstBad = bad.indexOf(true);
+    if (firstBad !== -1) { els[firstBad].focus(); return; }
 
     btn.disabled = true;
     btn.textContent = 'Mengirim...';
 
     var payload = Object.assign({
-      _sheet: SHEET_TAB, nama: nama, institusi: institusi, jabatan: '-', kota: '-', jenis: '-',
+      _sheet: SHEET_TAB, nama: nama, institusi: institusi, jabatan: jabatan, alamat: alamat,
       wa: wa, minat: PROGRAM, timestamp: new Date().toISOString(), source: location.href
     }, getUtm());
 

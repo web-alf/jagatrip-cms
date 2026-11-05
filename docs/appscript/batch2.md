@@ -10,7 +10,7 @@ Backend endpoint untuk form `src/pages/batch2.astro` (Kemitraan Kampus Malaysia,
 
 ## Alur
 
-1. Client (inline `<script>` di `batch2.astro`) kirim POST JSON `{ nama, institusi, jabatan, kota, jenis, wa, minat, timestamp, source, utm_* }`.
+1. Client (inline `<script>` di `batch2.astro`) kirim POST JSON `{ nama, institusi, jabatan, alamat, wa, minat, timestamp, source, utm_* }`.
 2. Baris ditulis ke sheet `Desember` sesuai `JGT_B2_HEADER_MAP`. Header yang belum ada otomatis ditambah di ujung kanan; urutan existing tidak diubah.
 3. Setelah fetch (fire-and-forget, `mode: 'no-cors'`), browser redirect ke WA Admin Dwita dengan greeting berisi nama pendaftar.
 

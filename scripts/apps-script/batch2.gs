@@ -4,7 +4,7 @@
  * Sheet: "Desember"
  *
  * Alur:
- *  1. Terima POST JSON dari batch2.astro (nama, institusi, wa, minat, timestamp, source, utm_*).
+ *  1. Terima POST JSON dari batch2.astro (nama, institusi, jabatan, alamat, wa, minat, timestamp, source, utm_*).
  *  2. Tulis 1 baris ke sheet "Desember" sesuai JGT_B2_HEADER_MAP
  *     (header yang belum ada di sheet otomatis ditambahkan di ujung kanan, urutan existing tidak diubah).
  *
@@ -31,8 +31,7 @@ const JGT_B2_HEADER_MAP = [
   ['Nama Lengkap', 'nama'],
   ['Institusi', 'institusi'],
   ['Jabatan', 'jabatan'],
-  ['Kota', 'kota'],
-  ['Jenis', 'jenis'],
+  ['Alamat', 'alamat'], // belum ada di sheet → auto ditambah di ujung kanan saat submit pertama
   ['WhatsApp', 'wa'],
   ['Program', 'minat'],
   ['Status', '__status__'],
@@ -129,9 +128,8 @@ function testDoPost() {
     _sheet: 'Desember',
     nama: 'Test Peserta',
     institusi: 'SMA Test',
-    jabatan: '-',
-    kota: '-',
-    jenis: '-',
+    jabatan: 'Kepala Sekolah',
+    alamat: 'Semarang, Jawa Tengah',
     wa: '6281234567890',
     minat: 'Batch 2 Kemitraan Kampus Malaysia, 11-14 Januari 2027',
     timestamp: new Date().toISOString(),
