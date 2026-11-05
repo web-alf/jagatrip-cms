@@ -2,6 +2,7 @@
   --navy:#011F48; --blue:#023175; --orange:#EB650C; --orange-deep:#C94F06; --orange-soft:#FF9B52;
   --gold:#D8AE5E; --sky:#EDF3FA; --peach:#FDF1E5; --white:#fff;
   --ink:#14263F; --muted:#4F6077; --line:#D6DFEA; --line-dark:rgba(255,255,255,.2);
+  --faint:#94A3B8; --orange-l:#FB923C; --dborder:#1E3A5F; /* token Footer.astro */
   --body:"Barlow",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
   --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
 }
@@ -12,6 +13,8 @@ img{display:block;max-width:100%;height:auto}
 a{color:inherit}
 ul,ol{list-style:none}
 .wrap{width:min(1160px,100%);margin-inline:auto;padding-inline:24px}
+/* Footer.astro: .deco ada di global.css, LP ini tidak load global.css */
+.ft .deco{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 :focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:3px}
 .skip{position:absolute;left:-999px;top:8px;z-index:100;background:var(--navy);color:#fff;padding:8px 14px;border-radius:6px}
 .skip:focus{left:12px}
@@ -192,13 +195,6 @@ summary::after{content:"+";font-family:var(--display);font-size:28px;line-height
 details[open] summary::after{content:"–"}
 details p{padding-bottom:18px;color:var(--muted);max-width:68ch}
 
-/* Footer */
-footer{background:var(--navy);color:#C9D6E6;font-size:15px}
-footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 28px;padding-block:18px}
-footer a{color:#fff;text-decoration:none}
-footer a:hover{text-decoration:underline}
-footer .links{display:flex;flex-wrap:wrap;gap:6px 24px}
-
 @keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 @media(prefers-reduced-motion:no-preference){.swoosh path{animation:draw 1s .25s cubic-bezier(.3,.7,.3,1) backwards}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
@@ -239,5 +235,4 @@ footer .links{display:flex;flex-wrap:wrap;gap:6px 24px}
   .tag .amt{font-size:14.6vw}
   form{padding:22px}
   .bridge p{font-size:19px}
-  footer .wrap{padding-block:16px}
 }
