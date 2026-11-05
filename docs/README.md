@@ -97,6 +97,7 @@ temannya. Contoh kandidat: `deploy/` (Cloudflare, env, rollback),
 | `admin/update-content-guide.md` | guide | referensi update konten per menu/field di /admin |
 | `appscript/rule.md` | rule | akun `web@alfatihah.com`, 1 script per LP, prefix `JGT_<LP>_`, deploy |
 | `appscript/registrasi.md` | lp | setup & alur `scripts/apps-script/registrasi.gs` |
+| `appscript/batch2.md` | lp | setup & alur `scripts/apps-script/batch2.gs` (sheet `Desember`) |
 | `files/supabase-rule.md` | rule | gambar admin di bucket `media` + kenapa auto-update ke situs |
 | `files/repo-gs-rule.md` | rule | lokasi/penamaan/isi minimal source `.gs` di repo + dokumen pendamping |
 | `files/registrasi.md` | lp | struktur folder Drive dokumen registrasi |

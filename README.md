@@ -438,7 +438,8 @@ docs/
 │   └── update-content-guide.md # referensi update konten per menu/field di /admin
 ├── appscript/                  # backend Google Apps Script per LP
 │   ├── rule.md                 # aturan akun, 1 script per LP, prefix, deploy
-│   └── registrasi.md           # setup & alur registrasi.gs
+│   ├── registrasi.md           # setup & alur registrasi.gs
+│   └── batch2.md               # setup & alur batch2.gs (sheet Desember)
 ├── files/                      # penyimpanan file (Drive, Supabase Storage, repo)
 │   ├── supabase-rule.md        # aturan gambar admin di bucket media + auto-update situs
 │   ├── repo-gs-rule.md         # aturan penyimpanan source .gs di repo

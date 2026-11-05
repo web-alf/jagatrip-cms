@@ -4,6 +4,7 @@ CSS khusus landing page kampanye berdiri-sendiri (self-contained HTML, bukan
 `Base.astro`/`components/site/*`). Satu file per LP, nama = nama page.
 
 - `partnership.css` → `src/pages/partnership.astro`
+- `batch2.css` → `src/pages/batch2.astro` (Batch 2 Kemitraan Malaysia, Jan 2027; gambar di `public/images/batch2/`)
 
 Kenapa terpisah dari `src/styles/global.css`: global.css dipakai stack
 CMS baru (Base.astro + Header/Footer di `components/site/`) dengan token
