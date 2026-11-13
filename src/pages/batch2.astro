@@ -400,6 +400,21 @@ import Footer from "../components/site/Footer.astro";
     } catch (e) {}
     return out;
   }
+  function getTrafficSource() {
+    try {
+      var params = new URLSearchParams(location.search);
+      var utm = (params.get('utm_source') || '').trim().toLowerCase();
+      if (utm) return utm;
+
+      var ref = (document.referrer || '').toLowerCase();
+      if (/tiktok/.test(ref)) return 'tiktok';
+      if (/google|bing|yahoo/.test(ref)) return 'google';
+      if (/facebook|meta|instagram/.test(ref)) return 'meta';
+      return 'direct';
+    } catch (e) {
+      return 'direct';
+    }
+  }
   function normalizeWa(input) {
     var d = (input || '').replace(/[^\d+]/g, '');
     if (d.charAt(0) === '+') d = d.slice(1);
@@ -527,8 +542,7 @@ import Footer from "../components/site/Footer.astro";
         win.ttq.track('SubmitForm', {
           content_name: 'Batch 2 Kemitraan Malaysia',
           content_category: 'Lead Form',
-          value: 1,
-          currency: 'IDR'
+          source_channel: getTrafficSource()
         });
       } catch (err) {}
     }
@@ -552,7 +566,8 @@ import Footer from "../components/site/Footer.astro";
 
     var payload = Object.assign({
       _sheet: SHEET_TAB, nama: nama, institusi: institusi, jabatan: jabatan, alamat: alamat,
-      wa: wa, minat: PROGRAM, timestamp: new Date().toISOString(), source: location.href
+      wa: wa, minat: PROGRAM, timestamp: new Date().toISOString(), source: location.href,
+      source_channel: getTrafficSource()
     }, getUtm());
 
     try {

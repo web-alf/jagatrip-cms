@@ -34,6 +34,7 @@ const JGT_B2_HEADER_MAP = [
   ['Alamat', 'alamat'], // belum ada di sheet → auto ditambah di ujung kanan saat submit pertama
   ['WhatsApp', 'wa'],
   ['Program', 'minat'],
+  ['Sumber Trafik', 'source_channel'],
   ['Status', '__status__'],
   ['Source', 'source'],
   ['UTM Source', 'utm_source'],
@@ -134,7 +135,8 @@ function testDoPost() {
     minat: 'Batch 2 Kemitraan Kampus Malaysia, 11-14 Januari 2027',
     timestamp: new Date().toISOString(),
     source: 'TEST',
-    utm_source: 'test', utm_medium: '', utm_campaign: '', utm_term: '', utm_content: '', gclid: '', fbclid: '',
+    source_channel: 'tiktok',
+    utm_source: 'tiktok', utm_medium: '', utm_campaign: '', utm_term: '', utm_content: '', gclid: '', fbclid: '',
   };
   const res = doPost({ postData: { contents: JSON.stringify(payload) } });
   Logger.log(res.getContent());
