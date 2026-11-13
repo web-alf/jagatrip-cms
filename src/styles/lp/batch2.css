@@ -4,7 +4,7 @@
   --ink:#14263F; --muted:#4F6077; --line:#D6DFEA; --line-dark:rgba(255,255,255,.2);
   --faint:#94A3B8; --orange-l:#FB923C; --dborder:#1E3A5F; /* token Footer.astro */
   --body:"Barlow",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --display:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
@@ -28,15 +28,17 @@ h3{font-size:25px;font-weight:700;line-height:1.14}
 .btn{display:inline-block;font-family:var(--body);font-weight:700;font-size:17px;line-height:1.2;text-decoration:none;text-align:center;border:0;border-radius:8px;padding:16px 28px;cursor:pointer;background:var(--orange-deep);color:#fff;transition:background .15s}
 .btn:hover{background:#A94104}
 .btn:disabled{opacity:.65;cursor:wait}
-.link{font-weight:600;color:var(--navy);text-underline-offset:4px;text-decoration-thickness:1.5px;text-decoration-color:var(--orange)}
+.link{font-weight:600;color:var(--navy);text-underline-offset:4px;text-decoration-thickness:1.5px;text-decoration-color:var(--orange);transition:color .15s}
 .link:hover{color:var(--orange-deep)}
 
 /* Header */
 .top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px}
 .top img{width:132px}
+.top .brand{display:flex;align-items:center;gap:12px}
+.top .brand img:first-child{width:36px;height:36px}
 .top nav{display:flex;align-items:center;gap:30px}
-.top nav a:not(.btn){font-weight:600;font-size:16px;color:var(--navy);text-decoration:none}
+.top nav a:not(.btn){font-weight:600;font-size:16px;color:var(--navy);text-decoration:none;transition:color .15s}
 .top nav a:not(.btn):hover{color:var(--orange-deep)}
 .top .btn{padding:11px 20px;font-size:15.5px}
 
@@ -45,7 +47,7 @@ h3{font-size:25px;font-weight:700;line-height:1.14}
 .hero-wave{position:absolute;top:0;right:0;width:min(66vw,960px);height:auto;pointer-events:none}
 .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,.68fr);gap:40px;align-items:center;padding-block:clamp(36px,4.6vw,60px) clamp(52px,6vw,80px)}
 .partner{font-weight:600;font-size:16.5px;color:var(--blue);margin-bottom:16px}
-h1{font-size:clamp(60px,6.5vw,90px);font-weight:800;text-transform:uppercase;line-height:.96}
+h1{font-size:clamp(44px,5vw,72px);font-weight:800;text-transform:uppercase;line-height:1.04}
 h1 span{display:block}
 h1 .go{position:relative;color:var(--orange);width:max-content;max-width:100%;padding-bottom:16px;white-space:nowrap}
 .swoosh{position:absolute;left:0;bottom:0;width:100%;height:16px;overflow:visible}
@@ -90,10 +92,11 @@ h1 .go{position:relative;color:var(--orange);width:max-content;max-width:100%;pa
 .prog{position:relative;overflow:hidden;background:linear-gradient(165deg,#E6F0FB 0%,#F7FAFE 42%,#FEF4EA 100%)}
 .prog .wrap{position:relative}
 .prog-wave{position:absolute;top:0;right:0;width:min(58vw,820px);height:auto;pointer-events:none}
-.tabs{display:inline-flex;flex-wrap:wrap;gap:6px;margin-top:28px;padding:6px;background:#fff;border-radius:12px;box-shadow:0 10px 26px -16px rgba(1,31,72,.45)}
-.tabs button{display:inline-flex;align-items:center;gap:9px;font:inherit;font-weight:700;font-size:16.5px;line-height:1.2;padding:11px 20px;border:0;border-radius:8px;background:transparent;color:var(--navy);cursor:pointer}
-.tabs button .ico{color:var(--orange-deep);width:22px;height:22px}
-.tabs button[aria-selected="true"]{background:linear-gradient(120deg,var(--blue),var(--navy));color:#fff}
+.tabs{position:relative;display:inline-flex;flex-wrap:wrap;gap:6px;margin-top:28px;padding:6px;background:#fff;border-radius:12px;box-shadow:0 10px 26px -16px rgba(1,31,72,.45)}
+.tab-ind{position:absolute;top:6px;bottom:6px;left:0;width:0;border-radius:8px;background:linear-gradient(120deg,var(--blue),var(--navy));z-index:0}
+.tabs button{position:relative;z-index:1;display:inline-flex;align-items:center;gap:9px;font:inherit;font-weight:700;font-size:16.5px;line-height:1.2;padding:11px 20px;border:0;border-radius:8px;background:transparent;color:var(--navy);cursor:pointer;transition:color .25s}
+.tabs button .ico{color:var(--orange-deep);width:22px;height:22px;transition:color .25s}
+.tabs button[aria-selected="true"]{color:#fff}
 .tabs button[aria-selected="true"] .ico{color:var(--orange-soft)}
 .panel{margin-top:26px}
 .panel>p{max-width:64ch;color:var(--ink);font-weight:500}
@@ -125,13 +128,14 @@ h1 .go{position:relative;color:var(--orange);width:max-content;max-width:100%;pa
 .mini .ico{width:21px;height:21px}
 
 /* Kampus */
-.camp{padding-block:30px;border-bottom:1px solid var(--line)}
-.camp .wrap{display:grid;grid-template-columns:auto 1fr;gap:12px 28px;align-items:center}
-.camp .lbl{font-weight:600;font-size:16px;color:var(--muted);padding-top:1px;max-width:11em;line-height:1.35}
-.camp ul{display:flex;flex-wrap:wrap;gap:10px 28px}
-.camp b{display:block;font-weight:600;color:var(--navy);font-size:16.5px;line-height:1.3}
-.camp li span{font-size:14.5px;color:var(--muted)}
-.camp .more{align-self:center;font-weight:700;font-size:16px;line-height:1.25;color:#fff;background:var(--orange-deep);padding:9px 16px;border-radius:8px}
+.camp{padding-block:38px;border-bottom:1px solid var(--line)}
+.camp .wrap{display:grid;grid-template-columns:auto 1fr;gap:16px 36px;align-items:start}
+.camp .lbl{font-weight:700;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding-top:5px;max-width:10em;line-height:1.4}
+.camp ul{display:flex;flex-wrap:wrap;align-items:flex-start;gap:22px 44px}
+.camp li:not(.more){border-top:2px solid var(--gold);padding-top:13px;max-width:15em}
+.camp b{display:block;font-family:var(--display);font-weight:700;color:var(--navy);font-size:clamp(23px,2.3vw,27px);line-height:1.1;letter-spacing:-.005em;text-wrap:balance}
+.camp li span{display:block;font-size:15px;color:var(--muted);margin-top:4px}
+.camp .more{align-self:flex-end;font-weight:700;font-size:16px;line-height:1.25;color:#fff;background:var(--orange-deep);padding:9px 16px;border-radius:8px}
 
 /* Jembatan */
 .bridge{position:relative;overflow:hidden;background:var(--orange-deep);color:#fff}
@@ -146,7 +150,7 @@ h1 .go{position:relative;color:var(--orange);width:max-content;max-width:100%;pa
 .tag .norm{font-size:17px;color:#C9D6E6}
 .tag s{font-family:var(--display);font-size:32px;font-weight:600;color:#fff;text-decoration-color:var(--orange-soft);text-decoration-thickness:3px;display:block;line-height:1.1;margin-top:2px}
 .tag .eb{margin-top:20px;font-weight:700;color:var(--orange-soft);font-size:18px}
-.tag .amt{font-family:var(--display);font-size:clamp(58px,6vw,72px);font-weight:800;line-height:1;color:#fff;letter-spacing:-.01em;margin-top:2px}
+.tag .amt{font-family:var(--display);font-size:clamp(34px,3.6vw,46px);font-weight:800;line-height:1;color:#fff;letter-spacing:-.01em;margin-top:2px;white-space:nowrap}
 .tag .per{margin-top:8px;color:#DCE6F2;font-size:16.5px}
 .tag .btn{display:block;margin-top:22px;background:var(--orange);color:var(--navy)}
 .tag .btn:hover{background:var(--orange-soft)}
@@ -191,17 +195,28 @@ form .btn{width:100%;margin-top:4px}
 details{border-top:1px solid var(--line)}
 summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;align-items:baseline;padding:17px 0;font-weight:600;font-size:18.5px;color:var(--navy);line-height:1.35}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-family:var(--display);font-size:28px;line-height:1;color:var(--orange-deep);flex:none}
-details[open] summary::after{content:"–"}
+summary::after{content:"+";display:inline-block;font-family:var(--display);font-size:28px;line-height:1;color:var(--orange-deep);flex:none}
+details[open]:not(.closing) summary::after{transform:rotate(45deg)}
 details p{padding-bottom:18px;color:var(--muted);max-width:68ch}
 
 @keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
-@media(prefers-reduced-motion:no-preference){.swoosh path{animation:draw 1s .25s cubic-bezier(.3,.7,.3,1) backwards}}
+@keyframes rise-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes stack-in{from{opacity:0;transform:translateY(26px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:no-preference){
+  .partner{animation:rise-in .6s cubic-bezier(.16,1,.3,1) backwards}
+  h1 span{animation:rise-in .7s cubic-bezier(.16,1,.3,1) backwards}
+  h1 span:nth-of-type(2){animation-delay:.08s}
+  h1 .go{animation-delay:.16s}
+  .swoosh path{animation:draw 1s .55s cubic-bezier(.3,.7,.3,1) backwards}
+  .stack{animation:stack-in .85s cubic-bezier(.16,1,.3,1) .3s backwards}
+  .tab-ind{transition:transform .35s cubic-bezier(.16,1,.3,1),width .35s cubic-bezier(.16,1,.3,1)}
+  summary::after{transition:transform .3s cubic-bezier(.16,1,.3,1)}
+}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 
 @media(max-width:960px){
   .hero-grid{grid-template-columns:minmax(0,1fr);gap:44px}
-  h1{font-size:clamp(46px,11.6vw,90px)}
+  h1{font-size:clamp(40px,6.8vw,64px)}
   .stack{width:min(84%,400px)}
   .hero-wave{width:88vw}
   .why,.price,.reg-grid{grid-template-columns:minmax(0,1fr)}
@@ -224,15 +239,18 @@ details p{padding-bottom:18px;color:var(--muted);max-width:68ch}
   .tabs button .ico{display:none}
   .camp .wrap{grid-template-columns:1fr}
   .camp .lbl{max-width:none}
+  .camp ul{flex-direction:column;align-items:stretch;gap:18px}
+  .camp li:not(.more){max-width:none}
+  .camp .more{align-self:flex-start}
   .route{grid-template-columns:1fr;gap:16px}
   .route::before{left:14px;right:auto;top:14px;bottom:30px;width:2px;height:auto}
   .route li{padding:2px 0 0 44px}
   .facts{gap:10px 26px}
   .arc{width:78vw;opacity:.4}
   .hero-wave{width:40vw}
-  h1{font-size:clamp(44px,12.6vw,90px)}
+  h1{font-size:clamp(28px,8.8vw,40px)}
   .tag{padding:24px}
-  .tag .amt{font-size:14.6vw}
+  .tag .amt{font-size:clamp(28px,8.5vw,38px)}
   form{padding:22px}
   .bridge p{font-size:19px}
 }

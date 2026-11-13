@@ -19,7 +19,7 @@ import Footer from "../components/site/Footer.astro";
 <link rel="icon" type="image/webp" href="/images/batch2/favicon.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -50,8 +50,7 @@ import Footer from "../components/site/Footer.astro";
 
 <header class="top">
   <div class="wrap">
-    
-    <a href="#atas" aria-label="JAGATRIP, kembali ke atas"><img src="/images/batch2/logo.webp" alt="JAGATRIP" width="132" height="36"></a>
+    <a class="brand" href="#atas" aria-label="JAGATRIP, kembali ke atas"><img src="/images/logo-icon.webp" alt="" width="36" height="36"><img src="/images/batch2/logo.webp" alt="JAGATRIP" width="132" height="36"></a>
     <nav aria-label="Navigasi halaman">
       <a href="#program">Program</a>
       <a href="#manfaat">Manfaat</a>
@@ -60,6 +59,47 @@ import Footer from "../components/site/Footer.astro";
       <a class="btn" href="#daftar">Daftar</a>
     </nav>
   </div>
+  <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject = t;
+      var ttq = w[t] = w[t] || [];
+      ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie", "holdConsent", "revokeConsent", "grantConsent"];
+      ttq.setAndDefer = function (t, e) {
+        t[e] = function () {
+          t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+        };
+      };
+      for (var i = 0; i < ttq.methods.length; i++) {
+        ttq.setAndDefer(ttq, ttq.methods[i]);
+      }
+      ttq.instance = function (t) {
+        var e = ttq._i[t] || [];
+        for (var n = 0; n < ttq.methods.length; n++) {
+          ttq.setAndDefer(e, ttq.methods[n]);
+        }
+        return e;
+      };
+      ttq.load = function (e, n) {
+        var r = "https://analytics.tiktok.com/i18n/pixel/events.js";
+        var o = n && n.partner;
+        ttq._i = ttq._i || {};
+        ttq._i[e] = [];
+        ttq._i[e]._u = r;
+        ttq._t = ttq._t || {};
+        ttq._t[e] = +new Date();
+        ttq._o = ttq._o || {};
+        ttq._o[e] = n || {};
+        var s = d.createElement("script");
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = r + "?sdkid=" + e + "&lib=" + t;
+        var x = d.getElementsByTagName("script")[0];
+        x.parentNode.insertBefore(s, x);
+      };
+      ttq.load("DBQLN9JC77U6087O1GI0");
+      ttq.page();
+    }(window, document, "ttq");
+  </script>
 </header>
 
 <main id="atas">
@@ -128,6 +168,7 @@ import Footer from "../components/site/Footer.astro";
     <h2 id="program-h">Program yang dapat dijajaki</h2>
     <p class="lede" style="margin-top:12px">Institusi memilih sesuai kebutuhan, bidang, dan kalender akademik. Sebagian dapat berjalan daring, sebagian tatap muka.</p>
     <div class="tabs" role="tablist" aria-label="Jenis institusi">
+      <span class="tab-ind" aria-hidden="true"></span>
       <button role="tab" id="tab-s" aria-controls="panel-s" aria-selected="true" type="button"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span>Sekolah, madrasah, pesantren</span></button>
       <button role="tab" id="tab-p" aria-controls="panel-p" aria-selected="false" tabindex="-1" type="button"><svg class="ico" aria-hidden="true"><use href="#i-cap"/></svg><span>Perguruan tinggi</span></button>
     </div>
@@ -370,6 +411,12 @@ import Footer from "../components/site/Footer.astro";
 
   // Tab program
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var tabInd = document.querySelector('.tab-ind');
+  function moveIndicator(tab) {
+    if (!tabInd || !tab) return;
+    tabInd.style.width = tab.offsetWidth + 'px';
+    tabInd.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
+  }
   function selectTab(tab, focus) {
     tabs.forEach(function (t) {
       var on = t === tab;
@@ -377,6 +424,7 @@ import Footer from "../components/site/Footer.astro";
       t.tabIndex = on ? 0 : -1;
       document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
     });
+    moveIndicator(tab);
     if (focus) tab.focus();
   }
   tabs.forEach(function (tab, i) {
@@ -388,6 +436,70 @@ import Footer from "../components/site/Footer.astro";
       }
     });
   });
+  moveIndicator(tabs[0]);
+  var tabResizeRaf;
+  window.addEventListener('resize', function () {
+    if (tabResizeRaf) cancelAnimationFrame(tabResizeRaf);
+    tabResizeRaf = requestAnimationFrame(function () {
+      var active = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
+      moveIndicator(active);
+    });
+  });
+
+  // Accordion FAQ
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion && window.Element && Element.prototype.animate) {
+    Array.prototype.slice.call(document.querySelectorAll('.faq details')).forEach(function (el) {
+      var summary = el.querySelector('summary');
+      var content = el.querySelector('p');
+      var anim = null, isClosing = false, isExpanding = false;
+
+      summary.addEventListener('click', function (e) {
+        e.preventDefault();
+        el.style.overflow = 'hidden';
+        if (isClosing || !el.open) {
+          openPanel();
+        } else if (isExpanding || el.open) {
+          shrinkPanel();
+        }
+      });
+
+      function openPanel() {
+        el.classList.remove('closing');
+        el.style.height = el.offsetHeight + 'px';
+        el.open = true;
+        window.requestAnimationFrame(function () { expandPanel(); });
+      }
+
+      function expandPanel() {
+        isExpanding = true;
+        var startHeight = el.offsetHeight + 'px';
+        var endHeight = (summary.offsetHeight + content.offsetHeight) + 'px';
+        if (anim) anim.cancel();
+        anim = el.animate({ height: [startHeight, endHeight] }, { duration: 260, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+        anim.onfinish = function () { finish(true); };
+        anim.oncancel = function () { isExpanding = false; };
+      }
+
+      function shrinkPanel() {
+        isClosing = true;
+        el.classList.add('closing');
+        var startHeight = el.offsetHeight + 'px';
+        var endHeight = summary.offsetHeight + 'px';
+        if (anim) anim.cancel();
+        anim = el.animate({ height: [startHeight, endHeight] }, { duration: 260, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+        anim.onfinish = function () { finish(false); };
+        anim.oncancel = function () { isClosing = false; };
+      }
+
+      function finish(isOpen) {
+        el.open = isOpen;
+        el.classList.remove('closing');
+        anim = null; isClosing = false; isExpanding = false;
+        el.style.height = ''; el.style.overflow = '';
+      }
+    });
+  }
 
   // Flip flyer
   var flipBtn = document.getElementById('flyerFlip');
@@ -433,7 +545,8 @@ import Footer from "../components/site/Footer.astro";
     try {
       fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', keepalive: true, body: JSON.stringify(payload) }).catch(function () {});
     } catch (err) {}
-    if (window.fbq) { try { window.fbq('track', 'Lead', { content_name: 'Batch 2 Kemitraan Malaysia' }); } catch (err2) {} }
+    if ((window as any).fbq) { try { (window as any).fbq('track', 'Lead', { content_name: 'Batch 2 Kemitraan Malaysia' }); } catch (err2) {} }
+    if ((window as any).ttq) { try { (window as any).ttq.track('SubmitForm', { content_name: 'Batch 2 Kemitraan Malaysia' }); } catch (err3) {} }
 
     var pesan = 'Halo Admin, saya ' + nama + ' berminat mengikuti program kemitraan Malaysia, dan sudah mengisi form. Bagaimana tahap selanjutnya?';
     var waUrl = 'https://wa.me/' + ADMIN_WA + '?text=' + encodeURIComponent(pesan);
