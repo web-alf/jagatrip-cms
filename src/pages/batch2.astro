@@ -520,6 +520,19 @@ import Footer from "../components/site/Footer.astro";
     else input.removeAttribute('aria-describedby');
     return bad;
   }
+  function trackTikTokLead() {
+    var win = window;
+    if (win.ttq) {
+      try {
+        win.ttq.track('SubmitForm', {
+          content_name: 'Batch 2 Kemitraan Malaysia',
+          content_category: 'Lead Form',
+          value: 1,
+          currency: 'IDR'
+        });
+      } catch (err) {}
+    }
+  }
   ['nama', 'institusi', 'jabatan', 'alamat', 'wa'].forEach(function (id) {
     var el = document.getElementById(id);
     el.addEventListener('input', function () { if (el.getAttribute('aria-invalid') === 'true') mark(el, false); });
@@ -546,7 +559,7 @@ import Footer from "../components/site/Footer.astro";
       fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', keepalive: true, body: JSON.stringify(payload) }).catch(function () {});
     } catch (err) {}
     if ((window as any).fbq) { try { (window as any).fbq('track', 'Lead', { content_name: 'Batch 2 Kemitraan Malaysia' }); } catch (err2) {} }
-    if ((window as any).ttq) { try { (window as any).ttq.track('SubmitForm', { content_name: 'Batch 2 Kemitraan Malaysia' }); } catch (err3) {} }
+    trackTikTokLead();
 
     var pesan = 'Halo Admin, saya ' + nama + ' berminat mengikuti program kemitraan Malaysia, dan sudah mengisi form. Bagaimana tahap selanjutnya?';
     var waUrl = 'https://wa.me/' + ADMIN_WA + '?text=' + encodeURIComponent(pesan);
