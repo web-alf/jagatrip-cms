@@ -31,7 +31,12 @@ import Footer from "../components/site/Footer.astro";
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.7 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.7-4-9s1.4-6.4 4-9Z"/></symbol>
 <symbol id="i-board" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8M7.5 12l3-3 2.5 2 3.5-4"/></symbol>
-<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2.5 9.5 12 5l9.5 4.5L12 14Z"/><path d="M6.5 11.5V16c0 1.2 2.6 2.8 5.5 2.8s5.5-1.6 5.5-2.8v-4.5M21.5 9.5V15"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2.5
+</header>
+
+<main id="atas">
+<section class="hero">
+  <svg clas 9.5 12 5l9.5 4.5L12 14Z"/><path d="M6.5 11.5V16c0 1.2 2.6 2.8 5.5 2.8s5.5-1.6 5.5-2.8v-4.5M21.5 9.5V15"/></symbol>
 <symbol id="i-plane" viewBox="0 0 24 24"><path d="M21 3 3 10.5l6.8 2.7L12.5 20 21 3Zm0 0L9.8 13.2"/></symbol>
 <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M15.5 5.2a3.2 3.2 0 0 1 0 5.6M17.5 14.9c2 .7 3.5 2.6 3.5 5.1"/></symbol>
 <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5Z"/></symbol>
@@ -587,10 +592,7 @@ import Footer from "../components/site/Footer.astro";
       try {
         window.dataLayer.push({
           event: 'lead_form_submit',
-          form_name: 'batch2',
-          user_name: nama,
-          user_instansi: institusi,
-          user_jabatan: jabatan
+          form_name: 'batch2'
         });
       } catch (err3) {}
     }
@@ -603,11 +605,13 @@ import Footer from "../components/site/Footer.astro";
     statusEl.appendChild(document.createTextNode('Data terkirim. Membuka WhatsApp. Bila tidak terbuka, '));
     var a = document.createElement('a');
     a.href = waUrl; a.textContent = 'ketuk di sini';
+    a.target = '_blank';
+    a.rel = 'noopener';
     statusEl.appendChild(a);
     statusEl.appendChild(document.createTextNode('.'));
     btn.textContent = 'Data terkirim';
 
-    setTimeout(function () { window.location.href = waUrl; }, 600);
+    setTimeout(function () { window.open(waUrl, '_blank', 'noopener'); }, 600);
   });
 })();
 </script>
