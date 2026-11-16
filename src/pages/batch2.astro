@@ -20,6 +20,12 @@ import Footer from "../components/site/Footer.astro";
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MM8WG665"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -100,6 +106,8 @@ import Footer from "../components/site/Footer.astro";
       ttq.page();
     }(window, document, "ttq");
   </script>
+
+  
 </header>
 
 <main id="atas">
@@ -575,6 +583,17 @@ import Footer from "../components/site/Footer.astro";
     } catch (err) {}
     if ((window as any).fbq) { try { (window as any).fbq('track', 'Lead', { content_name: 'Batch 2 Kemitraan Malaysia' }); } catch (err2) {} }
     trackTikTokLead();
+    if (window.dataLayer) {
+      try {
+        window.dataLayer.push({
+          event: 'lead_form_submit',
+          form_name: 'batch2',
+          user_name: nama,
+          user_instansi: institusi,
+          user_jabatan: jabatan
+        });
+      } catch (err3) {}
+    }
 
     var pesan = 'Halo Admin, saya ' + nama + ' berminat mengikuti program kemitraan Malaysia, dan sudah mengisi form. Bagaimana tahap selanjutnya?';
     var waUrl = 'https://wa.me/' + ADMIN_WA + '?text=' + encodeURIComponent(pesan);
